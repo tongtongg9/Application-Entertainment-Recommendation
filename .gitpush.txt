@@ -1,6 +1,6 @@
 git add . 
 
-git commit -m "v--200821"
+git commit -m "v--210821"
 
-git push
+git push -u origin main
 
