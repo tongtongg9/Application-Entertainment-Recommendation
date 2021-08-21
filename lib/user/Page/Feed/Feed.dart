@@ -90,131 +90,153 @@ class _FeedState extends State<Feed> {
   Widget _reviewList() {
     var dateformate = DateFormat.yMMMEd();
 
-    return ListView.builder(
-      primary: false,
-      shrinkWrap: true,
-      itemCount: datamember.length,
-      itemBuilder: (context, index) {
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: Card(
-              elevation: 0,
+    return SingleChildScrollView(
+      child: datamember.length <= 0
+          ? Card(
+              color: tBackgroundLightColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
-              color: Theme.of(context).scaffoldBackgroundColor,
-              // color: Theme.of(context).backgroundColor,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15, bottom: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 40,
-                          width: 40,
-                          child: Stack(
-                            overflow: Overflow.visible,
-                            fit: StackFit.expand,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: imgsuser('${datamember[index].userImg}'),
-                              ),
-                            ],
+              child: SizedBox(
+                height: 200,
+                child: Center(
+                  child: Text(
+                    'ยังไม่มีรีวิวจากผู้ใช้อื่น',
+                    style: TextStyle(
+                      color: tWhiteColor,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          : ListView.builder(
+              primary: false,
+              shrinkWrap: true,
+              itemCount: datamember.length,
+              itemBuilder: (context, index) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      // color: Theme.of(context).backgroundColor,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15, bottom: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 40,
+                                  width: 40,
+                                  child: Stack(
+                                    overflow: Overflow.visible,
+                                    fit: StackFit.expand,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: imgsuser(
+                                            '${datamember[index].userImg}'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "${datamember[index].userUsername}",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(width: 8),
+                                        Text(
+                                          'รีวิวให้ร้าน',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                        SizedBox(width: 8),
+                                        Text(
+                                          "${datamember[index].npName}",
+                                          style: TextStyle(
+                                            color: tPimaryColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      // "${datamember[index].revTime}",
+                                      '${dateformate.format(DateTime.parse(datamember[index].revTime))}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 8),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${datamember[index].userUsername}",
+                                  "${datamember[index].revTopic}",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(width: 8),
                                 Text(
-                                  'รีวิวให้ร้าน',
+                                  "${datamember[index].revDetail}",
+                                  maxLines: 5,
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Text(
-                                  "${datamember[index].npName}",
-                                  style: TextStyle(
-                                    color: tPimaryColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ],
                             ),
-                            Text(
-                              // "${datamember[index].revTime}",
-                              '${dateformate.format(DateTime.parse(datamember[index].revTime))}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                          ),
+                          Divider(
+                            color: Colors.white10,
+                            thickness: 3,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${datamember[index].revTopic}",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "${datamember[index].revDetail}",
-                          maxLines: 5,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Divider(
-                    color: Colors.white10,
-                    thickness: 3,
-                  ),
-                ],
-              ),
+                );
+                // ],
+              },
             ),
-          ),
-        );
-        // ],
-      },
     );
   }
-Widget imgsuser(imageName) {
+
+  Widget imgsuser(imageName) {
     Widget child;
     print('Imagename : $imageName');
     if (imageName != null) {

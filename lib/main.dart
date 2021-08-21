@@ -12,8 +12,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // get initialRoute => Routes();
-  // get routes => Routes();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
