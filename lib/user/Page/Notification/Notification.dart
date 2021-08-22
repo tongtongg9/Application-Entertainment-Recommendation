@@ -20,7 +20,7 @@ class _NontificationState extends State<Nontification> {
         title: Text(
           'แจ้งเตือน',
           style: TextStyle(
-            color: tWhiteColor,
+            color: tTextColor,
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),

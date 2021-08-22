@@ -16,8 +16,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
-String userId;
+  String userId;
   UserInfo udata;
   //connect server api
   Future<Void> _getInfoUser() async {
@@ -58,7 +57,6 @@ String userId;
     //call _getAPI
     _getInfoUser();
   }
-
 
   Future _logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -105,7 +103,7 @@ String userId;
     );
   }
 
- // ? Proile Picture
+  // ? Proile Picture
   SizedBox profilePic() {
     return SizedBox(
       height: 100,
@@ -122,7 +120,7 @@ String userId;
       ),
     );
   } //! >> class Proile Picture
-  
+
   Widget imgsuser(imageName) {
     Widget child;
     print('Imagename : $imageName');
@@ -148,7 +146,8 @@ String userId;
           children: [
             ImageIcon(
               new AssetImage(
-                  "assets/icons/logout.png",), // new AssetImage("assets/images/user.png"),
+                "assets/icons/logout.png",
+              ), // new AssetImage("assets/images/user.png"),
               color: Theme.of(context).errorColor,
               size: 20,
             ),
@@ -200,7 +199,7 @@ class ProfileMenu extends StatelessWidget {
           children: [
             ImageIcon(
               new AssetImage(icon), // new AssetImage("assets/images/user.png"),
-              color: tWhiteColor,
+              color: tTextColor,
               size: 20,
             ),
             SizedBox(width: 20),
@@ -208,7 +207,7 @@ class ProfileMenu extends StatelessWidget {
               child: Text(
                 text, // "บัญชีผู้ใช้",
                 style: TextStyle(
-                  color: tWhiteColor,
+                  color: tTextColor,
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
@@ -216,7 +215,7 @@ class ProfileMenu extends StatelessWidget {
             ),
             Icon(
               Icons.arrow_forward_ios,
-              color: tWhiteColor,
+              color: tPimaryColor,
               size: 20,
             ),
           ],

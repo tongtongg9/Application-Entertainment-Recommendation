@@ -118,7 +118,6 @@ class _EditPageOwState extends State<EditPageOw> {
     );
   }
 
- 
   Widget frmUsername(bool readOnly) {
     return Column(
       children: [
@@ -145,7 +144,7 @@ class _EditPageOwState extends State<EditPageOw> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: tBackgroundLightColor,
+            fillColor: tBGDeepColor,
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
@@ -184,7 +183,7 @@ class _EditPageOwState extends State<EditPageOw> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: tBackgroundLightColor,
+            fillColor: tBGDeepColor,
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
@@ -222,7 +221,7 @@ class _EditPageOwState extends State<EditPageOw> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: tBackgroundLightColor,
+            fillColor: tBGDeepColor,
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
@@ -260,7 +259,7 @@ class _EditPageOwState extends State<EditPageOw> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: tBackgroundLightColor,
+            fillColor: tBGDeepColor,
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
@@ -298,7 +297,7 @@ class _EditPageOwState extends State<EditPageOw> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: tBackgroundLightColor,
+            fillColor: tBGDeepColor,
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
@@ -336,7 +335,7 @@ class _EditPageOwState extends State<EditPageOw> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: tBackgroundLightColor,
+            fillColor: tBGDeepColor,
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
@@ -374,7 +373,7 @@ class _EditPageOwState extends State<EditPageOw> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: tBackgroundLightColor,
+            fillColor: tBGDeepColor,
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
@@ -412,7 +411,7 @@ class _EditPageOwState extends State<EditPageOw> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: tBackgroundLightColor,
+            fillColor: tBGDeepColor,
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,

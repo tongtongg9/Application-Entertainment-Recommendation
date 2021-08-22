@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_finalapp1/model/Connectapi.dart'; 
+import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/Member.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
@@ -111,8 +111,8 @@ class _ShowDataUserState extends State<ShowDataUser> {
               ),
             ),
             Divider(
-              thickness: 3,
-              color: Colors.white10,
+              thickness: 2,
+              color: Colors.black12,
             ),
             SizedBox(height: 25),
             Row(
@@ -233,7 +233,7 @@ class Infotype extends StatelessWidget {
           Text(
             type,
             style: TextStyle(
-              color: Colors.white,
+              color: tTextColor,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -259,7 +259,7 @@ class Infodata extends StatelessWidget {
         Text(
           data,
           style: TextStyle(
-            color: Colors.white,
+            color: tTextColor,
             fontSize: 16,
           ),
         ),

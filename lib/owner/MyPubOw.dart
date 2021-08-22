@@ -102,7 +102,7 @@ class _MyPubOwState extends State<MyPubOw> {
                       });
                 },
                 child: Card(
-                  color: tBackgroundLightColor,
+                  color: tBGDeepColor,
                   elevation: 8,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),

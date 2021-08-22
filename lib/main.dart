@@ -25,31 +25,19 @@ class MyApp extends StatelessWidget {
 
   ThemeData mytheme() {
     return ThemeData(
-      // primaryColor: HexColor('#5dcbed'),
-      // primaryColor: HexColor('#f34dc3'),
-      // primaryColorLight: HexColor('#245c86'),
-      // primaryColorDark: HexColor('#353b40'),
-      // primaryColorDark: HexColor('#1a1e22'),
-      // errorColor: HexColor('#d90429'),
-      // backgroundColor: HexColor('#1a1e22'),
-      // scaffoldBackgroundColor: HexColor('#353b40'),
-      // scaffoldBackgroundColor: HexColor('#1a1e22'),
-      scaffoldBackgroundColor: tBackgroundColor,
-      // accentColor: HexColor('#1a1e22'),
+      scaffoldBackgroundColor: tBGColor,
       fontFamily: 'Mitr',
       appBarTheme: AppBarTheme(
         centerTitle: true,
-        // color: HexColor('#1a1e22'),
-        color: tBackgroundColor,
+        color: tBGColor,
         elevation: 0,
-        // brightness: Brightness.light,
         iconTheme: IconThemeData(
           color: tPimaryColor,
         ),
         textTheme: TextTheme(
           title: TextStyle(
             fontFamily: 'Mitr',
-            color: tWhiteColor,
+            color: tTextColor,
             fontSize: 20,
           ),
         ),

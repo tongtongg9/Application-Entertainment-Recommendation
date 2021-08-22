@@ -315,7 +315,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                             });
                       },
                       child: Card(
-                        color: tBackgroundLightColor,
+                        color: tBGDeepColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         child: SizedBox(
@@ -324,7 +324,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                             child: Text(
                               'ดูรีวิวจากผู้ใช้บริการ',
                               style: TextStyle(
-                                color: tWhiteColor,
+                                color: tTextColor,
                                 fontSize: 16,
                               ),
                             ),

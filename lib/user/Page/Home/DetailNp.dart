@@ -191,8 +191,7 @@ class _DetailNpState extends State<DetailNp> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  InkWell(
-                    borderRadius: BorderRadius.circular(50),
+                  GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                     },
@@ -200,13 +199,16 @@ class _DetailNpState extends State<DetailNp> {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
+                        borderRadius: BorderRadius.circular(10),
                         color: Colors.black87,
                         // color: Colors.white70,
                       ),
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: tPimaryColor,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: tPimaryColor,
+                        ),
                       ),
                     ),
                   ),
@@ -244,42 +246,41 @@ class _DetailNpState extends State<DetailNp> {
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: tTextColor,
                       ),
                     ),
                     Divider(
-                      height: 20,
-                      thickness: 1,
-                      color: Colors.white10,
+                      thickness: 2,
+                      color: Colors.black12,
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 15),
                     Text(
                       'รายละเอียดร้าน',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                        color: tTextColor,
                       ),
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 10),
                     Text(
                       '${_npAbout}',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
-                        color: Colors.white,
+                        color: tTextColor,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 0),
                     Text(
                       'ข้อมูลติดต่อ',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: tTextColor,
                       ),
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 10),
                     Row(
                       children: [
                         Text(
@@ -287,7 +288,7 @@ class _DetailNpState extends State<DetailNp> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
-                            color: Colors.white,
+                            color: tTextColor,
                           ),
                         ),
                         Text(
@@ -295,7 +296,7 @@ class _DetailNpState extends State<DetailNp> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
-                            color: Colors.white,
+                            color: tTextColor,
                           ),
                         ),
                       ],
@@ -307,7 +308,7 @@ class _DetailNpState extends State<DetailNp> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
-                            color: Colors.white,
+                            color: tTextColor,
                           ),
                         ),
                         Text(
@@ -315,24 +316,25 @@ class _DetailNpState extends State<DetailNp> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
-                            color: Colors.white,
+                            color: tTextColor,
                           ),
                         ),
                       ],
                     ),
+                    SizedBox(height: 10),
                     Divider(
-                      height: 50,
-                      thickness: 1,
-                      color: Colors.white10,
+                      thickness: 2,
+                      color: Colors.black12,
                     ),
                     Row(
                       children: [
                         Text(
                           "รีวิวจากผู้ใช้บริการ",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal),
+                            color: tTextColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                         Spacer(),
                         TextButton(
@@ -389,7 +391,7 @@ class _DetailNpState extends State<DetailNp> {
     return SingleChildScrollView(
       child: datamembers.length <= 0
           ? Card(
-              color: tBackgroundLightColor,
+              color: tBGDeepColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               child: SizedBox(
@@ -398,7 +400,7 @@ class _DetailNpState extends State<DetailNp> {
                   child: Text(
                     'ไม่มีรีวิวจากผู้ใช้อื่น',
                     style: TextStyle(
-                      color: tWhiteColor,
+                      color: tTextColor,
                       fontSize: 16,
                     ),
                   ),
@@ -417,7 +419,7 @@ class _DetailNpState extends State<DetailNp> {
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      color: tBackgroundLightColor,
+                      color: tBGDeepColor,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -450,7 +452,7 @@ class _DetailNpState extends State<DetailNp> {
                                     Text(
                                       "${datamembers[index].userUsername}",
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: tTextColor,
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -458,7 +460,7 @@ class _DetailNpState extends State<DetailNp> {
                                     Text(
                                       "${dateformate.format(DateTime.parse(datamembers[index].revTime))}",
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: tTextColor,
                                         fontSize: 14,
                                         fontWeight: FontWeight.normal,
                                       ),
@@ -476,7 +478,7 @@ class _DetailNpState extends State<DetailNp> {
                                 Text(
                                   "${datamembers[index].revTopic}",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: tTextColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -485,7 +487,7 @@ class _DetailNpState extends State<DetailNp> {
                                   "${datamembers[index].revDetail}",
                                   maxLines: 5,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: tTextColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.normal,
                                   ),
@@ -535,7 +537,7 @@ class _DetailNpState extends State<DetailNp> {
           child: Text(
             'สำรองที่นั่ง',
             style: TextStyle(
-              color: tWhiteColor,
+              color: tTextWColor,
               fontSize: 18,
             ),
           ),
@@ -559,7 +561,7 @@ class _DetailNpState extends State<DetailNp> {
           child: Text(
             'เขียนรีวิว',
             style: TextStyle(
-              color: tWhiteColor,
+              color: tTextWColor,
               fontSize: 18,
             ),
           ),

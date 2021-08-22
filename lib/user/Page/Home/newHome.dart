@@ -73,7 +73,7 @@ class _NewwHomeState extends State<NewwHome> {
         title: Text(
           'หน้าหลัก',
           style: TextStyle(
-            color: tWhiteColor,
+            color: tTextColor,
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
@@ -113,7 +113,7 @@ class _NewwHomeState extends State<NewwHome> {
                   Text(
                     "สวัสดี คุณ,",
                     style: TextStyle(
-                      color: tWhiteColor,
+                      color: tTextColor,
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
                     ),
@@ -138,7 +138,7 @@ class _NewwHomeState extends State<NewwHome> {
                   Text(
                     "เลือกร้านที่คุณชอบแล้วออกไปสนุกเลย!!",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: tTextColor,
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
                     ),

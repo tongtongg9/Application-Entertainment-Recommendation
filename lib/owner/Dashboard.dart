@@ -210,7 +210,7 @@ class GridMenu extends StatelessWidget {
       onTap: press,
       child: Card(
         elevation: 5,
-        color: tBackgroundLightColor,
+        color: tBGDeepColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -223,7 +223,7 @@ class GridMenu extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: tWhiteColor,
+                color: tTextColor,
                 fontSize: 16,
               ),
             ),

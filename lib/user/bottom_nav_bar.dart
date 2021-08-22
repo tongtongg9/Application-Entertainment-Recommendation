@@ -46,7 +46,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        color: tWhiteColor,
+        color: tBGColor,
         shape: CircularNotchedRectangle(),
         notchMargin: 6,
         child: Container(
@@ -97,10 +97,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ImageIcon(new AssetImage('assets/icons/home.png'),
-              size: 28,
-              color: currentTab == 0
-                  ? tPimaryColor
-                  : tGreyColor),
+              size: 28, color: currentTab == 0 ? tPimaryColor : tGreyColor),
           // Text(
           //   'หน้าหลัก',
           //   style: TextStyle(
@@ -128,10 +125,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ImageIcon(new AssetImage('assets/icons/rss.png'),
-              size: 28,
-              color: currentTab == 1
-                  ? tPimaryColor
-                  : tGreyColor),
+              size: 28, color: currentTab == 1 ? tPimaryColor : tGreyColor),
           // Text(
           //   'ฟีดข่าว',
           //   style: TextStyle(
@@ -159,10 +153,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ImageIcon(new AssetImage('assets/icons/bell2.png'),
-              size: 28,
-              color: currentTab == 3
-                  ? tPimaryColor
-                  : tGreyColor),
+              size: 28, color: currentTab == 3 ? tPimaryColor : tGreyColor),
           // Text(
           //   'แจ้งเตือน',
           //   style: TextStyle(
@@ -190,10 +181,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ImageIcon(new AssetImage('assets/icons/user.png'),
-              size: 28,
-              color: currentTab == 4
-                  ? tPimaryColor
-                  : tGreyColor),
+              size: 28, color: currentTab == 4 ? tPimaryColor : tGreyColor),
           // Text(
           //   'โปรไฟล์',
           //   style: TextStyle(

@@ -132,7 +132,7 @@ class _ReviewPageState extends State<ReviewPage> {
                     borderSide: BorderSide.none,
                   ),
                   filled: true,
-                  fillColor: tBackgroundLightColor,
+                  fillColor: tBGDeepColor,
                   hintText: 'พูดสรุปถึงร้านนี้',
                   focusColor: tGreyColor,
                   hintStyle: TextStyle(
@@ -187,7 +187,7 @@ class _ReviewPageState extends State<ReviewPage> {
                     borderSide: BorderSide.none,
                   ),
                   filled: true,
-                  fillColor: tBackgroundLightColor,
+                  fillColor: tBGDeepColor,
                   hintText:
                       'เล่ารายละเอียดตรงนนี้เลย เขียนรีวิวเหมือนเล่าให้ฟังนะครับ',
                   focusColor: Colors.white54,

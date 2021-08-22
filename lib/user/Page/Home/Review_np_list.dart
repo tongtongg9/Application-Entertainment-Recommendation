@@ -85,68 +85,6 @@ class _ReviewListNpState extends State<ReviewListNp> {
         ),
         child: _reviewList(),
       ),
-      // body: ListView.builder(
-      //   scrollDirection: Axis.vertical,
-      //   itemCount: datamember.length,
-      //   itemBuilder: (context, index) {
-      //     return Padding(
-      //       padding: const EdgeInsets.all(20),
-      //       child: Container(
-      //         child: new FittedBox(
-      //           child: Material(
-      //             color: Theme.of(context).backgroundColor,
-      //             borderRadius: BorderRadius.circular(15),
-      //             child: Row(
-      //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //               crossAxisAlignment: CrossAxisAlignment.start,
-      //               children: <Widget>[
-      //                 Container(
-      //                   width: MediaQuery.of(context).size.width,
-      //                   // height: 200,
-      //                   child: Padding(
-      //                     padding: const EdgeInsets.all(10),
-      //                     child: Column(
-      //                       mainAxisAlignment: MainAxisAlignment.start,
-      //                       crossAxisAlignment: CrossAxisAlignment.start,
-      //                       children: <Widget>[
-      //                         Container(
-      //                           child: Text(
-      //                             "${datamember[index].revTopic}",
-      //                             style: TextStyle(
-      //                               color: Colors.white,
-      //                               fontSize: 16,
-      //                               fontWeight: FontWeight.bold,
-      //                             ),
-      //                           ),
-      //                         ),
-      //                         Container(
-      //                           child: Text(
-      //                             "${datamember[index].revDetail}",
-      //                             style: TextStyle(
-      //                               color: Colors.white,
-      //                               fontSize: 16,
-      //                               fontWeight: FontWeight.normal,
-      //                             ),
-      //                           ),
-      //                         ),
-      //                       ],
-      //                     ),
-      //                   ),
-      //                 ),
-      //                 // Container(
-      //                 //   width: 200,
-      //                 //   height: 150,
-      //                 //   child: mynpPhotos(),
-      //                 // ),
-      //               ],
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //     );
-      //     // ],
-      //   },
-      // ),
     );
   }
 
@@ -156,7 +94,7 @@ class _ReviewListNpState extends State<ReviewListNp> {
     return SingleChildScrollView(
       child: datamember.length <= 0
           ? Card(
-              color: tBackgroundLightColor,
+              color: tBGDeepColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               child: SizedBox(
@@ -165,7 +103,7 @@ class _ReviewListNpState extends State<ReviewListNp> {
                   child: Text(
                     'ไม่มีรีวิวจากผู้ใช้อื่น',
                     style: TextStyle(
-                      color: tWhiteColor,
+                      color: tTextColor,
                       fontSize: 16,
                     ),
                   ),
@@ -184,7 +122,7 @@ class _ReviewListNpState extends State<ReviewListNp> {
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      color: tBackgroundLightColor,
+                      color: tBGDeepColor,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,7 +155,7 @@ class _ReviewListNpState extends State<ReviewListNp> {
                                     Text(
                                       "${datamember[index].userUsername}",
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: tTextColor,
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -226,7 +164,7 @@ class _ReviewListNpState extends State<ReviewListNp> {
                                       // "${datamember[index].revTime}",
                                       '${dateformate.format(DateTime.parse(datamember[index].revTime))}',
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: tTextColor,
                                         fontSize: 14,
                                         fontWeight: FontWeight.normal,
                                       ),
@@ -244,7 +182,7 @@ class _ReviewListNpState extends State<ReviewListNp> {
                                 Text(
                                   "${datamember[index].revTopic}",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: tTextColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -253,7 +191,7 @@ class _ReviewListNpState extends State<ReviewListNp> {
                                   "${datamember[index].revDetail}",
                                   maxLines: 5,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: tTextColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.normal,
                                   ),

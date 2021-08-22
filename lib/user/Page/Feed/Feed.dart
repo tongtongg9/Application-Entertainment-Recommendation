@@ -64,7 +64,7 @@ class _FeedState extends State<Feed> {
         title: Text(
           'รีวิวล่าสุด',
           style: TextStyle(
-            color: tWhiteColor,
+            color: tTextColor,
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
@@ -93,7 +93,7 @@ class _FeedState extends State<Feed> {
     return SingleChildScrollView(
       child: datamember.length <= 0
           ? Card(
-              color: tBackgroundLightColor,
+              color: tBGDeepColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               child: SizedBox(
@@ -102,7 +102,7 @@ class _FeedState extends State<Feed> {
                   child: Text(
                     'ไม่มีรีวิวจากผู้ใช้อื่น',
                     style: TextStyle(
-                      color: tWhiteColor,
+                      color: tTextColor,
                       fontSize: 16,
                     ),
                   ),
@@ -157,7 +157,7 @@ class _FeedState extends State<Feed> {
                                         Text(
                                           "${datamember[index].userUsername}",
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: tTextColor,
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -166,7 +166,7 @@ class _FeedState extends State<Feed> {
                                         Text(
                                           'รีวิวให้ร้าน',
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: tTextColor,
                                             fontSize: 14,
                                             fontWeight: FontWeight.normal,
                                           ),
@@ -186,7 +186,7 @@ class _FeedState extends State<Feed> {
                                       // "${datamember[index].revTime}",
                                       '${dateformate.format(DateTime.parse(datamember[index].revTime))}',
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: tTextColor,
                                         fontSize: 14,
                                         fontWeight: FontWeight.normal,
                                       ),
@@ -204,7 +204,7 @@ class _FeedState extends State<Feed> {
                                 Text(
                                   "${datamember[index].revTopic}",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: tTextColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -213,7 +213,7 @@ class _FeedState extends State<Feed> {
                                   "${datamember[index].revDetail}",
                                   maxLines: 5,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: tTextColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.normal,
                                   ),
@@ -222,8 +222,8 @@ class _FeedState extends State<Feed> {
                             ),
                           ),
                           Divider(
-                            color: Colors.white10,
-                            thickness: 3,
+                            color: Colors.black12,
+                            thickness: 2,
                           ),
                         ],
                       ),

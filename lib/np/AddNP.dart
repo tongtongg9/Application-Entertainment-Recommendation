@@ -247,7 +247,7 @@ class _AddNPState extends State<AddNP> {
           },
         ),
       ),
-      // backgroundColor: tBackgroundLightColor,
+      // backgroundColor: tBGDeepColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
@@ -469,7 +469,7 @@ class _AddNPState extends State<AddNP> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: tBackgroundLightColor,
+            fillColor: tBGDeepColor,
             hintText: _hintText,
             hintStyle: TextStyle(
               fontSize: 16,
@@ -487,7 +487,7 @@ class _AddNPState extends State<AddNP> {
       height: 50,
       child: RaisedButton(
         elevation: 0,
-        color: tBackgroundLightColor,
+        color: tBGDeepColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -496,7 +496,7 @@ class _AddNPState extends State<AddNP> {
             'เพิ่มรูปภาพ',
             style: TextStyle(
               fontSize: 14,
-              color: tWhiteColor,
+              color: tTextColor,
             ),
           ),
         ),
@@ -511,7 +511,7 @@ class _AddNPState extends State<AddNP> {
       child: _images.length <= 0
           ? Card(
               elevation: 0,
-              color: tBackgroundLightColor,
+              color: tBGDeepColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               child: SizedBox(
@@ -520,7 +520,7 @@ class _AddNPState extends State<AddNP> {
                   child: Text(
                     'เพิ่มรูปภาพของคุณ',
                     style: TextStyle(
-                      color: tWhiteColor,
+                      color: tTextColor,
                       fontSize: 12,
                     ),
                   ),
@@ -529,7 +529,7 @@ class _AddNPState extends State<AddNP> {
             )
           : Card(
               elevation: 0,
-              color: tBackgroundLightColor,
+              color: tBGDeepColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               child: Padding(
@@ -555,7 +555,7 @@ class _AddNPState extends State<AddNP> {
       child: images.length <= 0
           ? Card(
               elevation: 0,
-              color: tBackgroundLightColor,
+              color: tBGDeepColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               child: SizedBox(
@@ -564,7 +564,7 @@ class _AddNPState extends State<AddNP> {
                   child: Text(
                     'เพิ่มรูปภาพของคุณ',
                     style: TextStyle(
-                      color: tWhiteColor,
+                      color: tTextColor,
                       fontSize: 12,
                     ),
                   ),
@@ -573,7 +573,7 @@ class _AddNPState extends State<AddNP> {
             )
           : Card(
               elevation: 0,
-              color: tBackgroundLightColor,
+              color: tBGDeepColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               child: Padding(
@@ -996,7 +996,7 @@ class _AddNPState extends State<AddNP> {
             'บันทึก',
             style: TextStyle(
               fontSize: 16,
-              color: tWhiteColor,
+              color: tTextColor,
             ),
           ),
         ),
