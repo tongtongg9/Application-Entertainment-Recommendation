@@ -153,101 +153,122 @@ class _ReviewListNpState extends State<ReviewListNp> {
   Widget _reviewList() {
     var dateformate = DateFormat.yMMMEd();
 
-    return ListView.builder(
-      primary: false,
-      shrinkWrap: true,
-      itemCount: datamember.length,
-      itemBuilder: (context, index) {
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: Card(
-              elevation: 0,
+    return SingleChildScrollView(
+      child: datamember.length <= 0
+          ? Card(
+              color: tBackgroundLightColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
-              color: tBackgroundLightColor,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 40,
-                          width: 40,
-                          child: Stack(
-                            overflow: Overflow.visible,
-                            fit: StackFit.expand,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: imgsuser('${datamember[index].userImg}'),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${datamember[index].userUsername}",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              // "${datamember[index].revTime}",
-                              '${dateformate.format(DateTime.parse(datamember[index].revTime))}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+              child: SizedBox(
+                height: 200,
+                child: Center(
+                  child: Text(
+                    'ไม่มีรีวิวจากผู้ใช้อื่น',
+                    style: TextStyle(
+                      color: tWhiteColor,
+                      fontSize: 16,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${datamember[index].revTopic}",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "${datamember[index].revDetail}",
-                          maxLines: 5,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
+            )
+          : ListView.builder(
+              primary: false,
+              shrinkWrap: true,
+              itemCount: datamember.length,
+              itemBuilder: (context, index) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      color: tBackgroundLightColor,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 40,
+                                  width: 40,
+                                  child: Stack(
+                                    overflow: Overflow.visible,
+                                    fit: StackFit.expand,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: imgsuser(
+                                            '${datamember[index].userImg}'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${datamember[index].userUsername}",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      // "${datamember[index].revTime}",
+                                      '${dateformate.format(DateTime.parse(datamember[index].revTime))}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${datamember[index].revTopic}",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  "${datamember[index].revDetail}",
+                                  maxLines: 5,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+                // ],
+              },
             ),
-          ),
-        );
-        // ],
-      },
     );
   }
 

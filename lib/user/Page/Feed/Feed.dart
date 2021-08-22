@@ -100,7 +100,7 @@ class _FeedState extends State<Feed> {
                 height: 200,
                 child: Center(
                   child: Text(
-                    'ยังไม่มีรีวิวจากผู้ใช้อื่น',
+                    'ไม่มีรีวิวจากผู้ใช้อื่น',
                     style: TextStyle(
                       color: tWhiteColor,
                       fontSize: 16,

@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:date_field/date_field.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
+import 'package:my_finalapp1/widget/colors.dart';
 import 'dart:convert' as convert;
 
 import 'package:my_finalapp1/widget/custom_back_button.dart';
@@ -52,12 +53,12 @@ class _RegisUserState extends State<RegisUser> {
     return Scaffold(
       appBar: AppBar(
         leading: CustomBackButton(
-            tapBack: () {
-              Navigator.pop(context);
-            },
-          ),
-          // title: Text('สมัครสมาชิก'),
-          ),
+          tapBack: () {
+            Navigator.pop(context);
+          },
+        ),
+        // title: Text('สมัครสมาชิก'),
+      ),
       body: Container(
         child: Container(
           constraints: BoxConstraints(
@@ -433,7 +434,7 @@ class _RegisUserState extends State<RegisUser> {
           print(value);
         },
         dateTextStyle: TextStyle(
-          color: Theme.of(context).primaryColor,
+          color: tGreyColor,
           fontSize: 16,
         ),
         decoration: InputDecoration(
@@ -449,10 +450,6 @@ class _RegisUserState extends State<RegisUser> {
             color: Theme.of(context).primaryColor,
           ),
           labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-          // icon: ImageIcon(
-          //   new AssetImage('assets/icons/user.png'),
-          //   color: Theme.of(context).primaryColor,
-          // ),
         ),
         mode: DateTimeFieldPickerMode.date,
       ),

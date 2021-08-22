@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/Member.dart';
 import 'package:my_finalapp1/model/ShowImgnpforUser.dart';
+import 'package:my_finalapp1/widget/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -74,41 +75,41 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
     }
   }
 
-  List<Revlimit> datamembers = [];
-  //connect server api
-  Future<Void> _getListReviewslimit() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token');
-    _npId = prefs.getInt('id');
-    print('npId = $_npId');
-    print('token = $token');
-    var url = '${Connectapi().domain}/getlistreviewslimit/$_npId';
-    //conect
-    var response = await http.get(Uri.parse(url), headers: {
-      'Connect-type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
-    //check response
-    if (response.statusCode == 200) {
-      //แปลงjson ให้อยู่ในรูปแบบ model members
-      ReviewListLimitmodel members =
-          ReviewListLimitmodel.fromJson(convert.jsonDecode(response.body));
-      //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
-      setState(() {
-        datamembers = members.revlimit;
-        print(datamembers.length);
-        // load = false;
-      });
-    }
-  }
+  // List<Revlimit> datamembers = [];
+  // //connect server api
+  // Future<Void> _getListReviewslimit() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   token = prefs.getString('token');
+  //   _npId = prefs.getInt('id');
+  //   print('npId = $_npId');
+  //   print('token = $token');
+  //   var url = '${Connectapi().domain}/getlistreviewslimit/$_npId';
+  //   //conect
+  //   var response = await http.get(Uri.parse(url), headers: {
+  //     'Connect-type': 'application/json',
+  //     'Accept': 'application/json',
+  //     'Authorization': 'Bearer $token',
+  //   });
+  //   //check response
+  //   if (response.statusCode == 200) {
+  //     //แปลงjson ให้อยู่ในรูปแบบ model members
+  //     ReviewListLimitmodel members =
+  //         ReviewListLimitmodel.fromJson(convert.jsonDecode(response.body));
+  //     //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
+  //     setState(() {
+  //       datamembers = members.revlimit;
+  //       print(datamembers.length);
+  //       // load = false;
+  //     });
+  //   }
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _getOrImage();
-    _getListReviewslimit();
+    // _getListReviewslimit();
   }
 
   @override
@@ -279,36 +280,60 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                       thickness: 1,
                       color: Colors.white10,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "รีวิวจากผู้ใช้บริการ",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/reviewlistnp',
-                                arguments: {
-                                  '_npId': _npId,
-                                });
-                          },
-                          child: Text(
-                            'ดูทั้งหมด',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 14,
+                    // Row(
+                    // children: [
+                    //   Text(
+                    //     "รีวิวจากผู้ใช้บริการ",
+                    //     style: TextStyle(
+                    //         color: Colors.white,
+                    //         fontSize: 18,
+                    //         fontWeight: FontWeight.normal),
+                    //   ),
+                    //   Spacer(),
+                    // TextButton(
+                    //   onPressed: () {
+                    //     Navigator.pushNamed(context, '/reviewlistnp',
+                    //         arguments: {
+                    //           '_npId': _npId,
+                    //         });
+                    //   },
+                    //   child: Text(
+                    //     'ดูทั้งหมด',
+                    //     style: TextStyle(
+                    //       color: Theme.of(context).primaryColor,
+                    //       fontSize: 14,
+                    //     ),
+                    //   ),
+                    // ),
+                    // ],
+                    // ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/reviewlistnp',
+                            arguments: {
+                              '_npId': _npId,
+                            });
+                      },
+                      child: Card(
+                        color: tBackgroundLightColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: SizedBox(
+                          height: 80,
+                          child: Center(
+                            child: Text(
+                              'ดูรีวิวจากผู้ใช้บริการ',
+                              style: TextStyle(
+                                color: tWhiteColor,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    )
                     //  Spacer(),
-
-                    _reviewList(),
+                    // _reviewList(),
                   ],
                 ),
               ),
@@ -339,92 +364,92 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
     );
   }
 
-  Widget _reviewList() {
-    var dateformate = DateFormat.yMMMEd();
-    
-    return ListView.builder(
-      primary: false,
-      shrinkWrap: true,
-      itemCount: datamembers.length,
-      itemBuilder: (context, index) {
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: Card(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              color: Theme.of(context).backgroundColor,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        useravatar(),
-                        SizedBox(width: 8),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${datamembers[index].userUsername}",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "${dateformate.format(DateTime.parse(datamembers[index].revTime))}",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${datamembers[index].revTopic}",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "${datamembers[index].revDetail}",
-                          maxLines: 5,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-        // ],
-      },
-    );
-  }
+  // Widget _reviewList() {
+  //   var dateformate = DateFormat.yMMMEd();
+
+  //   return ListView.builder(
+  //     primary: false,
+  //     shrinkWrap: true,
+  //     itemCount: datamembers.length,
+  //     itemBuilder: (context, index) {
+  //       return Center(
+  //         child: Padding(
+  //           padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+  //           child: Card(
+  //             elevation: 0,
+  //             shape: RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.circular(10)),
+  //             color: Theme.of(context).backgroundColor,
+  //             child: Column(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Padding(
+  //                   padding: const EdgeInsets.all(15),
+  //                   child: Row(
+  //                     mainAxisAlignment: MainAxisAlignment.start,
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: <Widget>[
+  //                       useravatar(),
+  //                       SizedBox(width: 8),
+  //                       Column(
+  //                         crossAxisAlignment: CrossAxisAlignment.start,
+  //                         children: [
+  //                           Text(
+  //                             "${datamembers[index].userUsername}",
+  //                             style: TextStyle(
+  //                               color: Colors.white,
+  //                               fontSize: 14,
+  //                               fontWeight: FontWeight.bold,
+  //                             ),
+  //                           ),
+  //                           Text(
+  //                             "${dateformate.format(DateTime.parse(datamembers[index].revTime))}",
+  //                             style: TextStyle(
+  //                               color: Colors.white,
+  //                               fontSize: 14,
+  //                               fontWeight: FontWeight.normal,
+  //                             ),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //                 Padding(
+  //                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+  //                   child: Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: [
+  //                       Text(
+  //                         "${datamembers[index].revTopic}",
+  //                         style: TextStyle(
+  //                           color: Colors.white,
+  //                           fontSize: 16,
+  //                           fontWeight: FontWeight.bold,
+  //                         ),
+  //                       ),
+  //                       Text(
+  //                         "${datamembers[index].revDetail}",
+  //                         maxLines: 5,
+  //                         style: TextStyle(
+  //                           color: Colors.white,
+  //                           fontSize: 16,
+  //                           fontWeight: FontWeight.normal,
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //       // ],
+  //     },
+  //   );
+  // }
 
   Widget useravatar() {
     return SizedBox(
