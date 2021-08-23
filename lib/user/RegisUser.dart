@@ -1,12 +1,18 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:intl/intl.dart';
 import 'package:date_field/date_field.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'dart:convert' as convert;
 
 import 'package:my_finalapp1/widget/custom_back_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisUser extends StatefulWidget {
   @override
@@ -39,10 +45,116 @@ class _RegisUserState extends State<RegisUser> {
     if (response.statusCode == 200) {
       print('Register Success');
 
-      // Navigator.pop(context, true);
+      Navigator.pop(context, true);
     } else {
       print('Register not Success!!');
       print(response.body);
+      Navigator.pop(context, false);
+    }
+  }
+
+  //Upload Images อัพโหลดรูปภาพ =====================
+  //ตัวแปรเกี่ยวกับ อัพโหลดรูปภาพ
+  // File _image;
+  // File _camera;
+  // String imgstatus = '';
+  // String error = 'Error';
+  var filename;
+  var token;
+  var userId;
+  // ตัวแปรเกี่ยวกับ อัพโหลดรูปภาพ
+
+  //multi_image_picker
+  List<Asset> images = <Asset>[];
+  Asset asset;
+  String _error = 'No Error Dectected';
+
+  Future _getprefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+    userId = prefs.getInt('id');
+    print('uId = $userId');
+    print('token = $token');
+  }
+
+  //สร้าง GridView
+  Widget buildGridView() {
+    return GridView.count(
+      crossAxisCount: 3,
+      children: List.generate(images.length, (index) {
+        // asset = images[index];
+        return AssetThumb(
+          asset: images[index],
+          width: 300,
+          height: 300,
+        );
+      }),
+    );
+  }
+
+  // ? LoadAssets
+  Future<void> loadAssets() async {
+    List<Asset> resultList = <Asset>[];
+    String error = 'No Error Detected';
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 10,
+        enableCamera: true,
+        selectedAssets: images,
+        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+        materialOptions: MaterialOptions(
+          actionBarColor: "#abcdef",
+          actionBarTitle: "Example App",
+          allViewTitle: "All Photos",
+          useDetailsView: false,
+          selectCircleStrokeColor: "#000000",
+        ),
+      );
+    } on Exception catch (e) {
+      error = e.toString();
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+    setState(() {
+      images = resultList;
+      print('path : ${images.length}');
+      _error = error;
+    });
+  }
+
+//multi_image_picker
+  Future<String> _multiUploadimage(ast) async {
+    var _urlUpload = '${Connectapi().domain}/uploads/$userId';
+// create multipart request
+    MultipartRequest request =
+        http.MultipartRequest("PUT", Uri.parse(_urlUpload));
+    ByteData byteData = await ast.getByteData();
+    List<int> imageData = byteData.buffer.asUint8List();
+
+    http.MultipartFile multipartFile = http.MultipartFile.fromBytes(
+      'picture', //key of the api
+      imageData,
+      filename: 'some-file-name.jpg',
+      contentType: MediaType("image",
+          "jpg"), //this is not nessessory variable. if this getting error, erase the line.
+    );
+// add file to multipart
+    request.files.add(multipartFile);
+// send
+    var response = await request.send();
+    return response.reasonPhrase;
+  }
+
+  //Loop รูปภาพ
+  Future<void> _sendPathImage() async {
+    print('path : ${images.length}');
+    for (int i = 0; i < images.length; i++) {
+      asset = images[i];
+      print('image : $i');
+      var res = _multiUploadimage(asset);
     }
   }
 
@@ -59,439 +171,317 @@ class _RegisUserState extends State<RegisUser> {
         ),
         // title: Text('สมัครสมาชิก'),
       ),
-      body: Container(
-        child: Container(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height,
-            maxWidth: MediaQuery.of(context).size.width,
-          ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 0,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 18),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "สมัครสมาชิก",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 32,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                // shrinkWrap: true,
-                flex: 6,
-                child: Form(
-                  key: _uid,
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).backgroundColor,
-                        // color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(90),
-                          topRight: Radius.circular(0),
-                        )),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: ListView(
-                        // mainAxisAlignment: MainAxisAlignment.start,
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // usernameField(),
-                          // SizedBox(height: 15),
-                          // passwordField(),
-                          // SizedBox(height: 15),
-                          // btnLogin(),
-                          SizedBox(height: 30),
-                          usernameForm(),
-                          SizedBox(height: 15),
-                          passwordForm(true),
-                          SizedBox(height: 15),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ImageIcon(
-                                new AssetImage('assets/icons/name-tag.png'),
-                                color: Theme.of(context).primaryColor,
-                                // size: 30,
-                              ),
-                              SizedBox(width: 15),
-                              nameForm(),
-                              SizedBox(width: 15),
-                              lastnameForm(),
-                              // dateForm(),
-                            ],
-                          ),
-                          // nameForm(),
-                          // SizedBox(height: 15),
-                          // lastnameForm(),
-                          SizedBox(height: 15),
-                          phoneForm(),
-                          SizedBox(height: 15),
-                          emailForm(),
-                          SizedBox(height: 15),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              ImageIcon(
-                                new AssetImage('assets/icons/gender.png'),
-                                color: Theme.of(context).primaryColor,
-                                // size: 30,
-                              ),
-                              SizedBox(width: 15),
-                              genderForm(),
-                              SizedBox(width: 20),
-                              ImageIcon(
-                                new AssetImage('assets/icons/calendar.png'),
-                                color: Theme.of(context).primaryColor,
-                                // size: 30,
-                              ),
-                              SizedBox(width: 15),
-                              dateForm(),
-                              // dateForm(),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-
-                          // dateForm(),
-                          SizedBox(height: 25),
-                          btnSubmit(),
-                        ],
-                      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Form(
+            key: _uid,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "สมัครสมาชิก",
+                    style: TextStyle(
+                      color: tTextColor,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
+                  SizedBox(height: 20),
+                  regisForm(
+                    _uuser,
+                    'ชื่อผู้ใช้',
+                    'ชื่อผู้ใช้',
+                    'กรุณากรอกชื่อผู้ใช้',
+                    'assets/icons/user.png',
+                    false,
+                  ),
+                  SizedBox(height: 10),
+                  regisForm(
+                    _upass,
+                    'รหัสผ่าน',
+                    'รหัสผ่าน',
+                    'กรุณากรอกรหัสผ่าน',
+                    'assets/icons/user.png',
+                    true,
+                  ),
+                  SizedBox(height: 10),
+                  regisForm(
+                    _uname,
+                    'ชื่อ',
+                    'ชื่อ',
+                    'กรุณากรอกชื่อ',
+                    'assets/icons/user.png',
+                    false,
+                  ),
+                  SizedBox(height: 10),
+                  regisForm(
+                    _ulname,
+                    'นามสกุล',
+                    'นามสกุล',
+                    'กรุณากรอกนามสกุล',
+                    'assets/icons/user.png',
+                    false,
+                  ),
+                  SizedBox(height: 10),
+                  regisForm(
+                    _upho,
+                    'เบอร์โทรศัพท์',
+                    'เบอร์โทรศัพท์',
+                    'กรุณากรอกเบอร์โทรศัพท์',
+                    'assets/icons/user.png',
+                    false,
+                  ),
+                  SizedBox(height: 10),
+                  regisForm(
+                    _uemail,
+                    'E-mail',
+                    'E-mail',
+                    'กรุณากรอก E-mail',
+                    'assets/icons/user.png',
+                    false,
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      genderForm(),
+                      SizedBox(width: 20),
+                      dateForm(),
+                    ],
+                  ),
+                  SizedBox(height: 25),
+                  btnSubmit(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget regisForm(
+    final TextEditingController _controller,
+    final String _hText,
+    final String _hintText,
+    final String _validator,
+    final String _icon,
+    final bool isPasswordTextField,
+  ) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              _hText,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: tTextColor,
+              ),
+            ),
+            Text(
+              '*',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: tErrorColor,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 5),
+        TextFormField(
+          controller: _controller,
+          obscureText: isPasswordTextField ? isObscurePassword : false,
+          validator: (values) {
+            if (values.isEmpty) {
+              return _validator;
+            }
+          },
+          style: TextStyle(
+            color: tTextColor,
+            fontSize: 16,
+          ),
+          cursorColor: tPimaryColor,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
+            ),
+            filled: true,
+            fillColor: tBGDeepColor,
+            hintText: _hintText,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              color: tGreyColor,
+            ),
+            // icon: ImageIcon(
+            //   new AssetImage(_icon),
+            //   color: tTextColor,
+            //   size: 30,
+            // ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget genderForm() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 135),
+          child: Row(
+            children: [
+              Text(
+                'เพศ',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: tTextColor,
+                ),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: tErrorColor,
                 ),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget usernameForm() {
-    return TextFormField(
-      controller: _uuser,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'กรอกชื่อผู้ใช้',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/user.png'),
-          color: Theme.of(context).primaryColor,
-          // size: 30,
-        ),
-      ),
-    );
-  }
-
-  Widget passwordForm(bool isPasswordTextField) {
-    return TextFormField(
-      controller: _upass,
-      obscureText: isPasswordTextField ? isObscurePassword : false,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'กรอกรหัสผ่าน',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/lock.png'),
-          color: Theme.of(context).primaryColor,
-          // size: 30,
-        ),
-      ),
-    );
-  }
-
-  Widget nameForm() {
-    return Container(
-      width: 178,
-      height: 65,
-      child: TextFormField(
-        controller: _uname,
-        style: TextStyle(
-          color: Theme.of(context).primaryColor,
-          fontSize: 16,
-        ),
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide.none,
-          ),
-          filled: true,
-          fillColor: Theme.of(context).scaffoldBackgroundColor,
-          hintText: 'กรอกชื่อ',
-          focusColor: Theme.of(context).primaryColor,
-          hintStyle: TextStyle(
-            fontSize: 16,
-            color: Theme.of(context).primaryColor,
-          ),
-          // icon: ImageIcon(
-          //   new AssetImage('assets/icons/name-tag.png'),
-          //   color: Theme.of(context).primaryColor,
-          //   // size: 30,
-          // ),
-        ),
-      ),
-    );
-  }
-
-  Widget lastnameForm() {
-    return Container(
-      width: 178,
-      height: 65,
-      child: TextFormField(
-        controller: _ulname,
-        style: TextStyle(
-          color: Theme.of(context).primaryColor,
-          fontSize: 16,
-        ),
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide.none,
-          ),
-          filled: true,
-          fillColor: Theme.of(context).scaffoldBackgroundColor,
-          hintText: 'กรอกนามสกุล',
-          focusColor: Theme.of(context).primaryColor,
-          hintStyle: TextStyle(
-            fontSize: 16,
-            color: Theme.of(context).primaryColor,
-          ),
-          // icon: ImageIcon(
-          //   new AssetImage('assets/icons/name-tag.png'),
-          //   color: Theme.of(context).primaryColor,
-          //   // size: 30,
-          // ),
-        ),
-      ),
-    );
-  }
-
-  Widget phoneForm() {
-    return TextFormField(
-      controller: _upho,
-      keyboardType: TextInputType.number,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'กรอกเบอร์โทรศัพท์',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/phone.png'),
-          color: Theme.of(context).primaryColor,
-          // size: 30,
-        ),
-      ),
-    );
-  }
-
-  Widget emailForm() {
-    return TextFormField(
-      controller: _uemail,
-      keyboardType: TextInputType.emailAddress,
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'กรอก Email',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/mail.png'),
-          color: Theme.of(context).primaryColor,
-          // size: 30,
-        ),
-      ),
-    );
-  }
-
-  Widget genderForm() {
-    return DropdownButtonHideUnderline(
-      child: Container(
-        width: 110,
-        height: 65,
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Theme.of(context).scaffoldBackgroundColor,
-          border: Border.all(
-            color: Theme.of(context).scaffoldBackgroundColor,
-          ),
-        ),
-        child: DropdownButton<String>(
-          value: _choseGender,
-          // elevation: 5,
-          // style: GoogleFonts.kanit(color: Colors.black),
-          items: <String>[
-            'ชาย',
-            'หญิง',
-            'อื่นๆ',
-          ].map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          style: TextStyle(
-            fontFamily: 'Mitr',
-            color: Theme.of(context).primaryColor,
-            fontSize: 16,
-          ),
-          hint: Text(
-            "เลือกเพศ",
-            style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).primaryColor,
+        SizedBox(height: 5),
+        DropdownButtonHideUnderline(
+          child: Container(
+            width: 170,
+            height: 65,
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: tBGDeepColor,
+              border: Border.all(
+                color: tBGDeepColor,
+              ),
+            ),
+            child: DropdownButton<String>(
+              value: _choseGender,
+              items: <String>[
+                'ชาย',
+                'หญิง',
+                'อื่นๆ',
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              style: TextStyle(
+                fontFamily: 'Mitr',
+                color: tTextColor,
+                fontSize: 16,
+              ),
+              hint: Text(
+                "เลือกเพศ",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: tTextGColor,
+                ),
+              ),
+              // dropdownColor: Theme.of(context).backgroundColor,
+              onChanged: (String value) {
+                setState(() {
+                  _choseGender = value;
+                });
+              },
             ),
           ),
-          dropdownColor: Theme.of(context).backgroundColor,
-          onChanged: (String value) {
-            setState(() {
-              _choseGender = value;
-            });
-          },
         ),
-      ),
+      ],
     );
   }
 
   Widget dateForm() {
-    DateFormat("dd-MM-yyyy").format(DateTime.now());
-    return Container(
-      width: 200,
-      height: 65,
-      child: DateTimeFormField(
-        onDateSelected: (DateTime value) {
-          setState(() {
-            _date = value;
-          });
-          print(value);
-        },
-        dateTextStyle: TextStyle(
-          color: tGreyColor,
-          fontSize: 16,
-        ),
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide.none,
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 165),
+          child: Row(
+            children: [
+              Text(
+                'วันเกิด',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: tTextColor,
+                ),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: tErrorColor,
+                ),
+              ),
+            ],
           ),
-          filled: true,
-          fillColor: Theme.of(context).scaffoldBackgroundColor,
-          hintText: 'เลือกวันเกิด',
-          hintStyle: TextStyle(
-            fontSize: 16,
-            color: Theme.of(context).primaryColor,
-          ),
-          labelStyle: TextStyle(color: Theme.of(context).primaryColor),
         ),
-        mode: DateTimeFieldPickerMode.date,
-      ),
-    );
-  }
-
-  Widget datesForm() {
-    DateFormat("dd-MM-yyyy").format(DateTime.now());
-    return DateTimeFormField(
-      decoration: const InputDecoration(
-        hintStyle: TextStyle(color: Colors.black45),
-        errorStyle: TextStyle(color: Colors.redAccent),
-        border: OutlineInputBorder(),
-        suffixIcon: Icon(Icons.event_note),
-        labelText: 'เลือกวันเกิด',
-      ),
-      mode: DateTimeFieldPickerMode.date,
-      autovalidateMode: AutovalidateMode.always,
-      validator: (e) => (e?.day ?? 0) == 1 ? 'Please not the first day' : null,
-      onDateSelected: (DateTime value) {
-        setState(() {
-          _date = value;
-        });
-        print(value);
-      },
+        SizedBox(height: 5),
+        Container(
+          width: 220,
+          height: 65,
+          child: DateTimeFormField(
+            onDateSelected: (DateTime value) {
+              setState(() {
+                _date = value;
+              });
+              print(value);
+            },
+            dateTextStyle: TextStyle(
+              color: tGreyColor,
+              fontSize: 16,
+            ),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: tBGDeepColor,
+              hintText: 'เลือกวันเกิด',
+              hintStyle: TextStyle(
+                fontSize: 16,
+                color: tTextGColor,
+              ),
+              // labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+            ),
+            mode: DateTimeFieldPickerMode.date,
+          ),
+        ),
+      ],
     );
   }
 
   Widget btnSubmit() {
     return SizedBox(
-      width: double.infinity,
+      width: MediaQuery.of(context).size.width,
       child: RaisedButton(
-        color: Theme.of(context).primaryColor,
+        color: tPimaryColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(
-            'เสร็จสิ้น',
+            'บันทึก',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
+              color: tTextColor,
             ),
           ),
         ),

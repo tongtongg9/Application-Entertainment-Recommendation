@@ -422,10 +422,10 @@ class _AddNPState extends State<AddNP> {
   }
 
   Widget npForm(
-    TextEditingController _controller,
-    String hText,
-    String _hintText,
-    int _maxLine,
+    final TextEditingController _controller,
+    final String hText,
+    final String _hintText,
+    final int _maxLine,
   ) {
     return Column(
       children: [
@@ -538,11 +538,12 @@ class _AddNPState extends State<AddNP> {
                   itemCount: _images.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => Card(
-                      child: AssetThumb(
-                    asset: _images[index],
-                    width: 150,
-                    height: 150,
-                  )),
+                    child: AssetThumb(
+                      asset: _images[index],
+                      width: 150,
+                      height: 150,
+                    ),
+                  ),
                 ),
               ),
             ),

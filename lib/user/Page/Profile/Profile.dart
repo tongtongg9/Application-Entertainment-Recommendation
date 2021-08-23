@@ -7,6 +7,7 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/Member.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Profile extends StatefulWidget {
   // Profile({Key? key}) : super(key: key);
@@ -112,24 +113,42 @@ class _ProfileState extends State<Profile> {
         overflow: Overflow.visible,
         fit: StackFit.expand,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: imgsuser('${udata.userImg}'),
-          ),
+          imgsuser(),
         ],
       ),
     );
   } //! >> class Proile Picture
 
-  Widget imgsuser(imageName) {
+  // Widget imgsuser() => ClipRRect(
+  //       borderRadius: BorderRadius.circular(50),
+  //       child: CachedNetworkImage(
+  //         key: UniqueKey(),
+  //         imageUrl: '${Connectapi().domainimguser}${udata.userImg}',
+  //         fit: BoxFit.cover,
+  //         placeholder: (context, imageUrl) => new CircularProgressIndicator(),
+  //         errorWidget: (context, imageUrl, error) =>
+  //             Image.asset('assets/images/person.png'),
+  //       ),
+  //     );
+
+  Widget imgsuser() {
     Widget child;
-    print('Imagename : $imageName');
-    if (imageName != null) {
-      child = Image.network('${Connectapi().domainimguser}${imageName}');
+    if (udata.userImg != null) {
+      child = ClipRRect(
+        borderRadius: BorderRadius.circular(50),
+        child: Image.network(
+          '${Connectapi().domainimguser}${udata.userImg}',
+          fit: BoxFit.cover,
+        ),
+      );
     } else {
-      child = Image.asset('assets/images/person.png');
+      child = Image.asset(
+        'assets/images/person.png',
+        fit: BoxFit.cover,
+      );
     }
-    return new Container(child: child);
+    print('Imagename : $udata.userImg');
+    return new ClipRRect(child: child);
   }
 
   Padding btnLogout() {
