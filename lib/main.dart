@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:my_finalapp1/owner/Booking_ow_detail.dart';
+import 'package:my_finalapp1/owner/Booking_ow_list.dart';
 import 'package:my_finalapp1/routes/routes.dart';
 import 'package:my_finalapp1/user/Page/Home/Booking_user_get.dart';
 import 'package:my_finalapp1/widget/colors.dart';
@@ -58,6 +60,8 @@ class MyApp extends StatelessWidget {
         '/reviewpage': (context) => ReviewPage(),
         '/reservepage': (context) => ReservePage(),
         '/showbookinguser': (context) => ShowBookingUser(),
+        '/showbookingowner': (context) => ShowBookingOwner(),
+        '/showdetailbookingow': (context) => BookingDetailow(),
         '/reviewlistnp': (context) => ReviewListNp(),
         '/uprofilescreen': (context) => Profile(),
         '/upload': (context) => UploadPicture(),

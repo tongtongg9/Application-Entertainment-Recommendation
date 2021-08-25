@@ -157,6 +157,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 GridMenu(
                   press: () {
+                    Navigator.pushNamed(context, '/showbookingowner');
                     print('รายการสำรองที่นั่ง');
                   },
                   img: "assets/images/checklist.png",
