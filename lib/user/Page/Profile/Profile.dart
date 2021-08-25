@@ -96,6 +96,7 @@ class _ProfileState extends State<Profile> {
           icon: "assets/icons/bookmarks.png",
           text: "รายการสำรองที่นั่ง",
           press: () {
+            Navigator.pushNamed(context, '/showbookinguser');
             print("รายการสำรองที่นั่ง");
           },
         ),
