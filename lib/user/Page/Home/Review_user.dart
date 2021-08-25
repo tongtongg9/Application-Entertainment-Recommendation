@@ -184,7 +184,7 @@ class _ReviewPageState extends State<ReviewPage> {
                   filled: true,
                   fillColor: tBGDeepColor,
                   hintText:
-                      'เล่ารายละเอียดตรงนนี้เลย เขียนรีวิวเหมือนเล่าให้ฟังนะครับ',
+                      'เล่ารายละเอียดตรงนี้เลย เขียนรีวิวเหมือนเล่าให้ฟังนะครับ',
                   focusColor: Colors.white54,
                   hintStyle: TextStyle(
                     fontSize: 16,

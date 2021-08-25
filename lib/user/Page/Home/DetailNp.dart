@@ -191,7 +191,7 @@ class _DetailNpState extends State<DetailNp> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  GestureDetector(
+                  InkWell(
                     onTap: () {
                       Navigator.pop(context);
                     },
