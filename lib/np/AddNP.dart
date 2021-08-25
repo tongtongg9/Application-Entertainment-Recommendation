@@ -275,7 +275,7 @@ class _AddNPState extends State<AddNP> {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Divider(
                     thickness: 2,
-                    color: Colors.white10,
+                    color: Colors.black12,
                   ),
                 ),
                 Padding(
@@ -294,7 +294,7 @@ class _AddNPState extends State<AddNP> {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Divider(
                     thickness: 2,
-                    color: Colors.white10,
+                    color: Colors.black12,
                   ),
                 ),
                 Padding(
@@ -313,7 +313,7 @@ class _AddNPState extends State<AddNP> {
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                                      color: tTextColor,
                                     ),
                                   ),
                                   Text(
@@ -355,7 +355,7 @@ class _AddNPState extends State<AddNP> {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Divider(
                     thickness: 2,
-                    color: Colors.white10,
+                    color: Colors.black12,
                   ),
                 ),
                 Padding(
@@ -374,7 +374,7 @@ class _AddNPState extends State<AddNP> {
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                                      color: tTextColor,
                                     ),
                                   ),
                                   Text(
@@ -436,7 +436,7 @@ class _AddNPState extends State<AddNP> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: tTextColor,
               ),
             ),
             Text(

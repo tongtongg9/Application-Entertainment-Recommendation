@@ -79,7 +79,7 @@ class _EditPageOwState extends State<EditPageOw> {
           IconButton(
             icon: Icon(
               Icons.check,
-              color: Theme.of(context).primaryColor,
+              color: tPimaryColor,
             ),
             onPressed: save,
           ),
@@ -126,7 +126,7 @@ class _EditPageOwState extends State<EditPageOw> {
             Text(
               'ชื่อผู้ใช้',
               style: TextStyle(
-                color: Colors.white,
+                color: tTextColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -136,7 +136,7 @@ class _EditPageOwState extends State<EditPageOw> {
         SizedBox(height: 5),
         TextField(
           readOnly: readOnly ? readOnly : false,
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          style: TextStyle(color: tTextColor, fontSize: 16),
           controller: ow_username, //? << ดึงข้อมูลมาแก้ไข
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -148,7 +148,7 @@ class _EditPageOwState extends State<EditPageOw> {
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
-              color: Colors.white54,
+              color: tTextGColor,
             ),
           ),
         ),
@@ -164,7 +164,7 @@ class _EditPageOwState extends State<EditPageOw> {
             Text(
               'รหัสผ่าน',
               style: TextStyle(
-                color: Colors.white,
+                color: tTextColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -174,7 +174,7 @@ class _EditPageOwState extends State<EditPageOw> {
         SizedBox(height: 5),
         TextField(
           readOnly: readOnly ? readOnly : false,
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          style: TextStyle(color: tTextColor, fontSize: 16),
           controller: ow_password, //? << ดึงข้อมูลมาแก้ไข
           obscureText: isPasswordTextField ? isObscurePassword : false,
           decoration: InputDecoration(
@@ -187,7 +187,7 @@ class _EditPageOwState extends State<EditPageOw> {
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
-              color: Colors.white54,
+              color: tTextGColor,
             ),
           ),
         ),
@@ -203,7 +203,7 @@ class _EditPageOwState extends State<EditPageOw> {
             Text(
               'ชื่อ',
               style: TextStyle(
-                color: Colors.white,
+                color: tTextColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -213,7 +213,7 @@ class _EditPageOwState extends State<EditPageOw> {
         SizedBox(height: 5),
         TextField(
           readOnly: readOnly ? readOnly : false,
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          style: TextStyle(color: tTextColor, fontSize: 16),
           controller: ow_name, //? << ดึงข้อมูลมาแก้ไข
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -225,7 +225,7 @@ class _EditPageOwState extends State<EditPageOw> {
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
-              color: Colors.white54,
+              color: tTextGColor,
             ),
           ),
         ),
@@ -241,7 +241,7 @@ class _EditPageOwState extends State<EditPageOw> {
             Text(
               'นามสกุล',
               style: TextStyle(
-                color: Colors.white,
+                color: tTextColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -251,7 +251,7 @@ class _EditPageOwState extends State<EditPageOw> {
         SizedBox(height: 5),
         TextField(
           readOnly: readOnly ? readOnly : false,
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          style: TextStyle(color: tTextColor, fontSize: 16),
           controller: ow_lname, //? << ดึงข้อมูลมาแก้ไข
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -263,7 +263,7 @@ class _EditPageOwState extends State<EditPageOw> {
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
-              color: Colors.white54,
+              color: tTextGColor,
             ),
           ),
         ),
@@ -279,7 +279,7 @@ class _EditPageOwState extends State<EditPageOw> {
             Text(
               'เบอร์โทรศัพท์',
               style: TextStyle(
-                color: Colors.white,
+                color: tTextColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -289,7 +289,7 @@ class _EditPageOwState extends State<EditPageOw> {
         SizedBox(height: 5),
         TextField(
           readOnly: readOnly ? readOnly : false,
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          style: TextStyle(color: tTextColor, fontSize: 16),
           controller: ow_phone, //? << ดึงข้อมูลมาแก้ไข
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -301,7 +301,7 @@ class _EditPageOwState extends State<EditPageOw> {
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
-              color: Colors.white54,
+              color: tTextGColor,
             ),
           ),
         ),
@@ -317,7 +317,7 @@ class _EditPageOwState extends State<EditPageOw> {
             Text(
               'Email',
               style: TextStyle(
-                color: Colors.white,
+                color: tTextColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -327,7 +327,7 @@ class _EditPageOwState extends State<EditPageOw> {
         SizedBox(height: 5),
         TextField(
           readOnly: readOnly ? readOnly : false,
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          style: TextStyle(color: tTextColor, fontSize: 16),
           controller: ow_email, //? << ดึงข้อมูลมาแก้ไข
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -339,7 +339,7 @@ class _EditPageOwState extends State<EditPageOw> {
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
-              color: Colors.white54,
+              color: tTextGColor,
             ),
           ),
         ),
@@ -355,7 +355,7 @@ class _EditPageOwState extends State<EditPageOw> {
             Text(
               'เพศ',
               style: TextStyle(
-                color: Colors.white,
+                color: tTextColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -365,7 +365,7 @@ class _EditPageOwState extends State<EditPageOw> {
         SizedBox(height: 5),
         TextField(
           readOnly: readOnly ? readOnly : false,
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          style: TextStyle(color: tTextColor, fontSize: 16),
           controller: ow_gender, //? << ดึงข้อมูลมาแก้ไข
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -377,7 +377,7 @@ class _EditPageOwState extends State<EditPageOw> {
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
-              color: Colors.white54,
+              color: tTextGColor,
             ),
           ),
         ),
@@ -393,7 +393,7 @@ class _EditPageOwState extends State<EditPageOw> {
             Text(
               'วันเกิด',
               style: TextStyle(
-                color: Colors.white,
+                color: tTextColor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -403,7 +403,7 @@ class _EditPageOwState extends State<EditPageOw> {
         SizedBox(height: 5),
         TextField(
           readOnly: readOnly ? readOnly : false,
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          style: TextStyle(color: tTextColor, fontSize: 16),
           controller: ow_bday, //? << ดึงข้อมูลมาแก้ไข
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -415,7 +415,7 @@ class _EditPageOwState extends State<EditPageOw> {
             focusColor: tGreyColor,
             hintStyle: TextStyle(
               fontSize: 16,
-              color: Colors.white54,
+              color: tTextGColor,
             ),
           ),
         ),

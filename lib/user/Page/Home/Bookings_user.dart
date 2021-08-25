@@ -6,17 +6,33 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ReviewPage extends StatefulWidget {
-  // ReviewPage({Key? key}) : super(key: key);
+class ReservePage extends StatefulWidget {
+  // ReservePage({Key? key}) : super(key: key);
 
   @override
-  _ReviewPageState createState() => _ReviewPageState();
+  _ReservePageState createState() => _ReservePageState();
 }
 
-class _ReviewPageState extends State<ReviewPage> {
+class _ReservePageState extends State<ReservePage> {
   final _user_id = GlobalKey<FormState>();
-  final _rev_topic = TextEditingController();
-  final _rev_detail = TextEditingController();
+  final _book_detail = TextEditingController();
+
+  int _seats = 1;
+
+  void _incrementCount() {
+    setState(() {
+      _seats++;
+    });
+  }
+
+  void _decrementCount() {
+    if (_seats < 2) {
+      return;
+    }
+    setState(() {
+      _seats--;
+    });
+  }
 
   var userID;
   var token;
@@ -29,9 +45,9 @@ class _ReviewPageState extends State<ReviewPage> {
     print('token = $token');
   }
 
-  void addReviews(Map<String, dynamic> values) async {
+  void addBookings(Map<String, dynamic> values) async {
     // var url = 'http://192.168.0.8:8888/register';
-    String url = '${Connectapi().domain}/addreviews/$userID';
+    String url = '${Connectapi().domain}/addbookings/$userID';
     var response = await http.post(Uri.parse(url),
         headers: {
           'Content-Type': 'application/json',
@@ -58,10 +74,12 @@ class _ReviewPageState extends State<ReviewPage> {
 
   Map<String, dynamic> _rec_member;
   var _npId;
+  var _npName;
 
   Future getDataNp() {
     _rec_member = ModalRoute.of(context).settings.arguments;
     _npId = _rec_member['_npId'];
+    _npName = _rec_member['_npName'];
   }
 
   @override
@@ -69,21 +87,12 @@ class _ReviewPageState extends State<ReviewPage> {
     getDataNp();
     return Scaffold(
       appBar: AppBar(
-        title: Text('รีวิวให้ร้านนี้'),
+        title: Text('สำรองที่นั่ง'),
         leading: CustomBackButton(
           tapBack: () {
             Navigator.pop(context);
           },
         ),
-        // actions: [
-        //   IconButton(
-        //     icon: Icon(
-        //       Icons.check,
-        //       color: Theme.of(context).primaryColor,
-        //     ),
-        //     onPressed: save,
-        //   ),
-        // ],
       ),
       body: Container(
         width: double.infinity,
@@ -93,10 +102,31 @@ class _ReviewPageState extends State<ReviewPage> {
             key: _user_id,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Row(
+              //   children: [
+              //     Text(
+              //       'สำรองที่นั่งร้าน ',
+              //       style: TextStyle(
+              //         fontSize: 18,
+              //         fontWeight: FontWeight.bold,
+              //         color: tTextColor,
+              //       ),
+              //     ),
+              //     Text(
+              //       _npName,
+              //       style: TextStyle(
+              //         fontSize: 18,
+              //         fontWeight: FontWeight.bold,
+              //         color: tTextColor,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(height: 15),
               Row(
                 children: [
                   Text(
-                    'หัวเรื่องรีวิว',
+                    'เลือกจำนวนที่นั่ง',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -114,38 +144,78 @@ class _ReviewPageState extends State<ReviewPage> {
                 ],
               ),
               SizedBox(height: 10),
-              TextFormField(
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'กรุณากรอกหัวเรื่องรีวิว';
-                  }
-                },
-                controller: _rev_topic,
-                style: TextStyle(
-                  // color: Theme.of(context).primaryColor,
-                  color: tTextColor,
-                  fontSize: 16,
-                ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: tBGDeepColor,
-                  hintText: 'พูดสรุปถึงร้านนี้',
-                  focusColor: tGreyColor,
-                  hintStyle: TextStyle(
-                    fontSize: 16,
-                    color: tTextGColor,
-                  ),
+              Container(
+                width: 120,
+                // color: Colors.black54,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      //! ? -
+                      onTap: () {
+                        _decrementCount();
+                      },
+                      child: Container(
+                        width: 30,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: tPimaryColor,
+                          // color: Colors.white70,
+                        ),
+                        child: Icon(
+                          Icons.remove_circle_sharp,
+                          color: tTextWColor,
+                          size: 18,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 40,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: tBGDeepColor,
+                        // color: Colors.white70,
+                      ),
+                      child: Center(
+                        child: Text(
+                          _seats.toString(),
+                          style: TextStyle(
+                            color: tTextColor,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      //! ? +
+                      onTap: () {
+                        _incrementCount();
+                      },
+                      child: Container(
+                        width: 30,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: tPimaryColor,
+                          // color: Colors.white70,
+                        ),
+                        child: Icon(
+                          Icons.add_circle_sharp,
+                          color: tTextWColor,
+                          size: 18,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 30), //! <<<<
               Row(
                 children: [
                   Text(
-                    'เนื้อหารีวิว',
+                    'รายละเอียดการสำรองที่นั่ง',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -166,16 +236,16 @@ class _ReviewPageState extends State<ReviewPage> {
               TextFormField(
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'กรุณากรอกเนื้อหารีวิว';
+                    return 'กรุณากรอกรายละเอียดการสำรองที่นั่ง';
                   }
                 },
-                controller: _rev_detail,
+                controller: _book_detail,
                 style: TextStyle(
                   // color: Theme.of(context).primaryColor,
                   color: tTextColor,
                   fontSize: 16,
                 ),
-                maxLines: 6,
+                maxLines: 4,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -183,8 +253,7 @@ class _ReviewPageState extends State<ReviewPage> {
                   ),
                   filled: true,
                   fillColor: tBGDeepColor,
-                  hintText:
-                      'เล่ารายละเอียดตรงนนี้เลย เขียนรีวิวเหมือนเล่าให้ฟังนะครับ',
+                  hintText: 'แจ้งรายละเอียดให้กับทางร้าน ${_npName} ',
                   focusColor: Colors.white54,
                   hintStyle: TextStyle(
                     fontSize: 16,
@@ -229,7 +298,7 @@ class _ReviewPageState extends State<ReviewPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(
-            'โพสต์',
+            'ยืนยัน',
             style: TextStyle(
               fontSize: 18,
               color: Colors.white,
@@ -238,15 +307,13 @@ class _ReviewPageState extends State<ReviewPage> {
         ),
         onPressed: () {
           Map<String, dynamic> valuse = Map();
-          // valuse['user_id'] = _user_id;
           valuse['np_id'] = _npId;
-          valuse['rev_topic'] = _rev_topic.text;
-          valuse['rev_detail'] = _rev_detail.text;
+          valuse['bk_seat'] = _seats.toString();
+          valuse['bk_detail'] = _book_detail.text;
+          print(_seats.toString());
+          print(_book_detail.text);
 
-          print(_rev_topic.text);
-          print(_rev_detail.text);
-
-          addReviews(valuse);
+          addBookings(valuse);
           Navigator.pop(context, '/showdetailnp');
         },
       ),

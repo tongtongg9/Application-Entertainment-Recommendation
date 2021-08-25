@@ -192,7 +192,7 @@ class Infotype extends StatelessWidget {
           Text(
             type,
             style: TextStyle(
-              color: Colors.white,
+              color: tTextColor,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -218,7 +218,7 @@ class Infodata extends StatelessWidget {
         Text(
           data,
           style: TextStyle(
-            color: Colors.white,
+            color: tTextColor,
             fontSize: 16,
           ),
         ),

@@ -156,13 +156,25 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  InkWell(
+                  GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: Theme.of(context).primaryColor,
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.black87,
+                        // color: Colors.white70,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: tPimaryColor,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -199,13 +211,12 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: tTextColor,
                       ),
                     ),
                     Divider(
-                      height: 20,
-                      thickness: 1,
-                      color: Colors.white10,
+                      thickness: 2,
+                      color: Colors.black12,
                     ),
                     SizedBox(height: 20),
                     Text(
@@ -213,7 +224,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                        color: tTextColor,
                       ),
                     ),
                     SizedBox(height: 15),
@@ -222,7 +233,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
-                        color: Colors.white,
+                        color: tTextColor,
                       ),
                     ),
                     SizedBox(height: 20),
@@ -231,7 +242,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: tTextColor,
                       ),
                     ),
                     SizedBox(height: 15),
@@ -242,7 +253,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
-                            color: Colors.white,
+                            color: tTextColor,
                           ),
                         ),
                         Text(
@@ -250,7 +261,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
-                            color: Colors.white,
+                            color: tTextColor,
                           ),
                         ),
                       ],
@@ -262,7 +273,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
-                            color: Colors.white,
+                            color: tTextColor,
                           ),
                         ),
                         Text(
@@ -270,15 +281,14 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
-                            color: Colors.white,
+                            color: tTextColor,
                           ),
                         ),
                       ],
                     ),
                     Divider(
-                      height: 50,
-                      thickness: 1,
-                      color: Colors.white10,
+                      thickness: 2,
+                      color: Colors.black12,
                     ),
                     // Row(
                     // children: [
@@ -332,8 +342,6 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                         ),
                       ),
                     )
-                    //  Spacer(),
-                    // _reviewList(),
                   ],
                 ),
               ),
@@ -343,7 +351,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: tBGColor,
         // color: Colors.white,
         // color: Colors.transparent,
         // shape: CircularNotchedRectangle(),
@@ -473,7 +481,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
       width: 425,
       // height: 50,
       child: RaisedButton(
-        color: Theme.of(context).primaryColor,
+        color: tPimaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -483,6 +491,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
             'จัดการร้าน',
             style: TextStyle(
               fontSize: 18,
+              color: tTextWColor,
             ),
           ),
         ),

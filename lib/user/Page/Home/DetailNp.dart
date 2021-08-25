@@ -542,7 +542,12 @@ class _DetailNpState extends State<DetailNp> {
             ),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/reservepage', arguments: {
+            '_npId': _npId,
+            '_npName': _npName,
+          });
+        },
       ),
     );
   }

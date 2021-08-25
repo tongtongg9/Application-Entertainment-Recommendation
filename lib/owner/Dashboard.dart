@@ -77,7 +77,7 @@ class _DashboardState extends State<Dashboard> {
                     Text(
                       "สวัสดี คุณ,",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: tTextColor,
                         fontSize: 18,
                         fontWeight: FontWeight.normal,
                       ),
@@ -100,7 +100,7 @@ class _DashboardState extends State<Dashboard> {
                         Text(
                           "ขอต้อนรับสู่ร้านของคุณ",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: tTextColor,
                             fontSize: 18,
                             fontWeight: FontWeight.normal,
                           ),

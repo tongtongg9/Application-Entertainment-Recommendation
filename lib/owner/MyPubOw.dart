@@ -125,7 +125,7 @@ class _MyPubOwState extends State<MyPubOw> {
                                 child: Text(
                                   "${datamember[index].npName}",
                                   style: TextStyle(
-                                      color: Colors.white,
+                                      color: tTextColor,
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -149,7 +149,7 @@ class _MyPubOwState extends State<MyPubOw> {
                                       child: Text(
                                         "${datamember[index].npAdress} ${datamember[index].npDistrict}",
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: tTextColor,
                                           fontSize: 16,
                                         ),
                                       ),
@@ -158,7 +158,7 @@ class _MyPubOwState extends State<MyPubOw> {
                                       child: Text(
                                         "${datamember[index].npProvince}",
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: tTextColor,
                                           fontSize: 16,
                                         ),
                                       ),
@@ -167,7 +167,7 @@ class _MyPubOwState extends State<MyPubOw> {
                                       child: Text(
                                         "ติดต่อ ${datamember[index].npPhone}",
                                         style: TextStyle(
-                                            color: Colors.white,
+                                            color: tTextColor,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500),
                                       ),

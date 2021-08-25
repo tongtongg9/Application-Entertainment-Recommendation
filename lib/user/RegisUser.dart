@@ -396,6 +396,7 @@ class _RegisUserState extends State<RegisUser> {
               onChanged: (String value) {
                 setState(() {
                   _choseGender = value;
+                  print(value);
                 });
               },
             ),
