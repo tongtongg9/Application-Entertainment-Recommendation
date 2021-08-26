@@ -4,6 +4,7 @@ import 'package:my_finalapp1/widget/custom_back_button.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:my_finalapp1/model/Connectapi.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BookingDetailow extends StatefulWidget {
   // BookingDetailow({Key? key}) : super(key: key);
@@ -13,23 +14,21 @@ class BookingDetailow extends StatefulWidget {
 }
 
 class _BookingDetailowState extends State<BookingDetailow> {
-  var bkId;
-  var bkSeat;
-  var bkDetail;
-  var bkBookingTime;
-  var bkStatus;
-  var npId;
-  var npName;
-  var userId;
-  var userName;
-  var userPhone;
-  var userEmail;
-  var owId;
-
-  var token;
+  // var bkId;
+  // var bkSeat;
+  // var bkDetail;
+  // var bkBookingTime;
+  // var bkStatus;
+  // var npId;
+  // var npName;
+  // var userId;
+  // var userName;
+  // var userPhone;
+  // var userEmail;
+  // var owId;
 
   Map<String, dynamic> _rec_member;
-
+  var token;
   var _bkId;
   var _bkSeat;
   var _bkDetail;
@@ -43,7 +42,7 @@ class _BookingDetailowState extends State<BookingDetailow> {
   var _userEmail;
   var _owId;
 
-  Future getDataNp() {
+  Future getData() {
     _rec_member = ModalRoute.of(context).settings.arguments;
     _bkId = _rec_member['bk_id'];
     _bkSeat = _rec_member['bk_seat'];
@@ -58,6 +57,8 @@ class _BookingDetailowState extends State<BookingDetailow> {
     _userEmail = _rec_member['user_email'];
     _owId = _rec_member['ow_id'];
     print(_bkId);
+    print(_npId);
+    print(_npName);
     // print(_npName);
     // _fachome = _rec_member['ac_home'];
     // _facsub = _rec_member['ac_sub'];
@@ -66,7 +67,13 @@ class _BookingDetailowState extends State<BookingDetailow> {
     // _facdetel = _rec_member['ac_detel'];
   }
 
-  String _updatestatus = '1';
+  Future getInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+    _owId = prefs.getInt('id');
+    print('uId = $_owId');
+    print('token = $token');
+  }
 
   Future<void> _update(Map<String, dynamic> values) async {
     var url = '${Connectapi().domain}/updatestatus/$_bkId';
@@ -87,9 +94,38 @@ class _BookingDetailowState extends State<BookingDetailow> {
     }
   }
 
+  var _updatestatus1 = '1';
+  var _updatestatus2 = '2';
+
+  var _satatus0 = 'รอการยืนยันการสำรองที่นั่ง';
+  var _satatus1 = 'ยืนยันการสำรองที่นั่งสำเร็จ';
+  var _satatus2 = 'การสำรองที่นั่งถูกยกเลิก';
+
+  Widget checkStatus(bkStatus) {
+    Widget child;
+    if (bkStatus == '1') {
+      child = Text(_satatus1,
+          style: TextStyle(fontSize: 16, color: Colors.orange[900]));
+    } else if (bkStatus == '2') {
+      child = Text(_satatus2,
+          style: TextStyle(fontSize: 16, color: Colors.orange[900]));
+    } else {
+      child = Text(_satatus0,
+          style: TextStyle(fontSize: 16, color: Colors.orange[900]));
+    }
+    return new Container(child: child);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
-    getDataNp();
+    getData();
     return Scaffold(
       appBar: AppBar(
         title: Text('รายละเอียดการสำรองที่นั่ง'),
@@ -114,8 +150,9 @@ class _BookingDetailowState extends State<BookingDetailow> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Map<String, dynamic> valuse = Map();
-          valuse['bk_status'] = _updatestatus;
-          print(valuse);
+          // valuse['bk_id'] = _bkId;
+          valuse['bk_status'] = _updatestatus1;
+          print(_updatestatus1);
           _update(valuse);
         },
         label: Text('เพิ่มร้านของคุณ'),
@@ -143,6 +180,7 @@ class _BookingDetailowState extends State<BookingDetailow> {
                   Text(
                     '${_bkStatus}',
                   ),
+                  checkStatus(_bkStatus),
                 ],
               ),
             ),
