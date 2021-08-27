@@ -500,7 +500,6 @@ class _DetailNpState extends State<DetailNp> {
                     ),
                   ),
                 );
-                // ],
               },
             ),
     );
@@ -530,7 +529,7 @@ class _DetailNpState extends State<DetailNp> {
       child: RaisedButton(
         color: tPimaryColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -559,7 +558,7 @@ class _DetailNpState extends State<DetailNp> {
       child: RaisedButton(
         color: tPimaryColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),

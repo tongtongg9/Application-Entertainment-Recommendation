@@ -30,6 +30,7 @@ class Rsbookbyow {
   int userId;
   int bkSeat;
   String bkDetail;
+  String bkCheckinDate;
   String bkStatus;
   String bkBookingTime;
   String userUsername;
@@ -58,6 +59,7 @@ class Rsbookbyow {
       this.userId,
       this.bkSeat,
       this.bkDetail,
+      this.bkCheckinDate,
       this.bkStatus,
       this.bkBookingTime,
       this.userUsername,
@@ -86,6 +88,7 @@ class Rsbookbyow {
     userId = json['user_id'];
     bkSeat = json['bk_seat'];
     bkDetail = json['bk_detail'];
+    bkCheckinDate = json['bk_checkin_date'];
     bkStatus = json['bk_status'];
     bkBookingTime = json['bk_booking_time'];
     userUsername = json['user_username'];
@@ -116,6 +119,7 @@ class Rsbookbyow {
     data['user_id'] = this.userId;
     data['bk_seat'] = this.bkSeat;
     data['bk_detail'] = this.bkDetail;
+    data['bk_checkin_date'] = this.bkCheckinDate;
     data['bk_status'] = this.bkStatus;
     data['bk_booking_time'] = this.bkBookingTime;
     data['user_username'] = this.userUsername;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
@@ -7,16 +8,17 @@ import 'package:http/http.dart' as http;
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class BookingDetailow extends StatefulWidget {
-  // BookingDetailow({Key? key}) : super(key: key);
+class BookingDetailuser extends StatefulWidget {
+  // BookingDetailuser({Key? key}) : super(key: key);
 
   @override
-  _BookingDetailowState createState() => _BookingDetailowState();
+  _BookingDetailuserState createState() => _BookingDetailuserState();
 }
 
-class _BookingDetailowState extends State<BookingDetailow> {
+class _BookingDetailuserState extends State<BookingDetailuser> {
   Map<String, dynamic> _rec_member;
   var token;
+
   var _bkId;
   var _bkSeat;
   var _bkDetail;
@@ -33,8 +35,6 @@ class _BookingDetailowState extends State<BookingDetailow> {
   var _userLastname;
   var _userPhone;
   var _userEmail;
-
-  var _owId;
 
   Future getData() {
     _rec_member = ModalRoute.of(context).settings.arguments;
@@ -65,8 +65,8 @@ class _BookingDetailowState extends State<BookingDetailow> {
   Future getInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
-    _owId = prefs.getInt('id');
-    print('uId = $_owId');
+    _userId = prefs.getInt('id');
+    print('uId = $_userId');
     print('token = $token');
   }
 
@@ -88,9 +88,6 @@ class _BookingDetailowState extends State<BookingDetailow> {
       print('Update Fail!!');
     }
   }
-
-  var _updatestatus1 = '1';
-  var _updatestatus2 = '2';
 
   var dateformate = DateFormat.yMd();
   var timeformate = DateFormat.jm();
@@ -165,22 +162,22 @@ class _BookingDetailowState extends State<BookingDetailow> {
         //   )
         // ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Map<String, dynamic> valuse = Map();
-          // valuse['bk_id'] = _bkId;
-          valuse['bk_status'] = _updatestatus1;
-          print(_updatestatus1);
-          _update(valuse);
-        },
-        label: Text('เพิ่มร้านของคุณ'),
-        backgroundColor: tPimaryColor,
-        icon: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // floatingActionButton: FloatingActionButton.extended(
+      // onPressed: () {
+      // Map<String, dynamic> valuse = Map();
+      // valuse['bk_id'] = _bkId;
+      // valuse['bk_status'] = _updatestatus1;
+      // print(_updatestatus1);
+      // _update(valuse);
+      // },
+      // label: Text('เพิ่มร้านของคุณ'),
+      // backgroundColor: tPimaryColor,
+      // icon: Icon(
+      // Icons.add,
+      // color: Colors.white,
+      // ),
+      // ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -333,6 +330,30 @@ class _BookingDetailowState extends State<BookingDetailow> {
                             ],
                           ),
                         ),
+                        Divider(
+                          thickness: 1,
+                          color: Colors.black12,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'รายละเอียดที่แจ้งไว้กับทางร้าน',
+                              style: TextStyle(
+                                color: tTextColor,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            Text(
+                              '${_bkDetail}',
+                              style: TextStyle(
+                                color: tTextColor,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -414,61 +435,6 @@ class _BookingDetailowState extends State<BookingDetailow> {
                                 ),
                                 Text(
                                   '${_userPhone}',
-                                  style: TextStyle(
-                                    color: tTextColor,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Card(
-                elevation: 5,
-                shadowColor: tBGDeepColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                color: Colors.white,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  // height: MediaQuery.of(context).size.height * 0.335,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            // SizedBox(
-                            //   child: ImageIcon(
-                            //     new AssetImage('assets/icons/user.png'),
-                            //     size: 30,
-                            //     color: tPimaryColor,
-                            //   ),
-                            // ),
-                            // SizedBox(width: 10),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'รายละเอียดที่แจ้งถึงทางร้าน',
-                                  style: TextStyle(
-                                    color: tTextColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                Text(
-                                  '${_bkDetail}',
                                   style: TextStyle(
                                     color: tTextColor,
                                     fontWeight: FontWeight.normal,

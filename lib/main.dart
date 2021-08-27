@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:my_finalapp1/owner/Booking_ow_detail.dart';
 import 'package:my_finalapp1/owner/Booking_ow_list.dart';
 import 'package:my_finalapp1/routes/routes.dart';
+import 'package:my_finalapp1/user/Page/Home/Booking_user_detail.dart';
 import 'package:my_finalapp1/user/Page/Home/Booking_user_list.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         '/showbookinguser': (context) => ShowBookingUser(),
         '/showbookingowner': (context) => ShowBookingOwner(),
         '/showdetailbookingow': (context) => BookingDetailow(),
+        '/showdetailbookinguser': (context) => BookingDetailuser(),
         '/reviewlistnp': (context) => ReviewListNp(),
         '/uprofilescreen': (context) => Profile(),
         '/upload': (context) => UploadPicture(),

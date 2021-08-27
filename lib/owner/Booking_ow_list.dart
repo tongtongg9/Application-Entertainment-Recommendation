@@ -18,7 +18,7 @@ class ShowBookingOwner extends StatefulWidget {
 }
 
 class _ShowBookingOwnerState extends State<ShowBookingOwner> {
-  List<Rsbookbyow> datamembers = [];
+  List<Rsbookbyow> datamember = [];
   var token;
   var userID;
 
@@ -50,10 +50,53 @@ class _ShowBookingOwnerState extends State<ShowBookingOwner> {
           Get_Bookings_by_ow.fromJson(convert.jsonDecode(response.body));
       //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
       setState(() {
-        datamembers = members.rsbookbyow;
+        datamember = members.rsbookbyow;
         // load = false;
       });
     }
+  }
+
+  var dateformate = DateFormat.yMd();
+  var timeformate = DateFormat.jm();
+
+  var _satatus0 = 'รอการยืนยันการสำรองที่นั่ง';
+  var _satatus1 = 'ยืนยันการสำรองที่นั่งสำเร็จ';
+  var _satatus2 = 'การสำรองที่นั่งถูกยกเลิก';
+
+  Widget checkStatus(bkStatus) {
+    Widget child;
+    print(bkStatus);
+    if (bkStatus == '1') {
+      child =
+          // Text(_satatus1, style: TextStyle(fontSize: 14, color: Colors.green));
+          Card(
+              elevation: 0,
+              color: Colors.green,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(_satatus1,
+                    style: TextStyle(fontSize: 14, color: tTextWColor)),
+              ));
+    } else if (bkStatus == '2') {
+      child = Card(
+          elevation: 0,
+          color: tErrorColor,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(_satatus2,
+                style: TextStyle(fontSize: 14, color: tTextWColor)),
+          ));
+    } else {
+      child = Card(
+          elevation: 0,
+          color: Colors.orange,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(_satatus0,
+                style: TextStyle(fontSize: 14, color: tTextWColor)),
+          ));
+    }
+    return new Container(child: child);
   }
 
   @override
@@ -89,35 +132,22 @@ class _ShowBookingOwnerState extends State<ShowBookingOwner> {
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          width: double.infinity,
-          padding: EdgeInsets.only(bottom: 30),
+          width: MediaQuery.of(context).size.width,
           child: Padding(
             padding: const EdgeInsets.only(
-              left: 10,
-              right: 10,
+              left: 0,
+              right: 0,
             ),
             child: _reviewList(),
           ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text('เพิ่มร้านของคุณ'),
-        backgroundColor: tPimaryColor,
-        icon: Icon(
-          Icons.add,
-          color: Colors.white,
         ),
       ),
     );
   }
 
   Widget _reviewList() {
-    var dateformate = DateFormat.yMMMEd();
-
     return SingleChildScrollView(
-      child: datamembers.length <= 0
+      child: datamember.length <= 0
           ? Card(
               elevation: 0,
               color: tBGDeepColor,
@@ -136,152 +166,222 @@ class _ShowBookingOwnerState extends State<ShowBookingOwner> {
                 ),
               ),
             )
-          : ListView.builder(
-              primary: false,
-              shrinkWrap: true,
-              itemCount: datamembers.length,
-              itemBuilder: (context, index) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/showdetailbookingow',
-                            arguments: {
-                              'bk_id': datamembers[index].bkId,
-                              'bk_seat': datamembers[index].bkSeat,
-                              'bk_detail': datamembers[index].bkDetail,
-                              'bk_booking_time':
-                                  datamembers[index].bkBookingTime,
-                              'bk_status': datamembers[index].bkStatus,
-                              'np_id': datamembers[index].npId,
-                              'np_name': datamembers[index].npName,
-                              'user_id': datamembers[index].userId,
-                              'user_name': datamembers[index].userName,
-                              'user_phone': datamembers[index].userPhone,
-                              'user_email': datamembers[index].userEmail,
-                              'ow_id': datamembers[index].owId,
-                            });
-                        print(datamembers[index].npName);
-                      },
-                      child: Card(
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        // color: Theme.of(context).backgroundColor,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 15, bottom: 5),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  // SizedBox(
-                                  //   height: 40,
-                                  //   width: 40,
-                                  //   child: Stack(
-                                  //     overflow: Overflow.visible,
-                                  //     fit: StackFit.expand,
-                                  //     children: [
-                                  //       ClipRRect(
-                                  //         borderRadius: BorderRadius.circular(50),
-                                  //         child: imgsuser(
-                                  //             '${datamember[index].userImg}'),
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  SizedBox(width: 8),
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                itemCount: datamember.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/showdetailbookingow',
+                          arguments: {
+                            'ow_id': datamember[index].owId,
+                            'bk_id': datamember[index].bkId,
+                            'bk_seat': datamember[index].bkSeat,
+                            'bk_detail': datamember[index].bkDetail,
+                            'bk_checkin_date': datamember[index].bkCheckinDate,
+                            'bk_status': datamember[index].bkStatus,
+                            //
+                            'np_id': datamember[index].npId,
+                            'np_name': datamember[index].npName,
+                            'np_phone': datamember[index].npPhone,
+                            'np_email': datamember[index].npEmail,
+                            //
+                            'user_id': datamember[index].userId,
+                            'user_name': datamember[index].userName,
+                            'user_lastname': datamember[index].userLastname,
+                            'user_phone': datamember[index].userPhone,
+                            'user_email': datamember[index].userEmail,
+                          });
+                      print(datamember[index].npName);
+                    },
+                    child: Card(
+                      elevation: 5,
+                      shadowColor: tBGDeepColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      color: Colors.white,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.335,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
                                   Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "${datamembers[index].npName}",
-                                            style: TextStyle(
-                                              color: tTextColor,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SizedBox(width: 8),
-                                          Text(
-                                            'รีวิวให้ร้าน',
-                                            style: TextStyle(
-                                              color: tTextColor,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
-                                          SizedBox(width: 8),
-                                          Text(
-                                            "${datamembers[index].npName}",
-                                            style: TextStyle(
-                                              color: tPimaryColor,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
                                       Text(
-                                        // "${datamember[index].revTime}",
-                                        '${dateformate.format(DateTime.parse(datamembers[index].bkBookingTime))}',
+                                        '${datamember[index].npName}',
                                         style: TextStyle(
                                           color: tTextColor,
-                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${datamember[index].npPhone}',
+                                        style: TextStyle(
+                                          color: tTextColor,
                                           fontWeight: FontWeight.normal,
+                                          fontSize: 16,
                                         ),
                                       ),
                                     ],
                                   ),
+                                  checkStatus(datamember[index].bkStatus)
                                 ],
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                              child: Column(
+                              Divider(
+                                thickness: 1,
+                                color: Colors.black12,
+                              ),
+                              IntrinsicHeight(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    SizedBox(
+                                      width: 110,
+                                      height: 110,
+                                      child: Card(
+                                        // color: Colors.black45,
+                                        elevation: 0,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              '${datamember[index].bkSeat}',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            ),
+                                            Text(
+                                              'จำนวณที่สำรองนั่ง',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    VerticalDivider(
+                                      indent: 20,
+                                      endIndent: 20,
+                                      thickness: 1,
+                                      color: Colors.black26,
+                                    ),
+                                    SizedBox(
+                                      width: 110,
+                                      height: 110,
+                                      child: Card(
+                                        // color: Colors.black45,
+                                        elevation: 0,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              '${timeformate.format(DateTime.parse(datamember[index].bkCheckinDate))}',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            ),
+                                            Text(
+                                              'เวลาเช็คอิน',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    VerticalDivider(
+                                      indent: 20,
+                                      endIndent: 20,
+                                      thickness: 1,
+                                      color: Colors.black26,
+                                    ),
+                                    SizedBox(
+                                      width: 110,
+                                      height: 110,
+                                      child: Card(
+                                        // color: Colors.black45,
+                                        elevation: 0,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              '${dateformate.format(DateTime.parse(datamember[index].bkCheckinDate))}',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            ),
+                                            Text(
+                                              'วันที่เช็คอิน',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(
+                                thickness: 1,
+                                color: Colors.black12,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${datamembers[index].bkSeat}",
+                                    'รายละเอียดที่แจ้งไว้กับทางร้าน',
                                     style: TextStyle(
                                       color: tTextColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.normal,
                                     ),
                                   ),
                                   Text(
-                                    "${datamembers[index].bkDetail}",
-                                    maxLines: 5,
+                                    '${datamember[index].bkDetail}',
                                     style: TextStyle(
                                       color: tTextColor,
-                                      fontSize: 16,
                                       fontWeight: FontWeight.normal,
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                            Divider(
-                              color: Colors.black12,
-                              thickness: 2,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-                // ],
-              },
+                  );
+                },
+              ),
             ),
     );
   }

@@ -1,5 +1,3 @@
-//?-------------------
-//? get Bookings by user
 class Get_Bookings_by_user {
   bool ok;
   List<Rsbookbyuser> rsbookbyuser;
@@ -32,8 +30,18 @@ class Rsbookbyuser {
   int userId;
   int bkSeat;
   String bkDetail;
+  String bkCheckinDate;
   String bkStatus;
   String bkBookingTime;
+  String userUsername;
+  String userPassword;
+  String userName;
+  String userLastname;
+  String userPhone;
+  String userEmail;
+  String userGender;
+  String userBday;
+  String userImg;
   int owId;
   String npName;
   String npAbout;
@@ -51,8 +59,18 @@ class Rsbookbyuser {
       this.userId,
       this.bkSeat,
       this.bkDetail,
+      this.bkCheckinDate,
       this.bkStatus,
       this.bkBookingTime,
+      this.userUsername,
+      this.userPassword,
+      this.userName,
+      this.userLastname,
+      this.userPhone,
+      this.userEmail,
+      this.userGender,
+      this.userBday,
+      this.userImg,
       this.owId,
       this.npName,
       this.npAbout,
@@ -70,8 +88,18 @@ class Rsbookbyuser {
     userId = json['user_id'];
     bkSeat = json['bk_seat'];
     bkDetail = json['bk_detail'];
+    bkCheckinDate = json['bk_checkin_date'];
     bkStatus = json['bk_status'];
     bkBookingTime = json['bk_booking_time'];
+    userUsername = json['user_username'];
+    userPassword = json['user_password'];
+    userName = json['user_name'];
+    userLastname = json['user_lastname'];
+    userPhone = json['user_phone'];
+    userEmail = json['user_email'];
+    userGender = json['user_gender'];
+    userBday = json['user_bday'];
+    userImg = json['user_img'];
     owId = json['ow_id'];
     npName = json['np_name'];
     npAbout = json['np_about'];
@@ -91,8 +119,18 @@ class Rsbookbyuser {
     data['user_id'] = this.userId;
     data['bk_seat'] = this.bkSeat;
     data['bk_detail'] = this.bkDetail;
+    data['bk_checkin_date'] = this.bkCheckinDate;
     data['bk_status'] = this.bkStatus;
     data['bk_booking_time'] = this.bkBookingTime;
+    data['user_username'] = this.userUsername;
+    data['user_password'] = this.userPassword;
+    data['user_name'] = this.userName;
+    data['user_lastname'] = this.userLastname;
+    data['user_phone'] = this.userPhone;
+    data['user_email'] = this.userEmail;
+    data['user_gender'] = this.userGender;
+    data['user_bday'] = this.userBday;
+    data['user_img'] = this.userImg;
     data['ow_id'] = this.owId;
     data['np_name'] = this.npName;
     data['np_about'] = this.npAbout;

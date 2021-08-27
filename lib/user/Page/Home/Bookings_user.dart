@@ -1,3 +1,4 @@
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/widget/colors.dart';
@@ -36,6 +37,8 @@ class _ReservePageState extends State<ReservePage> {
 
   var userID;
   var token;
+
+  DateTime _date;
 
   Future getNP() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -261,6 +264,29 @@ class _ReservePageState extends State<ReservePage> {
                   ),
                 ),
               ),
+              SizedBox(height: 30), //! <<<<
+              Row(
+                children: [
+                  Text(
+                    'วันที่และเวลาที่ต้องการสำรองที่นั่ง',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: tTextColor,
+                    ),
+                  ),
+                  Text(
+                    '*',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: tErrorColor,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              dateForm(),
             ],
           ),
         ),
@@ -282,6 +308,40 @@ class _ReservePageState extends State<ReservePage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget dateForm() {
+    return SizedBox(
+      width: 220,
+      height: 65,
+      child: DateTimeFormField(
+        onDateSelected: (DateTime value) {
+          setState(() {
+            _date = value;
+          });
+          print(value);
+        },
+        dateTextStyle: TextStyle(
+          color: tGreyColor,
+          fontSize: 16,
+        ),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: tBGDeepColor,
+          hintText: 'เลือกวันและเวลา',
+          hintStyle: TextStyle(
+            fontSize: 16,
+            color: tTextGColor,
+          ),
+          // labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+        ),
+        mode: DateTimeFieldPickerMode.dateAndTime,
       ),
     );
   }
@@ -310,6 +370,9 @@ class _ReservePageState extends State<ReservePage> {
           valuse['np_id'] = _npId;
           valuse['bk_seat'] = _seats.toString();
           valuse['bk_detail'] = _book_detail.text;
+          valuse['bk_checkin_date'] = _date.toString();
+
+          print(_date.toString());
           print(_seats.toString());
           print(_book_detail.text);
 
