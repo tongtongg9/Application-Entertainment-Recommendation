@@ -233,7 +233,7 @@ class _AddNPState extends State<AddNP> {
   }
 
   PickResult selectedPlace;
-  var APIkeys = new Keys();
+  var apikeys = new Keys();
   static final kInitialPosition = LatLng(-33.8567844, 151.213108);
 
   @override
@@ -258,8 +258,6 @@ class _AddNPState extends State<AddNP> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      // hText('ชื่อร้าน'),
-                      // SizedBox(height: 5),
                       npForm(_npname, 'ชื่อร้าน', 'ชื่อร้าน', 1),
                       SizedBox(height: 10),
                       npForm(_npabout, 'เกี่ยวกับร้าน', 'เกี่ยวกับร้าน', 4),
@@ -271,12 +269,11 @@ class _AddNPState extends State<AddNP> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Divider(
-                    thickness: 2,
-                    color: Colors.black12,
-                  ),
+                Divider(
+                  endIndent: 25,
+                  indent: 25,
+                  thickness: 2,
+                  color: Colors.black12,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20),
@@ -290,12 +287,11 @@ class _AddNPState extends State<AddNP> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Divider(
-                    thickness: 2,
-                    color: Colors.black12,
-                  ),
+                Divider(
+                  endIndent: 25,
+                  indent: 25,
+                  thickness: 2,
+                  color: Colors.black12,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20),
@@ -351,12 +347,11 @@ class _AddNPState extends State<AddNP> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Divider(
-                    thickness: 2,
-                    color: Colors.black12,
-                  ),
+                Divider(
+                  endIndent: 25,
+                  indent: 25,
+                  thickness: 2,
+                  color: Colors.black12,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20),
@@ -459,7 +454,7 @@ class _AddNPState extends State<AddNP> {
             }
           },
           style: TextStyle(
-            color: Colors.white,
+            color: tTextColor,
             fontSize: 16,
           ),
           maxLines: _maxLine,
@@ -926,7 +921,7 @@ class _AddNPState extends State<AddNP> {
               MaterialPageRoute(
                 builder: (context) {
                   return PlacePicker(
-                    apiKey: APIkeys.apikey,
+                    apiKey: apikeys.apikey,
                     initialPosition: kInitialPosition,
                     useCurrentLocation: true,
                     selectInitialPosition: true,

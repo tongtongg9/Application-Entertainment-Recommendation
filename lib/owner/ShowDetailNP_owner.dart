@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:delayed_display/delayed_display.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
@@ -75,6 +76,24 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
     }
   }
 
+  Future<void> _updateStatus(Map<String, dynamic> values) async {
+    var url = '${Connectapi().domain}/updateowner/$_npId';
+    print(_npId);
+    var response = await http.put(Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: convert.jsonEncode(values));
+    print(values);
+    if (response.statusCode == 200) {
+      print('Update Success!');
+      // Navigator.pop(context, true);
+    } else {
+      print('Update Fail!!');
+    }
+  }
   // List<Revlimit> datamembers = [];
   // //connect server api
   // Future<Void> _getListReviewslimit() async {
@@ -111,6 +130,9 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
     _getOrImage();
     // _getListReviewslimit();
   }
+
+  bool isSwitechedOn = true;
+  bool isSwitechedOf = false;
 
   @override
   Widget build(BuildContext context) {
@@ -341,6 +363,20 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                           ),
                         ),
                       ),
+                    ),
+                    Divider(
+                      thickness: 2,
+                      color: Colors.black12,
+                    ),
+                    CupertinoSwitch(
+                      value: isSwitechedOf,
+                      onChanged: (value) {
+                        print('$value');
+                        setState(() {
+                          // isSwitechedOn = value;
+                          isSwitechedOf = value;
+                        });
+                      },
                     )
                   ],
                 ),
@@ -506,7 +542,16 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
           // print(_rev_detail.text);
 
           // addReviews(valuse);
-          // Navigator.pop(context, '/showdetailnp');
+          Navigator.pushNamed(context, '/oweditmypub', arguments: {
+            '_npId': _npId,
+            '_npName': _npName,
+            '_npAbout': _npAbout,
+            '_npPhone': _npPhone,
+            '_npEmail': _npEmail,
+            '_npAdress': _npAdress,
+            '_npDistrict': _npDistrict,
+            '_npProvince': _npProvince,
+          });
         },
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:my_finalapp1/np/Edit_np.dart';
 import 'package:my_finalapp1/owner/Booking_ow_detail.dart';
 import 'package:my_finalapp1/owner/Booking_ow_list.dart';
 import 'package:my_finalapp1/routes/routes.dart';
@@ -81,7 +82,7 @@ class MyApp extends StatelessWidget {
         '/oweditdata': (context) => EditPageOw(),
         '/owmypub': (context) => MyPubOw(),
         '/showdetailnpowner': (context) => ShowDetailNPowner(),
-        // '/owaddmypub' : ( context) => RegisterPageOw(),
+        '/oweditmypub': (context) => EditPagenp(),
         '/owaddmypub': (context) => AddNP(),
         '/addimgsnp': (context) => AddImagesNP(),
       },
