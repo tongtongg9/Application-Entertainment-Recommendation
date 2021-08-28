@@ -89,6 +89,9 @@ class _BookingDetailuserState extends State<BookingDetailuser> {
     }
   }
 
+  var _updatestatus1 = '1';
+  var _updatestatus2 = '2';
+
   var dateformate = DateFormat.yMd();
   var timeformate = DateFormat.jm();
 
@@ -409,7 +412,12 @@ class _BookingDetailuserState extends State<BookingDetailuser> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        // SizedBox(height: 10),
+                        Divider(
+                          indent: 40,
+                          thickness: 1,
+                          color: Colors.black12,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -453,6 +461,139 @@ class _BookingDetailuserState extends State<BookingDetailuser> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        // color: Colors.transparent,
+        // shape: CircularNotchedRectangle(),
+        // notchMargin: 6,
+        child: Container(
+          height: 60,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _bkStatus == '0'
+                    ? SizedBox(
+                        width: 210,
+                        child: RaisedButton(
+                          color: tErrorColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                              'ยกเลิกการจอง',
+                              style: TextStyle(
+                                color: tTextWColor,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            Map<String, dynamic> valuse = Map();
+                            // valuse['bk_id'] = _bkId;
+                            valuse['bk_status'] = _updatestatus2;
+                            print(_updatestatus2);
+                            _update(valuse);
+                          },
+                        ),
+                      )
+                    : SizedBox(
+                        width: 210,
+                        child: RaisedButton(
+                          color: Colors.black26,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                              'ยกเลิกการจอง',
+                              style: TextStyle(
+                                color: tTextWColor,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            // Map<String, dynamic> valuse = Map();
+                            // // valuse['bk_id'] = _bkId;
+                            // valuse['bk_status'] = _updatestatus2;
+                            // print(_updatestatus2);
+                            // _update(valuse);
+                          },
+                        ),
+                      )
+                // btnR(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget btnL() {
+    return SizedBox(
+      width: 210,
+      // width: MediaQuery.of(context).size.width,
+      // height: 50,
+      child: RaisedButton(
+        color: tErrorColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Text(
+            'ยกเลิกการจอง',
+            style: TextStyle(
+              color: tTextWColor,
+              fontSize: 18,
+            ),
+          ),
+        ),
+        onPressed: () {
+          Map<String, dynamic> valuse = Map();
+          // valuse['bk_id'] = _bkId;
+          valuse['bk_status'] = _updatestatus2;
+          print(_updatestatus2);
+          _update(valuse);
+        },
+      ),
+    );
+  }
+
+  Widget btnR() {
+    return SizedBox(
+      width: 210,
+      // width: MediaQuery.of(context).size.width,
+      // height: 50,
+      child: RaisedButton(
+        color: Colors.green,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Text(
+            'ยืนยันการสำรองที่นั่ง',
+            style: TextStyle(
+              color: tTextWColor,
+              fontSize: 18,
+            ),
+          ),
+        ),
+        onPressed: () {
+          // Map<String, dynamic> valuse = Map();
+          // // valuse['bk_id'] = _bkId;
+          // valuse['bk_status'] = _updatestatus1;
+          // print(_updatestatus1);
+          // _update(valuse);
+        },
       ),
     );
   }

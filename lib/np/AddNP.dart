@@ -413,6 +413,7 @@ class _AddNPState extends State<AddNP> {
                     ],
                   ),
                 ),
+                btnMap(),
               ],
             ),
           ),
