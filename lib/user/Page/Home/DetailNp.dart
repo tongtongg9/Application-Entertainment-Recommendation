@@ -1,6 +1,7 @@
 import 'dart:ffi';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/Member.dart';
@@ -62,7 +63,6 @@ class _DetailNpState extends State<DetailNp> {
     }
   }
 
-  // final _npId = GlobalKey<FormState>();
   var _npName;
   var _npAbout;
   var _npPhone;
@@ -70,17 +70,12 @@ class _DetailNpState extends State<DetailNp> {
   var _npAdress;
   var _npDistrict;
   var _npProvince;
-  // var _fachome;
-  // var _facsub;
-  // var _facdistrict;
-  // var _facprovince;
-  // var _facdetel;
+  var _npLat;
+  var _npLong;
+  var _npBkStatus;
 
   Map<String, dynamic> _rec_member;
   var _npId;
-  // var token;
-
-  var npId;
   var token;
 
   Future getDataNp() {
@@ -93,14 +88,15 @@ class _DetailNpState extends State<DetailNp> {
     _npAdress = _rec_member['np_adress'];
     _npDistrict = _rec_member['np_district'];
     _npProvince = _rec_member['np_province'];
+    _npLat = _rec_member['np_lat'];
+    _npLong = _rec_member['np_long'];
+    _npBkStatus = _rec_member['np_bk_status'];
+
     print(_npId);
     print(_npName);
-    // _fachome = _rec_member['ac_home'];
-    // _facsub = _rec_member['ac_sub'];
-    // _facdistrict = _rec_member['ac_district'];
-    // _facprovince = _rec_member['ac_province'];
-    // _facdetel = _rec_member['ac_detel'];
   }
+
+  var npId;
 
   List<Revlimit> datamembers = [];
   //connect server api
@@ -129,6 +125,16 @@ class _DetailNpState extends State<DetailNp> {
         // load = false;
       });
     }
+  }
+
+  void googleMap() async {
+    String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$_npLat,$_npLong';
+
+    if (await canLaunch(googleUrl)) {
+      await launch(googleUrl);
+    } else
+      throw ('ไม่สามารถเปิด Google Maps ได้ ');
   }
 
   @override
@@ -220,147 +226,243 @@ class _DetailNpState extends State<DetailNp> {
             delay: Duration(milliseconds: 100),
             fadingDuration: Duration(milliseconds: 300),
             slidingBeginOffset: const Offset(0, 1),
-            child: Container(
-              // height: size.height * 0.6,
-              height: MediaQuery.of(context).size.height,
-              width: double.infinity,
-              margin: EdgeInsets.only(top: size.height * 0.35),
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
-                color: Theme.of(context).scaffoldBackgroundColor,
-                // color: Colors.white70,
-              ),
-              child: SingleChildScrollView(
-                // child: SafeArea(
-                // top: false,
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${_npName}',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: tTextColor,
-                      ),
+            child: DraggableScrollableSheet(
+              initialChildSize: 0.6,
+              minChildSize: 0.6,
+              maxChildSize: 0.9,
+              builder: (context, scrollController) => Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: double.infinity,
+                  // margin: EdgeInsets.only(top: size.height * 0.3),
+                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
                     ),
-                    Divider(
-                      thickness: 2,
-                      color: Colors.black12,
-                    ),
-                    SizedBox(height: 15),
-                    Text(
-                      'รายละเอียดร้าน',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: tTextColor,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      '${_npAbout}',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                        color: tTextColor,
-                      ),
-                    ),
-                    SizedBox(height: 0),
-                    Text(
-                      'ข้อมูลติดต่อ',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: tTextColor,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                  ),
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'เบอร์โทรศัพท์  : ',
+                          '$_npName',
                           style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
                             color: tTextColor,
                           ),
                         ),
-                        Text(
-                          '${_npPhone}',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: tTextColor,
-                          ),
+                        Divider(
+                          thickness: 2,
+                          color: Colors.black12,
                         ),
-                      ],
-                    ),
-                    Row(
-                      children: [
+                        SizedBox(height: 15),
                         Text(
-                          'Email  : ',
+                          'รายละเอียดร้าน',
                           style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: tTextColor,
-                          ),
-                        ),
-                        Text(
-                          '${_npEmail}',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: tTextColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Divider(
-                      thickness: 2,
-                      color: Colors.black12,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "รีวิวจากผู้ใช้บริการ",
-                          style: TextStyle(
-                            color: tTextColor,
                             fontSize: 18,
-                            fontWeight: FontWeight.normal,
+                            fontWeight: FontWeight.w700,
+                            color: tTextColor,
                           ),
                         ),
-                        Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/reviewlistnp',
-                                arguments: {
-                                  '_npId': _npId,
-                                });
-                          },
-                          child: Text(
-                            'ดูทั้งหมด',
-                            style: TextStyle(
-                              color: tPimaryColor,
-                              fontSize: 14,
+                        SizedBox(height: 10),
+                        Text(
+                          '$_npAbout',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                            color: tTextColor,
+                          ),
+                        ),
+                        SizedBox(height: 0),
+                        Text(
+                          'ข้อมูลติดต่อ',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: tTextColor,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Text(
+                              'เบอร์โทรศัพท์  : ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: tTextColor,
+                              ),
+                            ),
+                            Text(
+                              '$_npPhone',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: tTextColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Email  : ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: tTextColor,
+                              ),
+                            ),
+                            Text(
+                              '$_npEmail',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: tTextColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Divider(
+                          thickness: 2,
+                          color: Colors.black12,
+                        ),
+                        SizedBox(height: 10),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'ที่อยู่ร้าน',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: tTextColor,
+                                  ),
+                                ),
+                                TextButton.icon(
+                                  onPressed: () {
+                                    googleMap();
+                                    print(googleMap);
+                                  },
+                                  icon: Icon(
+                                    Icons.location_pin,
+                                    color: tPimaryColor,
+                                  ),
+                                  label: Text(
+                                    '$_npName',
+                                    style: TextStyle(
+                                      color: tPimaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  '${_npAdress} อำเภอ${_npDistrict} จังหวัด${_npProvince}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                    color: tTextColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5),
+                        Card(
+                          elevation: 2,
+                          shadowColor: tBGDeepColor,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 250,
+                            child: Center(
+                              child: Text(
+                                'ไม่มีตำแหน่งร้าน',
+                                style: TextStyle(
+                                  color: tTextColor,
+                                  fontSize: 12,
+                                ),
+                              ),
                             ),
                           ),
                         ),
+                        // Card(
+                        //     elevation: 2,
+                        //     shadowColor: tBGDeepColor,
+                        //     child: SizedBox(
+                        //       width: MediaQuery.of(context).size.width,
+                        //       height: 250,
+                        //       child: GoogleMap(
+                        //         initialCameraPosition: CameraPosition(
+                        //           target: LatLng(_npLat, _npLong),
+                        //           zoom: 15,
+                        //         ),
+                        //         mapType: MapType.normal,
+                        //         markers: <Marker>{
+                        //           Marker(
+                        //             markerId: MarkerId('myStore'),
+                        //             position: LatLng(_npLat, _npLong),
+                        //             infoWindow: InfoWindow(
+                        //                 title: '$_npName',
+                        //                 snippet:
+                        //                     '${_npAdress} อำเภอ${_npDistrict} จังหวัด${_npProvince}',
+                        //                 onTap: () {
+                        //                   googleMap();
+                        //                 }),
+                        //           ),
+                        //         },
+                        //       ),
+                        //     ),
+                        //   ),
+                        SizedBox(height: 10),
+                        Divider(
+                          thickness: 2,
+                          color: Colors.black12,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "รีวิวจากผู้ใช้บริการ",
+                              style: TextStyle(
+                                color: tTextColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            Spacer(),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/reviewlistnp',
+                                    arguments: {
+                                      '_npId': _npId,
+                                    });
+                              },
+                              child: Text(
+                                'ดูทั้งหมด',
+                                style: TextStyle(
+                                  color: tPimaryColor,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        _reviewList(),
                       ],
                     ),
-                    _reviewList(),
-                  ],
-                ),
-              ),
+                  )),
             ),
           ),
-          // ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(

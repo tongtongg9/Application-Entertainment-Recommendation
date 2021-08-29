@@ -173,12 +173,13 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
           ),
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              padding: const EdgeInsets.only(left: 16, top: 6),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  GestureDetector(
+                  InkWell(
                     onTap: () {
                       Navigator.pop(context);
                     },
@@ -207,183 +208,183 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
             delay: Duration(milliseconds: 100),
             fadingDuration: Duration(milliseconds: 300),
             slidingBeginOffset: const Offset(0, 1),
-            child: Container(
-              // height: size.height * 0.6,
-              height: MediaQuery.of(context).size.height,
-              width: double.infinity,
-              margin: EdgeInsets.only(top: size.height * 0.35),
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
+            child: DraggableScrollableSheet(
+              initialChildSize: 0.6,
+              minChildSize: 0.6,
+              maxChildSize: 0.9,
+              builder: (context, scrollController) => Container(
+                height: MediaQuery.of(context).size.height,
+                width: double.infinity,
+                // margin: EdgeInsets.only(top: size.height * 0.3),
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                  color: Theme.of(context).scaffoldBackgroundColor,
                 ),
-                color: Theme.of(context).scaffoldBackgroundColor,
-                // color: Colors.white70,
-              ),
-              child: SingleChildScrollView(
-                // child: SafeArea(
-                // top: false,
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${_npName}',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: tTextColor,
-                      ),
-                    ),
-                    Divider(
-                      thickness: 2,
-                      color: Colors.black12,
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'รายละเอียดร้าน',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: tTextColor,
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    Text(
-                      '${_npAbout}',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                        color: tTextColor,
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'ข้อมูลติดต่อ',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: tTextColor,
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    Row(
-                      children: [
-                        Text(
-                          'เบอร์โทรศัพท์  : ',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: tTextColor,
-                          ),
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${_npName}',
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: tTextColor,
                         ),
-                        Text(
-                          '${_npPhone}',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: tTextColor,
-                          ),
+                      ),
+                      Divider(
+                        thickness: 2,
+                        color: Colors.black12,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'รายละเอียดร้าน',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: tTextColor,
                         ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Email  : ',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: tTextColor,
-                          ),
+                      ),
+                      SizedBox(height: 15),
+                      Text(
+                        '${_npAbout}',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                          color: tTextColor,
                         ),
-                        Text(
-                          '${_npEmail}',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: tTextColor,
-                          ),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'ข้อมูลติดต่อ',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: tTextColor,
                         ),
-                      ],
-                    ),
-                    Divider(
-                      thickness: 2,
-                      color: Colors.black12,
-                    ),
-                    // Row(
-                    // children: [
-                    //   Text(
-                    //     "รีวิวจากผู้ใช้บริการ",
-                    //     style: TextStyle(
-                    //         color: Colors.white,
-                    //         fontSize: 18,
-                    //         fontWeight: FontWeight.normal),
-                    //   ),
-                    //   Spacer(),
-                    // TextButton(
-                    //   onPressed: () {
-                    //     Navigator.pushNamed(context, '/reviewlistnp',
-                    //         arguments: {
-                    //           '_npId': _npId,
-                    //         });
-                    //   },
-                    //   child: Text(
-                    //     'ดูทั้งหมด',
-                    //     style: TextStyle(
-                    //       color: Theme.of(context).primaryColor,
-                    //       fontSize: 14,
-                    //     ),
-                    //   ),
-                    // ),
-                    // ],
-                    // ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/reviewlistnp',
-                            arguments: {
-                              '_npId': _npId,
-                            });
-                      },
-                      child: Card(
-                        color: tBGDeepColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: SizedBox(
-                          height: 80,
-                          child: Center(
-                            child: Text(
-                              'ดูรีวิวจากผู้ใช้บริการ',
-                              style: TextStyle(
-                                color: tTextColor,
-                                fontSize: 16,
+                      ),
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Text(
+                            'เบอร์โทรศัพท์  : ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: tTextColor,
+                            ),
+                          ),
+                          Text(
+                            '${_npPhone}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: tTextColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Email  : ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: tTextColor,
+                            ),
+                          ),
+                          Text(
+                            '${_npEmail}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: tTextColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        thickness: 2,
+                        color: Colors.black12,
+                      ),
+                      // Row(
+                      // children: [
+                      //   Text(
+                      //     "รีวิวจากผู้ใช้บริการ",
+                      //     style: TextStyle(
+                      //         color: Colors.white,
+                      //         fontSize: 18,
+                      //         fontWeight: FontWeight.normal),
+                      //   ),
+                      //   Spacer(),
+                      // TextButton(
+                      //   onPressed: () {
+                      //     Navigator.pushNamed(context, '/reviewlistnp',
+                      //         arguments: {
+                      //           '_npId': _npId,
+                      //         });
+                      //   },
+                      //   child: Text(
+                      //     'ดูทั้งหมด',
+                      //     style: TextStyle(
+                      //       color: Theme.of(context).primaryColor,
+                      //       fontSize: 14,
+                      //     ),
+                      //   ),
+                      // ),
+                      // ],
+                      // ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/reviewlistnp',
+                              arguments: {
+                                '_npId': _npId,
+                              });
+                        },
+                        child: Card(
+                          color: tBGDeepColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: SizedBox(
+                            height: 80,
+                            child: Center(
+                              child: Text(
+                                'ดูรีวิวจากผู้ใช้บริการ',
+                                style: TextStyle(
+                                  color: tTextColor,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Divider(
-                      thickness: 2,
-                      color: Colors.black12,
-                    ),
-                    CupertinoSwitch(
-                      value: isSwitechedOf,
-                      onChanged: (value) {
-                        print('$value');
-                        setState(() {
-                          // isSwitechedOn = value;
-                          isSwitechedOf = value;
-                        });
-                      },
-                    )
-                  ],
+                      Divider(
+                        thickness: 2,
+                        color: Colors.black12,
+                      ),
+                      CupertinoSwitch(
+                        value: isSwitechedOf,
+                        onChanged: (value) {
+                          print('$value');
+                          setState(() {
+                            // isSwitechedOn = value;
+                            isSwitechedOf = value;
+                          });
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-          // ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -519,7 +520,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
       child: RaisedButton(
         color: tPimaryColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),

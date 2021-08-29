@@ -185,8 +185,9 @@ class Rows {
   String npAdress;
   String npDistrict;
   String npProvince;
-  Null npLat;
-  Null npLong;
+  double npLat;
+  double npLong;
+  String npBkStatus;
 
   Rows(
       {this.imgsproId,
@@ -201,7 +202,8 @@ class Rows {
       this.npDistrict,
       this.npProvince,
       this.npLat,
-      this.npLong});
+      this.npLong,
+      this.npBkStatus});
 
   Rows.fromJson(Map<String, dynamic> json) {
     imgsproId = json['imgspro_id'];
@@ -217,6 +219,7 @@ class Rows {
     npProvince = json['np_province'];
     npLat = json['np_lat'];
     npLong = json['np_long'];
+    npBkStatus = json['np_bk_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -234,6 +237,7 @@ class Rows {
     data['np_province'] = this.npProvince;
     data['np_lat'] = this.npLat;
     data['np_long'] = this.npLong;
+    data['np_bk_status'] = this.npBkStatus;
     return data;
   }
 }
@@ -492,8 +496,9 @@ class Showfeed {
   String npAdress;
   String npDistrict;
   String npProvince;
-  Null npLat;
-  Null npLong;
+  double npLat;
+  double npLong;
+  String npBkStatus;
 
   Showfeed(
       {this.revId,
@@ -520,7 +525,8 @@ class Showfeed {
       this.npDistrict,
       this.npProvince,
       this.npLat,
-      this.npLong});
+      this.npLong,
+      this.npBkStatus});
 
   Showfeed.fromJson(Map<String, dynamic> json) {
     revId = json['rev_id'];
@@ -548,6 +554,7 @@ class Showfeed {
     npProvince = json['np_province'];
     npLat = json['np_lat'];
     npLong = json['np_long'];
+    npBkStatus = json['np_bk_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -577,6 +584,7 @@ class Showfeed {
     data['np_province'] = this.npProvince;
     data['np_lat'] = this.npLat;
     data['np_long'] = this.npLong;
+    data['np_bk_status'] = this.npBkStatus;
     return data;
   }
 }

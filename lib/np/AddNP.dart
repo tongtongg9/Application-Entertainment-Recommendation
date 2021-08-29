@@ -252,11 +252,11 @@ class _AddNPState extends State<AddNP> {
         child: SingleChildScrollView(
           child: Form(
             key: _owid,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  Column(
                     children: [
                       npForm(_npname, 'ชื่อร้าน', 'ชื่อร้าน', 1),
                       SizedBox(height: 10),
@@ -268,16 +268,13 @@ class _AddNPState extends State<AddNP> {
                       SizedBox(height: 10),
                     ],
                   ),
-                ),
-                Divider(
-                  endIndent: 25,
-                  indent: 25,
-                  thickness: 2,
-                  color: Colors.black12,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
+                  SizedBox(height: 10),
+                  Divider(
+                    thickness: 2,
+                    color: Colors.black12,
+                  ),
+                  SizedBox(height: 10),
+                  Column(
                     children: [
                       npForm(_npadress, 'ที่อยู่', 'รายละเอียดที่อยู่', 2),
                       SizedBox(height: 10),
@@ -286,16 +283,20 @@ class _AddNPState extends State<AddNP> {
                       npForm(_npprov, 'จังหวัด', 'จังหวัด', 1),
                     ],
                   ),
-                ),
-                Divider(
-                  endIndent: 25,
-                  indent: 25,
-                  thickness: 2,
-                  color: Colors.black12,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
+                  SizedBox(height: 10),
+                  Divider(
+                    thickness: 2,
+                    color: Colors.black12,
+                  ),
+                  SizedBox(height: 10),
+                  addMap(),
+                  SizedBox(height: 10),
+                  Divider(
+                    thickness: 2,
+                    color: Colors.black12,
+                  ),
+                  SizedBox(height: 10),
+                  Column(
                     children: [
                       Row(
                         children: [
@@ -346,16 +347,13 @@ class _AddNPState extends State<AddNP> {
                       buildImagesProfile(),
                     ],
                   ),
-                ),
-                Divider(
-                  endIndent: 25,
-                  indent: 25,
-                  thickness: 2,
-                  color: Colors.black12,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
+                  SizedBox(height: 10),
+                  Divider(
+                    thickness: 2,
+                    color: Colors.black12,
+                  ),
+                  SizedBox(height: 10),
+                  Column(
                     children: [
                       Row(
                         children: [
@@ -399,22 +397,10 @@ class _AddNPState extends State<AddNP> {
                       buildImagesList(),
                     ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      btnSubmit(),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: selectedPlace == null
-                      ? Container()
-                      : Text(selectedPlace.geometry.location.toString() ?? ""),
-                ),
-                btnMap(),
-              ],
+                  SizedBox(height: 20),
+                  btnSubmit(),
+                ],
+              ),
             ),
           ),
         ),
@@ -466,7 +452,7 @@ class _AddNPState extends State<AddNP> {
           cursorColor: tPimaryColor,
           decoration: InputDecoration(
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide.none,
             ),
             filled: true,
@@ -482,6 +468,180 @@ class _AddNPState extends State<AddNP> {
     );
   }
 
+  Widget addMap() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'เพิ่มตำแหน่งร้านของคุณ',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: tTextColor,
+                      ),
+                    ),
+                    Text(
+                      '*',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: tErrorColor,
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  'เลือกตำแหน่งร้านของคุณบน Google Maps',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: tTextGColor,
+                  ),
+                ),
+              ],
+            ),
+            Spacer(),
+            SizedBox(
+              width: 120,
+              height: 50,
+              child: RaisedButton(
+                  elevation: 0,
+                  color: tBGDeepColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'เพิ่มตำแหน่ง',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: tTextColor,
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return PlacePicker(
+                            apiKey: apikeys.apikey,
+                            initialPosition: kInitialPosition,
+                            useCurrentLocation: true,
+                            selectInitialPosition: true,
+                            usePlaceDetailSearch: true,
+                            onPlacePicked: (result) {
+                              selectedPlace = result;
+                              setState(() {
+                                var lat = selectedPlace.geometry.location.lat;
+                                var lng = selectedPlace.geometry.location.lng;
+                                print('$lat,$lng');
+                              });
+                              Navigator.of(context).pop();
+                            },
+                            forceSearchOnZoomChanged: true,
+                            automaticallyImplyAppBarLeading: true,
+                            autocompleteLanguage: "th",
+                            region: 'au',
+                            // selectedPlaceWidgetBuilder:
+                            //     (_, selectedPlace, state, isSearchBarFocused) {
+                            //   print(
+                            //       "state: $state, isSearchBarFocused: $isSearchBarFocused");
+                            //   return isSearchBarFocused
+                            //       ? Container()
+                            //       : FloatingCard(
+                            //           bottomPosition:
+                            //               0.0, // MediaQuery.of(context) will cause rebuild. See MediaQuery document for the information.
+                            //           leftPosition: 0.0,
+                            //           rightPosition: 0.0,
+                            //           width: 500,
+                            //           borderRadius: BorderRadius.circular(12.0),
+                            //           child: state == SearchingState.Searching
+                            //               ? Center(child: CircularProgressIndicator())
+                            //               : RaisedButton(
+                            //                   child: Text("Pick Here"),
+                            //                   onPressed: () {
+                            //                     var lat =
+                            //                         selectedPlace.geometry.location.lat;
+                            //                     var lng =
+                            //                         selectedPlace.geometry.location.lng;
+                            //                     // IMPORTANT: You MUST manage selectedPlace data yourself as using this build will not invoke onPlacePicker as
+                            //                     //            this will override default 'Select here' Button.
+                            //                     print("$lat,$lng");
+                            //                     Navigator.of(context).pop();
+                            //                   },
+                            //                 ),
+                            //         );
+                            // },
+                            // pinBuilder: (context, state) {
+                            //   if (state == PinState.Idle) {
+                            //     return Icon(Icons.favorite_border);
+                            //   } else {
+                            //     return Icon(Icons.favorite);
+                            //   }
+                            // },
+                          );
+                        },
+                      ),
+                    );
+                  }),
+            ),
+          ],
+        ),
+        SizedBox(height: 10),
+        Container(
+            child: selectedPlace == null
+                ? Card(
+                    elevation: 0,
+                    color: tBGDeepColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    child: SizedBox(
+                      height: 150,
+                      child: Center(
+                        child: Text(
+                          'เพิ่มตำแหน่งร้านของคุณ',
+                          style: TextStyle(
+                            color: tTextColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 250,
+                    child: GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(selectedPlace.geometry.location.lat,
+                            selectedPlace.geometry.location.lng),
+                        zoom: 15,
+                      ),
+                      mapType: MapType.normal,
+                      markers: <Marker>{
+                        Marker(
+                          markerId: MarkerId('myStore'),
+                          position: LatLng(selectedPlace.geometry.location.lat,
+                              selectedPlace.geometry.location.lng),
+                          infoWindow: InfoWindow(
+                            title: 'ร้านของคุณ',
+                            snippet:
+                                'ละติจูด = ${selectedPlace.geometry.location.lat} , ลองติจูด = ${selectedPlace.geometry.location.lng}',
+                          ),
+                        ),
+                      }.toSet(),
+                    ),
+                  )),
+      ],
+    );
+  }
+
   Widget addImgs(VoidCallback onload) {
     return SizedBox(
       width: 100,
@@ -490,7 +650,7 @@ class _AddNPState extends State<AddNP> {
         elevation: 0,
         color: tBGDeepColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
           child: Text(
@@ -595,405 +755,13 @@ class _AddNPState extends State<AddNP> {
     );
   }
 
-  Widget namenpForm() {
-    return TextFormField(
-      controller: _npname,
-      validator: (values) {
-        if (values.isEmpty) {
-          return 'กรุณากรอกชื่อร้าน';
-        }
-      },
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'ชื่อร้าน',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
-        ),
-        // icon: ImageIcon(
-        //   new AssetImage('assets/icons/user.png'),
-        //   color: Theme.of(context).primaryColor,
-        //   // size: 16,
-        // ),
-      ),
-    );
-  }
-
-  Widget aboutnpForm() {
-    return TextFormField(
-      controller: _npabout,
-      validator: (values) {
-        if (values.isEmpty) {
-          return 'กรุณากรอกเกี่ยวกับร้าน';
-        }
-      },
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
-      maxLines: 4,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'เกี่ยวกับร้าน',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/user.png'),
-          color: Theme.of(context).primaryColor,
-          // size: 16,
-        ),
-      ),
-    );
-  }
-
-  Widget phonenpForm() {
-    return TextFormField(
-      controller: _nppho,
-      validator: (values) {
-        if (values.isEmpty) {
-          return 'กรุณากรอกเบอร์โทรร้าน';
-        }
-      },
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'เบอร์โทรร้าน',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/user.png'),
-          color: Theme.of(context).primaryColor,
-          // size: 30,
-        ),
-      ),
-    );
-  }
-
-  Widget emailnpForm() {
-    return TextFormField(
-      controller: _npemail,
-      validator: (values) {
-        if (values.isEmpty) {
-          return 'กรุณากรอก E-mail';
-        }
-      },
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'E-mail',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/user.png'),
-          color: Theme.of(context).primaryColor,
-          // size: 30,
-        ),
-      ),
-    );
-  }
-
-  Widget adressnpForm() {
-    return TextFormField(
-      controller: _npadress,
-      validator: (values) {
-        if (values.isEmpty) {
-          return 'กรุณากรอกที่อยู่';
-        }
-      },
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'ที่อยู่',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/user.png'),
-          color: Theme.of(context).primaryColor,
-          // size: 30,
-        ),
-      ),
-    );
-  }
-
-  Widget distnpForm() {
-    return TextFormField(
-      controller: _npdist,
-      validator: (values) {
-        if (values.isEmpty) {
-          return 'กรุณากรอกอำเภอ';
-        }
-      },
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 15,
-      ),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'อำเภอ',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 15,
-          color: Theme.of(context).primaryColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/user.png'),
-          color: Theme.of(context).primaryColor,
-          // size: 30,
-        ),
-      ),
-    );
-  }
-
-  Widget provnpForm() {
-    return TextFormField(
-      controller: _npprov,
-      validator: (values) {
-        if (values.isEmpty) {
-          return 'กรุณากรอกจังหวัด';
-        }
-      },
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'จังหวัด',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/user.png'),
-          color: Theme.of(context).primaryColor,
-          // size: 30,
-        ),
-      ),
-    );
-  }
-
-  Widget latnpForm() {
-    return TextFormField(
-      controller: _nplat,
-      validator: (values) {
-        if (values.isEmpty) {
-          return 'กรุณากรอกละติจูด';
-        }
-      },
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'ละติจูด',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/user.png'),
-          color: Theme.of(context).primaryColor,
-          // size: 30,
-        ),
-      ),
-    );
-  }
-
-  Widget longnpForm() {
-    return TextFormField(
-      controller: _nplong,
-      validator: (values) {
-        if (values.isEmpty) {
-          return 'กรุณากรอกลองติจูด';
-        }
-      },
-      style: TextStyle(
-        color: Theme.of(context).primaryColor,
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: Theme.of(context).scaffoldBackgroundColor,
-        hintText: 'ลองติจูด',
-        focusColor: Theme.of(context).primaryColor,
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).primaryColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/user.png'),
-          color: Theme.of(context).primaryColor,
-          // size: 30,
-        ),
-      ),
-    );
-  }
-
-  Widget btnMap() {
-    return SizedBox(
-      // width: double.infinity,
-      width: MediaQuery.of(context).size.width,
-      child: RaisedButton(
-          color: Theme.of(context).primaryColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              'Map',
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return PlacePicker(
-                    apiKey: apikeys.apikey,
-                    initialPosition: kInitialPosition,
-                    useCurrentLocation: true,
-                    selectInitialPosition: true,
-
-                    usePlaceDetailSearch: true,
-                    onPlacePicked: (result) {
-                      selectedPlace = result;
-                      Navigator.of(context).pop();
-                      setState(() {});
-                    },
-                    forceSearchOnZoomChanged: true,
-                    automaticallyImplyAppBarLeading: true,
-                    autocompleteLanguage: "th",
-                    region: 'au',
-                    // selectInitialPosition: true,
-                    // selectedPlaceWidgetBuilder:
-                    //     (_, selectedPlace, state, isSearchBarFocused) {
-                    //   print(
-                    //       "state: $state, isSearchBarFocused: $isSearchBarFocused");
-                    //   return isSearchBarFocused
-                    //       ? Container()
-                    //       : FloatingCard(
-                    //           bottomPosition:
-                    //               0.0, // MediaQuery.of(context) will cause rebuild. See MediaQuery document for the information.
-                    //           leftPosition: 0.0,
-                    //           rightPosition: 0.0,
-                    //           width: 500,
-                    //           borderRadius: BorderRadius.circular(12.0),
-                    //           child: state == SearchingState.Searching
-                    //               ? Center(child: CircularProgressIndicator())
-                    //               : RaisedButton(
-                    //                   child: Text("Pick Here"),
-                    //                   onPressed: () {
-                    //                     var lat =
-                    //                         selectedPlace.geometry.location.lat;
-                    //                     var lng =
-                    //                         selectedPlace.geometry.location.lng;
-                    //                     // IMPORTANT: You MUST manage selectedPlace data yourself as using this build will not invoke onPlacePicker as
-                    //                     //            this will override default 'Select here' Button.
-                    //                     print("$lat,$lng");
-                    //                     Navigator.of(context).pop();
-                    //                   },
-                    //                 ),
-                    //         );
-                    // },
-                    // pinBuilder: (context, state) {
-                    //   if (state == PinState.Idle) {
-                    //     return Icon(Icons.favorite_border);
-                    //   } else {
-                    //     return Icon(Icons.favorite);
-                    //   }
-                    // },
-                  );
-                },
-              ),
-            );
-          }),
-    );
-  }
-
   Widget btnSubmit() {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: RaisedButton(
         color: tPimaryColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -1008,8 +776,8 @@ class _AddNPState extends State<AddNP> {
         onPressed: () {
           if (_owid.currentState.validate()) {
             Map<String, dynamic> valuse = Map();
-            var lat = selectedPlace.geometry.location.lat;
-            var long = selectedPlace.geometry.location.lng;
+            // var lat = selectedPlace.geometry.location.lat;
+            // var long = selectedPlace.geometry.location.lng;
             valuse['np_name'] = _npname.text;
             valuse['np_about'] = _npabout.text;
             valuse['np_phone'] = _nppho.text;
@@ -1017,8 +785,8 @@ class _AddNPState extends State<AddNP> {
             valuse['np_adress'] = _npadress.text;
             valuse['np_district'] = _npdist.text;
             valuse['np_province'] = _npprov.text;
-            valuse['np_lat'] = lat;
-            valuse['np_long'] = long;
+            valuse['np_lat'] = selectedPlace.geometry.location.lat;
+            valuse['np_long'] = selectedPlace.geometry.location.lng;
 
             print(_npname.text);
             print(_npabout);
@@ -1027,8 +795,8 @@ class _AddNPState extends State<AddNP> {
             print(_npadress.text);
             print(_npdist.text);
             print(_npprov.text);
-            print(lat);
-            print(long);
+            print(selectedPlace.geometry.location.lat);
+            print(selectedPlace.geometry.location.lng);
 
             registernip(valuse);
             sendPathImage();
@@ -1041,3 +809,312 @@ class _AddNPState extends State<AddNP> {
     );
   }
 }
+
+
+  // Widget namenpForm() {
+  //   return TextFormField(
+  //     controller: _npname,
+  //     validator: (values) {
+  //       if (values.isEmpty) {
+  //         return 'กรุณากรอกชื่อร้าน';
+  //       }
+  //     },
+  //     style: TextStyle(
+  //       color: Theme.of(context).primaryColor,
+  //       fontSize: 16,
+  //     ),
+  //     decoration: InputDecoration(
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(15),
+  //         borderSide: BorderSide.none,
+  //       ),
+  //       filled: true,
+  //       fillColor: Theme.of(context).scaffoldBackgroundColor,
+  //       hintText: 'ชื่อร้าน',
+  //       focusColor: Theme.of(context).primaryColor,
+  //       hintStyle: TextStyle(
+  //         fontSize: 16,
+  //         color: Theme.of(context).primaryColor,
+  //       ),
+  //       // icon: ImageIcon(
+  //       //   new AssetImage('assets/icons/user.png'),
+  //       //   color: Theme.of(context).primaryColor,
+  //       //   // size: 16,
+  //       // ),
+  //     ),
+  //   );
+  // }
+
+  // Widget aboutnpForm() {
+  //   return TextFormField(
+  //     controller: _npabout,
+  //     validator: (values) {
+  //       if (values.isEmpty) {
+  //         return 'กรุณากรอกเกี่ยวกับร้าน';
+  //       }
+  //     },
+  //     style: TextStyle(
+  //       color: Theme.of(context).primaryColor,
+  //       fontSize: 16,
+  //     ),
+  //     maxLines: 4,
+  //     decoration: InputDecoration(
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(15),
+  //         borderSide: BorderSide.none,
+  //       ),
+  //       filled: true,
+  //       fillColor: Theme.of(context).scaffoldBackgroundColor,
+  //       hintText: 'เกี่ยวกับร้าน',
+  //       focusColor: Theme.of(context).primaryColor,
+  //       hintStyle: TextStyle(
+  //         fontSize: 16,
+  //         color: Theme.of(context).primaryColor,
+  //       ),
+  //       icon: ImageIcon(
+  //         new AssetImage('assets/icons/user.png'),
+  //         color: Theme.of(context).primaryColor,
+  //         // size: 16,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget phonenpForm() {
+  //   return TextFormField(
+  //     controller: _nppho,
+  //     validator: (values) {
+  //       if (values.isEmpty) {
+  //         return 'กรุณากรอกเบอร์โทรร้าน';
+  //       }
+  //     },
+  //     style: TextStyle(
+  //       color: Theme.of(context).primaryColor,
+  //       fontSize: 16,
+  //     ),
+  //     decoration: InputDecoration(
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(15),
+  //         borderSide: BorderSide.none,
+  //       ),
+  //       filled: true,
+  //       fillColor: Theme.of(context).scaffoldBackgroundColor,
+  //       hintText: 'เบอร์โทรร้าน',
+  //       focusColor: Theme.of(context).primaryColor,
+  //       hintStyle: TextStyle(
+  //         fontSize: 16,
+  //         color: Theme.of(context).primaryColor,
+  //       ),
+  //       icon: ImageIcon(
+  //         new AssetImage('assets/icons/user.png'),
+  //         color: Theme.of(context).primaryColor,
+  //         // size: 30,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget emailnpForm() {
+  //   return TextFormField(
+  //     controller: _npemail,
+  //     validator: (values) {
+  //       if (values.isEmpty) {
+  //         return 'กรุณากรอก E-mail';
+  //       }
+  //     },
+  //     style: TextStyle(
+  //       color: Theme.of(context).primaryColor,
+  //       fontSize: 16,
+  //     ),
+  //     decoration: InputDecoration(
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(15),
+  //         borderSide: BorderSide.none,
+  //       ),
+  //       filled: true,
+  //       fillColor: Theme.of(context).scaffoldBackgroundColor,
+  //       hintText: 'E-mail',
+  //       focusColor: Theme.of(context).primaryColor,
+  //       hintStyle: TextStyle(
+  //         fontSize: 16,
+  //         color: Theme.of(context).primaryColor,
+  //       ),
+  //       icon: ImageIcon(
+  //         new AssetImage('assets/icons/user.png'),
+  //         color: Theme.of(context).primaryColor,
+  //         // size: 30,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget adressnpForm() {
+  //   return TextFormField(
+  //     controller: _npadress,
+  //     validator: (values) {
+  //       if (values.isEmpty) {
+  //         return 'กรุณากรอกที่อยู่';
+  //       }
+  //     },
+  //     style: TextStyle(
+  //       color: Theme.of(context).primaryColor,
+  //       fontSize: 16,
+  //     ),
+  //     decoration: InputDecoration(
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(15),
+  //         borderSide: BorderSide.none,
+  //       ),
+  //       filled: true,
+  //       fillColor: Theme.of(context).scaffoldBackgroundColor,
+  //       hintText: 'ที่อยู่',
+  //       focusColor: Theme.of(context).primaryColor,
+  //       hintStyle: TextStyle(
+  //         fontSize: 16,
+  //         color: Theme.of(context).primaryColor,
+  //       ),
+  //       icon: ImageIcon(
+  //         new AssetImage('assets/icons/user.png'),
+  //         color: Theme.of(context).primaryColor,
+  //         // size: 30,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget distnpForm() {
+  //   return TextFormField(
+  //     controller: _npdist,
+  //     validator: (values) {
+  //       if (values.isEmpty) {
+  //         return 'กรุณากรอกอำเภอ';
+  //       }
+  //     },
+  //     style: TextStyle(
+  //       color: Theme.of(context).primaryColor,
+  //       fontSize: 15,
+  //     ),
+  //     decoration: InputDecoration(
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(16),
+  //         borderSide: BorderSide.none,
+  //       ),
+  //       filled: true,
+  //       fillColor: Theme.of(context).scaffoldBackgroundColor,
+  //       hintText: 'อำเภอ',
+  //       focusColor: Theme.of(context).primaryColor,
+  //       hintStyle: TextStyle(
+  //         fontSize: 15,
+  //         color: Theme.of(context).primaryColor,
+  //       ),
+  //       icon: ImageIcon(
+  //         new AssetImage('assets/icons/user.png'),
+  //         color: Theme.of(context).primaryColor,
+  //         // size: 30,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget provnpForm() {
+  //   return TextFormField(
+  //     controller: _npprov,
+  //     validator: (values) {
+  //       if (values.isEmpty) {
+  //         return 'กรุณากรอกจังหวัด';
+  //       }
+  //     },
+  //     style: TextStyle(
+  //       color: Theme.of(context).primaryColor,
+  //       fontSize: 16,
+  //     ),
+  //     decoration: InputDecoration(
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(15),
+  //         borderSide: BorderSide.none,
+  //       ),
+  //       filled: true,
+  //       fillColor: Theme.of(context).scaffoldBackgroundColor,
+  //       hintText: 'จังหวัด',
+  //       focusColor: Theme.of(context).primaryColor,
+  //       hintStyle: TextStyle(
+  //         fontSize: 16,
+  //         color: Theme.of(context).primaryColor,
+  //       ),
+  //       icon: ImageIcon(
+  //         new AssetImage('assets/icons/user.png'),
+  //         color: Theme.of(context).primaryColor,
+  //         // size: 30,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget latnpForm() {
+  //   return TextFormField(
+  //     controller: _nplat,
+  //     validator: (values) {
+  //       if (values.isEmpty) {
+  //         return 'กรุณากรอกละติจูด';
+  //       }
+  //     },
+  //     style: TextStyle(
+  //       color: Theme.of(context).primaryColor,
+  //       fontSize: 16,
+  //     ),
+  //     decoration: InputDecoration(
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(15),
+  //         borderSide: BorderSide.none,
+  //       ),
+  //       filled: true,
+  //       fillColor: Theme.of(context).scaffoldBackgroundColor,
+  //       hintText: 'ละติจูด',
+  //       focusColor: Theme.of(context).primaryColor,
+  //       hintStyle: TextStyle(
+  //         fontSize: 16,
+  //         color: Theme.of(context).primaryColor,
+  //       ),
+  //       icon: ImageIcon(
+  //         new AssetImage('assets/icons/user.png'),
+  //         color: Theme.of(context).primaryColor,
+  //         // size: 30,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget longnpForm() {
+  //   return TextFormField(
+  //     controller: _nplong,
+  //     validator: (values) {
+  //       if (values.isEmpty) {
+  //         return 'กรุณากรอกลองติจูด';
+  //       }
+  //     },
+  //     style: TextStyle(
+  //       color: Theme.of(context).primaryColor,
+  //       fontSize: 16,
+  //     ),
+  //     decoration: InputDecoration(
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(15),
+  //         borderSide: BorderSide.none,
+  //       ),
+  //       filled: true,
+  //       fillColor: Theme.of(context).scaffoldBackgroundColor,
+  //       hintText: 'ลองติจูด',
+  //       focusColor: Theme.of(context).primaryColor,
+  //       hintStyle: TextStyle(
+  //         fontSize: 16,
+  //         color: Theme.of(context).primaryColor,
+  //       ),
+  //       icon: ImageIcon(
+  //         new AssetImage('assets/icons/user.png'),
+  //         color: Theme.of(context).primaryColor,
+  //         // size: 30,
+  //       ),
+  //     ),
+  //   );
+  // }
+

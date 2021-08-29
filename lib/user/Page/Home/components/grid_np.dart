@@ -78,11 +78,9 @@ class _ShowGridNPState extends State<ShowGridNP> {
                 'np_adress': datamember[index].npAdress,
                 'np_district': datamember[index].npDistrict,
                 'np_province': datamember[index].npProvince,
-                // 'ac_home': datamember[index].acHome,
-                // 'ac_sub': datamember[index].acSub,
-                // 'ac_district': datamember[index].acDistrict,
-                // 'ac_province': datamember[index].acProvince,
-                // 'ac_detel': datamember[index].acDetel,
+                'np_lat': datamember[index].npLat,
+                'np_long': datamember[index].npLong,
+                'np_bk_status': datamember[index].npBkStatus,
               });
               print(datamember[index].npName);
             },
