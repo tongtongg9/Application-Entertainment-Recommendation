@@ -408,6 +408,11 @@ class _AddNPState extends State<AddNP> {
                     ],
                   ),
                 ),
+                Container(
+                  child: selectedPlace == null
+                      ? Container()
+                      : Text(selectedPlace.geometry.location.toString() ?? ""),
+                ),
                 btnMap(),
               ],
             ),
@@ -939,7 +944,8 @@ class _AddNPState extends State<AddNP> {
                     // selectInitialPosition: true,
                     // selectedPlaceWidgetBuilder:
                     //     (_, selectedPlace, state, isSearchBarFocused) {
-                    //   print("state: $state, isSearchBarFocused: $isSearchBarFocused");
+                    //   print(
+                    //       "state: $state, isSearchBarFocused: $isSearchBarFocused");
                     //   return isSearchBarFocused
                     //       ? Container()
                     //       : FloatingCard(
@@ -954,8 +960,10 @@ class _AddNPState extends State<AddNP> {
                     //               : RaisedButton(
                     //                   child: Text("Pick Here"),
                     //                   onPressed: () {
-                    //                     var lat = selectedPlace.geometry.location.lat;
-                    //                     var lng = selectedPlace.geometry.location.lng;
+                    //                     var lat =
+                    //                         selectedPlace.geometry.location.lat;
+                    //                     var lng =
+                    //                         selectedPlace.geometry.location.lng;
                     //                     // IMPORTANT: You MUST manage selectedPlace data yourself as using this build will not invoke onPlacePicker as
                     //                     //            this will override default 'Select here' Button.
                     //                     print("$lat,$lng");
@@ -1000,6 +1008,8 @@ class _AddNPState extends State<AddNP> {
         onPressed: () {
           if (_owid.currentState.validate()) {
             Map<String, dynamic> valuse = Map();
+            var lat = selectedPlace.geometry.location.lat;
+            var long = selectedPlace.geometry.location.lng;
             valuse['np_name'] = _npname.text;
             valuse['np_about'] = _npabout.text;
             valuse['np_phone'] = _nppho.text;
@@ -1007,8 +1017,8 @@ class _AddNPState extends State<AddNP> {
             valuse['np_adress'] = _npadress.text;
             valuse['np_district'] = _npdist.text;
             valuse['np_province'] = _npprov.text;
-            // valuse['np_lat'] = _nplat.text;
-            // valuse['np_long'] = _nplong.text;
+            valuse['np_lat'] = lat;
+            valuse['np_long'] = long;
 
             print(_npname.text);
             print(_npabout);
@@ -1017,8 +1027,8 @@ class _AddNPState extends State<AddNP> {
             print(_npadress.text);
             print(_npdist.text);
             print(_npprov.text);
-            // print(_nplat.text);
-            // print(_nplong.text);
+            print(lat);
+            print(long);
 
             registernip(valuse);
             sendPathImage();
