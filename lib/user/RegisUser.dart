@@ -381,7 +381,7 @@ class _RegisUserState extends State<RegisUser> {
                 );
               }).toList(),
               style: TextStyle(
-                fontFamily: 'Mitr',
+                fontFamily: 'IBMPlexSansThai',
                 color: tTextColor,
                 fontSize: 16,
               ),

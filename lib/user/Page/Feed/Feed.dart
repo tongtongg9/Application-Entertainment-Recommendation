@@ -75,13 +75,7 @@ class _FeedState extends State<Feed> {
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
           padding: EdgeInsets.only(bottom: 30),
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 10,
-              right: 10,
-            ),
-            child: _reviewList(),
-          ),
+          child: _reviewList(),
         ),
       ),
     );
@@ -109,92 +103,90 @@ class _FeedState extends State<Feed> {
                 ),
               ),
             )
-          : ListView.builder(
-              primary: false,
-              shrinkWrap: true,
-              itemCount: datamember.length,
-              itemBuilder: (context, index) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      // color: Theme.of(context).backgroundColor,
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                itemCount: datamember.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    elevation: 5,
+                    shadowColor: tBGDeepColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15, bottom: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 40,
-                                  width: 40,
-                                  child: Stack(
-                                    overflow: Overflow.visible,
-                                    fit: StackFit.expand,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(50),
-                                        child: imgsuser(
-                                            '${datamember[index].userImg}'),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 40,
+                                width: 40,
+                                child: Stack(
+                                  overflow: Overflow.visible,
+                                  fit: StackFit.expand,
                                   children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "${datamember[index].userUsername}",
-                                          style: TextStyle(
-                                            color: tTextColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(width: 8),
-                                        Text(
-                                          'รีวิวให้ร้าน',
-                                          style: TextStyle(
-                                            color: tTextColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                        SizedBox(width: 8),
-                                        Text(
-                                          "${datamember[index].npName}",
-                                          style: TextStyle(
-                                            color: tPimaryColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      // "${datamember[index].revTime}",
-                                      '${dateformate.format(DateTime.parse(datamember[index].revTime))}',
-                                      style: TextStyle(
-                                        color: tTextColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(50),
+                                      child: imgsuser(
+                                          '${datamember[index].userImg}'),
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
+                              ),
+                              SizedBox(width: 8),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "${datamember[index].userUsername}",
+                                        style: TextStyle(
+                                          color: tTextColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        'รีวิวให้ร้าน',
+                                        style: TextStyle(
+                                          color: tTextColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        "${datamember[index].npName}",
+                                        style: TextStyle(
+                                          color: tPimaryColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    // "${datamember[index].revTime}",
+                                    '${dateformate.format(DateTime.parse(datamember[index].revTime))}',
+                                    style: TextStyle(
+                                      color: tTextColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
@@ -221,17 +213,13 @@ class _FeedState extends State<Feed> {
                               ],
                             ),
                           ),
-                          Divider(
-                            color: Colors.black12,
-                            thickness: 2,
-                          ),
                         ],
                       ),
                     ),
-                  ),
-                );
-                // ],
-              },
+                  );
+                  // ],
+                },
+              ),
             ),
     );
   }

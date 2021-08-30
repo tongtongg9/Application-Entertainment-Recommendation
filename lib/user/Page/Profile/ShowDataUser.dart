@@ -197,22 +197,31 @@ class _ShowDataUserState extends State<ShowDataUser> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(50),
-            child: imgsuser('${udata.userImg}'),
+            child: imgsuser(),
           ),
         ],
       ),
     );
   } //! >> class Proile Picture
 
-  Widget imgsuser(imageName) {
+  Widget imgsuser() {
     Widget child;
-    print('Imagename : $imageName');
-    if (imageName != null) {
-      child = Image.network('${Connectapi().domainimguser}${imageName}');
+    if (udata.userImg != null) {
+      child = ClipRRect(
+        borderRadius: BorderRadius.circular(50),
+        child: Image.network(
+          '${Connectapi().domainimguser}${udata.userImg}',
+          fit: BoxFit.cover,
+        ),
+      );
     } else {
-      child = Image.asset('assets/images/person.png');
+      child = Image.asset(
+        'assets/images/person.png',
+        fit: BoxFit.cover,
+      );
     }
-    return new Container(child: child);
+    print('Imagename : $udata.userImg');
+    return new ClipRRect(child: child);
   }
 } //! main class
 

@@ -194,7 +194,7 @@ class _ShowBookingUserState extends State<ShowBookingUser> {
                       color: Colors.white,
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.335,
+                        // height: MediaQuery.of(context).size.height * 0.335,
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(

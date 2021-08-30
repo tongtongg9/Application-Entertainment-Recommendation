@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -145,12 +146,36 @@ class _DetailNpState extends State<DetailNp> {
     _getListReviewslimit();
   }
 
+  Widget checkStatus(_status) {
+    Widget child;
+    print(_status);
+    if (_status == 'open') {
+      child = Card(
+        elevation: 0,
+        color: Colors.green,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('เปิดบริการสำรองที่นั่ง',
+              style: TextStyle(fontSize: 12, color: tTextWColor)),
+        ),
+      );
+    } else if (_status == 'close') {
+      child = Card(
+        elevation: 0,
+        color: tErrorColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('ปิดบริการสำรองที่นั่ง',
+              style: TextStyle(fontSize: 12, color: tTextWColor)),
+        ),
+      );
+    }
+    return new Container(child: child);
+  }
+
   @override
   Widget build(BuildContext context) {
     getDataNp();
-    // double height = MediaQuery.of(context).size.height;
-    // double width = MediaQuery.of(context).size.width;
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       // extendBodyBehindAppBar: true,
       // extendBody: true,
@@ -165,26 +190,38 @@ class _DetailNpState extends State<DetailNp> {
       body: Stack(
         children: [
           // Container(
-          //   height: size.height * 0.45,
-          //   child: Image.asset(
-          //     'assets/images/NP/np02.jpg',
-          //     width: double.infinity,
-          //     height: 200,
-          //     fit: BoxFit.cover,
+          //   height: MediaQuery.of(context).size.height * 0.4,
+          //   // width: double.infinity,
+          //   // child: Expanded(
+          //   child: ListView.builder(
+          //     scrollDirection: Axis.horizontal,
+          //     itemCount: imgsmembers.length,
+          //     itemBuilder: (BuildContext context, index) {
+          //       return Container(
+          //         child: Container(
+          //           child: _checkSendRepairImage(imgsmembers[index].npImg),
+          //         ),
+          //       );
+          //     },
           //   ),
           // ),
           Container(
             height: MediaQuery.of(context).size.height * 0.4,
-            // width: double.infinity,
-            // child: Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
+            child: CarouselSlider.builder(
+              options: CarouselOptions(
+                height: 400,
+                viewportFraction: 1,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 4),
+                enableInfiniteScroll: false,
+              ),
               itemCount: imgsmembers.length,
-              itemBuilder: (BuildContext context, index) {
+              itemBuilder: (context, index, realIndex) {
                 return Container(
-                  child: Container(
-                    child: _checkSendRepairImage(imgsmembers[index].npImg),
-                  ),
+                  // margin: EdgeInsets.symmetric(horizontal: 5),
+                  width: MediaQuery.of(context).size.width,
+                  child: _checkSendRepairImage(imgsmembers[index].npImg),
+                  // fit: BoxFit.cover,
                 );
               },
             ),
@@ -248,13 +285,19 @@ class _DetailNpState extends State<DetailNp> {
                       // mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          '$_npName',
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: tTextColor,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              '$_npName',
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: tTextColor,
+                              ),
+                            ),
+                            Spacer(),
+                            checkStatus(_npBkStatus),
+                          ],
                         ),
                         Divider(
                           thickness: 2,
@@ -338,14 +381,14 @@ class _DetailNpState extends State<DetailNp> {
                           children: [
                             Row(
                               children: [
-                                Text(
-                                  'ที่อยู่ร้าน',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                    color: tTextColor,
-                                  ),
-                                ),
+                                // Text(
+                                //   'ที่อยู่ร้าน',
+                                //   style: TextStyle(
+                                //     fontSize: 18,
+                                //     fontWeight: FontWeight.w700,
+                                //     color: tTextColor,
+                                //   ),
+                                // ),
                                 TextButton.icon(
                                   onPressed: () {
                                     googleMap();
@@ -359,6 +402,7 @@ class _DetailNpState extends State<DetailNp> {
                                     '$_npName',
                                     style: TextStyle(
                                       color: tPimaryColor,
+                                      fontSize: 16,
                                     ),
                                   ),
                                 ),
@@ -397,33 +441,33 @@ class _DetailNpState extends State<DetailNp> {
                           ),
                         ),
                         // Card(
-                        //     elevation: 2,
-                        //     shadowColor: tBGDeepColor,
-                        //     child: SizedBox(
-                        //       width: MediaQuery.of(context).size.width,
-                        //       height: 250,
-                        //       child: GoogleMap(
-                        //         initialCameraPosition: CameraPosition(
-                        //           target: LatLng(_npLat, _npLong),
-                        //           zoom: 15,
-                        //         ),
-                        //         mapType: MapType.normal,
-                        //         markers: <Marker>{
-                        //           Marker(
-                        //             markerId: MarkerId('myStore'),
-                        //             position: LatLng(_npLat, _npLong),
-                        //             infoWindow: InfoWindow(
-                        //                 title: '$_npName',
-                        //                 snippet:
-                        //                     '${_npAdress} อำเภอ${_npDistrict} จังหวัด${_npProvince}',
-                        //                 onTap: () {
-                        //                   googleMap();
-                        //                 }),
-                        //           ),
-                        //         },
+                        //   elevation: 2,
+                        //   shadowColor: tBGDeepColor,
+                        //   child: SizedBox(
+                        //     width: MediaQuery.of(context).size.width,
+                        //     height: 250,
+                        //     child: GoogleMap(
+                        //       initialCameraPosition: CameraPosition(
+                        //         target: LatLng(_npLat, _npLong),
+                        //         zoom: 15,
                         //       ),
+                        //       mapType: MapType.normal,
+                        //       markers: <Marker>{
+                        //         Marker(
+                        //           markerId: MarkerId('myStore'),
+                        //           position: LatLng(_npLat, _npLong),
+                        //           infoWindow: InfoWindow(
+                        //               title: '$_npName',
+                        //               snippet:
+                        //                   '${_npAdress} อำเภอ${_npDistrict} จังหวัด${_npProvince}',
+                        //               onTap: () {
+                        //                 googleMap();
+                        //               }),
+                        //         ),
+                        //       },
                         //     ),
                         //   ),
+                        // ),
                         SizedBox(height: 10),
                         Divider(
                           thickness: 2,
@@ -625,32 +669,59 @@ class _DetailNpState extends State<DetailNp> {
   // }
 
   Widget btnReserve() {
-    return SizedBox(
-      width: 210,
-      // height: 50,
-      child: RaisedButton(
-        color: tPimaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'สำรองที่นั่ง',
-            style: TextStyle(
-              color: tTextWColor,
-              fontSize: 18,
+    return _npBkStatus == 'open'
+        ? SizedBox(
+            width: 210,
+            // height: 50,
+            child: RaisedButton(
+              color: tPimaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  'สำรองที่นั่ง',
+                  style: TextStyle(
+                    color: tTextWColor,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/reservepage', arguments: {
+                  '_npId': _npId,
+                  '_npName': _npName,
+                });
+              },
             ),
-          ),
-        ),
-        onPressed: () {
-          Navigator.pushNamed(context, '/reservepage', arguments: {
-            '_npId': _npId,
-            '_npName': _npName,
-          });
-        },
-      ),
-    );
+          )
+        : SizedBox(
+            width: 210,
+            // height: 50,
+            child: RaisedButton(
+              color: tGreyColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  'สำรองที่นั่ง',
+                  style: TextStyle(
+                    color: tTextWColor,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              onPressed: () {
+                // Navigator.pushNamed(context, '/reservepage', arguments: {
+                //   '_npId': _npId,
+                //   '_npName': _npName,
+                // });
+              },
+            ),
+          );
   }
 
   Widget btnReview() {
@@ -685,7 +756,10 @@ class _DetailNpState extends State<DetailNp> {
     Widget child;
     print('Imagename : $imageName');
     if (imageName != null) {
-      child = Image.network('${Connectapi().domainimgnpforuser}${imageName}');
+      child = Image.network(
+        '${Connectapi().domainimgnpforuser}${imageName}',
+        fit: BoxFit.cover,
+      );
     } else {
       child = Image.asset('assets/images/no_image.png');
     }

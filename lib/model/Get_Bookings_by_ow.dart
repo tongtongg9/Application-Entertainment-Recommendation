@@ -50,8 +50,9 @@ class Rsbookbyow {
   String npAdress;
   String npDistrict;
   String npProvince;
-  Null npLat;
-  Null npLong;
+  double npLat;
+  double npLong;
+  String npBkStatus;
 
   Rsbookbyow(
       {this.bkId,
@@ -80,7 +81,8 @@ class Rsbookbyow {
       this.npDistrict,
       this.npProvince,
       this.npLat,
-      this.npLong});
+      this.npLong,
+      this.npBkStatus});
 
   Rsbookbyow.fromJson(Map<String, dynamic> json) {
     bkId = json['bk_id'];
@@ -110,6 +112,7 @@ class Rsbookbyow {
     npProvince = json['np_province'];
     npLat = json['np_lat'];
     npLong = json['np_long'];
+    npBkStatus = json['np_bk_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -141,6 +144,7 @@ class Rsbookbyow {
     data['np_province'] = this.npProvince;
     data['np_lat'] = this.npLat;
     data['np_long'] = this.npLong;
+    data['np_bk_status'] = this.npBkStatus;
     return data;
   }
 }

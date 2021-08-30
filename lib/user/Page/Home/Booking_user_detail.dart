@@ -153,34 +153,7 @@ class _BookingDetailuserState extends State<BookingDetailuser> {
             Navigator.pop(context);
           },
         ),
-        // actions: [
-        //   TextButton(
-        //     onPressed: () {},
-        //     child: Text(
-        //       'บันทึก',
-        //       style: TextStyle(
-        //         color: tPimaryColor,
-        //       ),
-        //     ),
-        //   )
-        // ],
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      // floatingActionButton: FloatingActionButton.extended(
-      // onPressed: () {
-      // Map<String, dynamic> valuse = Map();
-      // valuse['bk_id'] = _bkId;
-      // valuse['bk_status'] = _updatestatus1;
-      // print(_updatestatus1);
-      // _update(valuse);
-      // },
-      // label: Text('เพิ่มร้านของคุณ'),
-      // backgroundColor: tPimaryColor,
-      // icon: Icon(
-      // Icons.add,
-      // color: Colors.white,
-      // ),
-      // ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -193,8 +166,8 @@ class _BookingDetailuserState extends State<BookingDetailuser> {
                     borderRadius: BorderRadius.circular(10)),
                 color: Colors.white,
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  // height: MediaQuery.of(context).size.height * 0.335,
+                  // width: MediaQuery.of(context).size.width,
+                  // height: MediaQuery.of(context).size.height,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
@@ -209,7 +182,7 @@ class _BookingDetailuserState extends State<BookingDetailuser> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${_npName}',
+                                  '$_npName',
                                   style: TextStyle(
                                     color: tTextColor,
                                     fontWeight: FontWeight.bold,
@@ -217,7 +190,7 @@ class _BookingDetailuserState extends State<BookingDetailuser> {
                                   ),
                                 ),
                                 Text(
-                                  '${_npPhone}',
+                                  '$_npPhone',
                                   style: TextStyle(
                                     color: tTextColor,
                                     fontWeight: FontWeight.normal,
@@ -247,7 +220,7 @@ class _BookingDetailuserState extends State<BookingDetailuser> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        '${_bkSeat}',
+                                        '$_bkSeat',
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.normal,

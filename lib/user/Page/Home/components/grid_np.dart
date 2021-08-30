@@ -63,8 +63,8 @@ class _ShowGridNPState extends State<ShowGridNP> {
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.all(20),
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
+        mainAxisSpacing: 2,
+        crossAxisSpacing: 2,
         childAspectRatio: 1.2,
         children: List.generate(datamember.length, (index) {
           return GestureDetector(
@@ -103,7 +103,7 @@ class _ShowGridNPState extends State<ShowGridNP> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        width: double.infinity,
+                        width: MediaQuery.of(context).size.width,
                         height: 70,
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -117,7 +117,7 @@ class _ShowGridNPState extends State<ShowGridNP> {
                             Row(
                               children: [
                                 Text(
-                                  ('${datamember[index].npName}'),
+                                  '${datamember[index].npName}',
                                   maxLines: 3,
                                   style: TextStyle(
                                     color: Colors.white,

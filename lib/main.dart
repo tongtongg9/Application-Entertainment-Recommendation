@@ -53,11 +53,8 @@ class MyApp extends StatelessWidget {
         '/mainpageuser': (context) => MainPageUser(),
         '/mainpageowner': (context) => MainPageOwner(),
         '/uloginpage': (context) => LoginUser(),
-        // '/uloginpage': ( context) => LoginPage(),
-        // '/uregisterpage': ( context) => RegisterPage(),
         '/uregisterpage': (context) => RegisUser(),
         '/homepage': (context) => BottomNavBar(),
-        // '/showdetailnp': ( context) => ShowDetailNp(),
         '/showdetailnp': (context) => DetailNp(),
         '/reviewpage': (context) => ReviewPage(),
         '/reservepage': (context) => ReservePage(),
@@ -92,7 +89,7 @@ class MyApp extends StatelessWidget {
   ThemeData mytheme() {
     return ThemeData(
       scaffoldBackgroundColor: tBGColor,
-      fontFamily: 'Mitr',
+      fontFamily: 'IBMPlexSansThai',
       appBarTheme: AppBarTheme(
         centerTitle: true,
         color: tBGColor,
@@ -102,7 +99,7 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: TextTheme(
           title: TextStyle(
-            fontFamily: 'Mitr',
+            fontFamily: 'IBMPlexSansThai',
             color: tTextColor,
             fontSize: 20,
           ),

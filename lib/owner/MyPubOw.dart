@@ -7,6 +7,7 @@ import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/Member.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
+import 'package:my_finalapp1/widget/refresh_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyPubOw extends StatefulWidget {
@@ -80,6 +81,8 @@ class _MyPubOwState extends State<MyPubOw> {
         ),
       ),
       body: ListView.builder(
+        shrinkWrap: true,
+        primary: false,
         scrollDirection: Axis.vertical,
         itemCount: datamember.length,
         itemBuilder: (context, index) {
@@ -99,6 +102,9 @@ class _MyPubOwState extends State<MyPubOw> {
                         'np_adress': datamember[index].npAdress,
                         'np_district': datamember[index].npDistrict,
                         'np_province': datamember[index].npProvince,
+                        'np_lat': datamember[index].npLat,
+                        'np_long': datamember[index].npLong,
+                        'np_bk_status': datamember[index].npBkStatus,
                       });
                 },
                 child: Card(

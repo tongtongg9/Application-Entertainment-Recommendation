@@ -97,8 +97,8 @@ class _ReservePageState extends State<ReservePage> {
           },
         ),
       ),
-      body: Container(
-        width: double.infinity,
+      body: SingleChildScrollView(
+        // width: double.infinity,
         padding: EdgeInsets.all(20),
         child: SafeArea(
           child: Column(

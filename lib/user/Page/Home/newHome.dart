@@ -1,11 +1,12 @@
 import 'dart:ffi';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/Member.dart';
 import 'package:my_finalapp1/user/Page/Home/components/app_bar.dart';
 import 'package:my_finalapp1/user/Page/Home/components/grid_np.dart';
-import 'package:my_finalapp1/user/Page/Home/components/places_categories.dart';
+import 'package:my_finalapp1/user/Page/Home/components/show_promotions.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' as convert;
@@ -19,46 +20,17 @@ class NewwHome extends StatefulWidget {
 }
 
 class _NewwHomeState extends State<NewwHome> {
-  String userId;
-  UserInfo udata;
-  //connect server api
-  Future<Void> _getInfoUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.getString('token');
-    var userId = prefs.getInt('id');
-    print('uId = $userId');
-    print('token = $token');
-    var url = '${Connectapi().domain}/getprofileuser/$userId';
-    //conect
-    var response = await http.get(Uri.parse(url), headers: {
-      'Connect-type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
-    //check response
-    if (response.statusCode == 200) {
-      //แปลงjson ให้อยู่ในรูปแบบ model members
-      UserMember members =
-          UserMember.fromJson(convert.jsonDecode(response.body));
-      //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
-      setState(() {
-        udata = members.info;
-      });
-    }
-  }
-
-  Future onGoBack(dynamic value) {
-    setState(() {
-      _getInfoUser();
-    });
-  }
+  // Future onGoBack(dynamic value) {
+  //   setState(() {
+  //     _getInfoUser();
+  //   });
+  // }
 
   @override
   void initState() {
     // TODO implement initState
     super.initState();
     //call _getAPI
-    _getInfoUser();
   }
 
   @override
@@ -89,65 +61,18 @@ class _NewwHomeState extends State<NewwHome> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              showWelcome(),
-              // PlacesCategories(),
+              ShowPromotions(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () {},
+                  child: CupertinoSearchTextField(),
+                ),
+              ),
               ShowGridNP(),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Padding showWelcome() {
-    return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16, top: 20),
-      child: Row(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: [
-                  Text(
-                    "สวัสดี คุณ,",
-                    style: TextStyle(
-                      color: tTextColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    '${udata.userName}',
-                    style: TextStyle(
-                      // color: Colors.white,
-                      color: tPimaryColor,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Row(
-                children: [
-                  Text(
-                    "เลือกร้านที่คุณชอบแล้วออกไปสนุกเลย!!",
-                    style: TextStyle(
-                      color: tTextColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ],
       ),
     );
   }
