@@ -220,7 +220,7 @@ class _DetailNpState extends State<DetailNp> {
                 return Container(
                   // margin: EdgeInsets.symmetric(horizontal: 5),
                   width: MediaQuery.of(context).size.width,
-                  child: _checkSendRepairImage(imgsmembers[index].npImg),
+                  child: _checkSendRepairImage('${imgsmembers[index].npId}'),
                   // fit: BoxFit.cover,
                 );
               },
@@ -770,7 +770,10 @@ class _DetailNpState extends State<DetailNp> {
     Widget child;
     print('Imagename : $imageName');
     if (imageName != null) {
-      child = Image.network('${Connectapi().domainimguser}${imageName}');
+      child = Image.network(
+        '${Connectapi().domainimguser}${imageName}',
+        fit: BoxFit.cover,
+      );
     } else {
       child = Image.asset('assets/images/person.png');
     }

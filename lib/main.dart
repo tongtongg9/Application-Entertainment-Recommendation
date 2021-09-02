@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:my_finalapp1/np/Edit_np.dart';
 import 'package:my_finalapp1/owner/Booking_ow_detail.dart';
 import 'package:my_finalapp1/owner/Booking_ow_list.dart';
+import 'package:my_finalapp1/owner/add_promotions.dart';
 import 'package:my_finalapp1/routes/routes.dart';
 import 'package:my_finalapp1/user/Page/Home/Booking_user_detail.dart';
 import 'package:my_finalapp1/user/Page/Home/Booking_user_list.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
         '/oweditmypub': (context) => EditPagenp(),
         '/owaddmypub': (context) => AddNP(),
         '/addimgsnp': (context) => AddImagesNP(),
+        '/addpromotions': (context) => AddPromotions(),
       },
     );
   }

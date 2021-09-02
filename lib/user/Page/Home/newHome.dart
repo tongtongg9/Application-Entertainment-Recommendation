@@ -64,10 +64,10 @@ class _NewwHomeState extends State<NewwHome> {
               ShowPromotions(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {},
-                  child: CupertinoSearchTextField(),
-                ),
+                // child: InkWell(
+                //   onTap: () {},
+                //   child: CupertinoSearchTextField(),
+                // ),
               ),
               ShowGridNP(),
             ],

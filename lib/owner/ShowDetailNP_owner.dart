@@ -472,110 +472,51 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                         ],
                       ),
                       SizedBox(height: 5),
-                      // Card(
-                      //   elevation: 2,
-                      //   shadowColor: tBGDeepColor,
-                      //   child: SizedBox(
-                      //     width: MediaQuery.of(context).size.width,
-                      //     height: 250,
-                      //     child: Center(
-                      //       child: Text(
-                      //         'ไม่มีตำแหน่งร้าน',
-                      //         style: TextStyle(
-                      //           color: tTextColor,
-                      //           fontSize: 12,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       Card(
                         elevation: 2,
                         shadowColor: tBGDeepColor,
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 250,
-                          child: GoogleMap(
-                            initialCameraPosition: CameraPosition(
-                              target: LatLng(_npLat, _npLong),
-                              zoom: 15,
-                            ),
-                            mapType: MapType.normal,
-                            markers: <Marker>{
-                              Marker(
-                                markerId: MarkerId('myStore'),
-                                position: LatLng(_npLat, _npLong),
-                                infoWindow: InfoWindow(
-                                    title: '$_npName',
-                                    snippet:
-                                        '${_npAdress} อำเภอ${_npDistrict} จังหวัด${_npProvince}',
-                                    onTap: () {
-                                      googleMap();
-                                    }),
+                          child: Center(
+                            child: Text(
+                              'ไม่มีตำแหน่งร้าน',
+                              style: TextStyle(
+                                color: tTextColor,
+                                fontSize: 12,
                               ),
-                            },
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
-                      // Row(
-                      // children: [
-                      //   Text(
-                      //     "รีวิวจากผู้ใช้บริการ",
-                      //     style: TextStyle(
-                      //         color: Colors.white,
-                      //         fontSize: 18,
-                      //         fontWeight: FontWeight.normal),
-                      //   ),
-                      //   Spacer(),
-                      // TextButton(
-                      //   onPressed: () {
-                      //     Navigator.pushNamed(context, '/reviewlistnp',
-                      //         arguments: {
-                      //           '_npId': _npId,
-                      //         });
-                      //   },
-                      //   child: Text(
-                      //     'ดูทั้งหมด',
-                      //     style: TextStyle(
-                      //       color: Theme.of(context).primaryColor,
-                      //       fontSize: 14,
+                      //! Card(
+                      //   elevation: 2,
+                      //   shadowColor: tBGDeepColor,
+                      //   child: SizedBox(
+                      //     width: MediaQuery.of(context).size.width,
+                      //     height: 250,
+                      //     child: GoogleMap(
+                      //       initialCameraPosition: CameraPosition(
+                      //         target: LatLng(_npLat, _npLong),
+                      //         zoom: 15,
+                      //       ),
+                      //       mapType: MapType.normal,
+                      //       markers: <Marker>{
+                      //         Marker(
+                      //           markerId: MarkerId('myStore'),
+                      //           position: LatLng(_npLat, _npLong),
+                      //           infoWindow: InfoWindow(
+                      //               title: '$_npName',
+                      //               snippet:
+                      //                   '${_npAdress} อำเภอ${_npDistrict} จังหวัด${_npProvince}',
+                      //               onTap: () {
+                      //                 googleMap();
+                      //               }),
+                      //         ),
+                      //       },
                       //     ),
                       //   ),
-                      // ),
-                      // ],
-                      // ),
-                      Divider(
-                        thickness: 2,
-                        color: Colors.black12,
-                      ),
-
-                      Card(
-                        color: tBGColor,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: SizedBox(
-                          height: 80,
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/reviewlistnp',
-                                    arguments: {
-                                      '_npId': _npId,
-                                    });
-                              },
-                              child: Text(
-                                'ดูรีวิวจากผู้ใช้บริการ',
-                                style: TextStyle(
-                                  color: tPimaryColor,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      //! ),
                     ],
                   ),
                 ),
@@ -596,9 +537,39 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                btnEditNp(),
+                btnBottombar(
+                  'ดูรีวิว',
+                  () {
+                    Navigator.pushNamed(context, '/reviewlistnp', arguments: {
+                      '_npId': _npId,
+                    });
+                  },
+                ),
+                btnBottombar(
+                  'เพิ่มโปรโมชั่น',
+                  () {
+                    Navigator.pushNamed(context, '/addpromotions', arguments: {
+                      '_npId': _npId,
+                    });
+                  },
+                ),
+                btnBottombar(
+                  'จัดการร้าน',
+                  () {
+                    Navigator.pushNamed(context, '/oweditmypub', arguments: {
+                      '_npId': _npId,
+                      '_npName': _npName,
+                      '_npAbout': _npAbout,
+                      '_npPhone': _npPhone,
+                      '_npEmail': _npEmail,
+                      '_npAdress': _npAdress,
+                      '_npDistrict': _npDistrict,
+                      '_npProvince': _npProvince,
+                    });
+                  },
+                ),
               ],
             ),
           ),
@@ -641,7 +612,6 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
               valuse['np_bk_status'] = _closeBk;
               print(_closeBk);
               _updateStatus(valuse);
-              // rerere();
               Navigator.pop(context);
             },
           )
@@ -692,93 +662,6 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
         ],
       );
 
-  // Widget _reviewList() {
-  //   var dateformate = DateFormat.yMMMEd();
-
-  //   return ListView.builder(
-  //     primary: false,
-  //     shrinkWrap: true,
-  //     itemCount: datamembers.length,
-  //     itemBuilder: (context, index) {
-  //       return Center(
-  //         child: Padding(
-  //           padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-  //           child: Card(
-  //             elevation: 0,
-  //             shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(10)),
-  //             color: Theme.of(context).backgroundColor,
-  //             child: Column(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 Padding(
-  //                   padding: const EdgeInsets.all(15),
-  //                   child: Row(
-  //                     mainAxisAlignment: MainAxisAlignment.start,
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     children: <Widget>[
-  //                       useravatar(),
-  //                       SizedBox(width: 8),
-  //                       Column(
-  //                         crossAxisAlignment: CrossAxisAlignment.start,
-  //                         children: [
-  //                           Text(
-  //                             "${datamembers[index].userUsername}",
-  //                             style: TextStyle(
-  //                               color: Colors.white,
-  //                               fontSize: 14,
-  //                               fontWeight: FontWeight.bold,
-  //                             ),
-  //                           ),
-  //                           Text(
-  //                             "${dateformate.format(DateTime.parse(datamembers[index].revTime))}",
-  //                             style: TextStyle(
-  //                               color: Colors.white,
-  //                               fontSize: 14,
-  //                               fontWeight: FontWeight.normal,
-  //                             ),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //                 Padding(
-  //                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-  //                   child: Column(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     children: [
-  //                       Text(
-  //                         "${datamembers[index].revTopic}",
-  //                         style: TextStyle(
-  //                           color: Colors.white,
-  //                           fontSize: 16,
-  //                           fontWeight: FontWeight.bold,
-  //                         ),
-  //                       ),
-  //                       Text(
-  //                         "${datamembers[index].revDetail}",
-  //                         maxLines: 5,
-  //                         style: TextStyle(
-  //                           color: Colors.white,
-  //                           fontSize: 16,
-  //                           fontWeight: FontWeight.normal,
-  //                         ),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //       // ],
-  //     },
-  //   );
-  // }
-
   Widget useravatar() {
     return SizedBox(
       height: 40,
@@ -796,9 +679,9 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
     );
   }
 
-  Widget btnEditNp() {
+  Widget btnBottombar(final String _text, final VoidCallback _pressed) {
     return SizedBox(
-      width: 425,
+      width: 135,
       // height: 50,
       child: RaisedButton(
         color: tPimaryColor,
@@ -808,35 +691,14 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(
-            'จัดการร้าน',
+            _text,
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               color: tTextWColor,
             ),
           ),
         ),
-        onPressed: () {
-          // Map<String, dynamic> valuse = Map();
-          // valuse['user_id'] = _user_id;
-          // valuse['np_id'] = _npId;
-          // valuse['rev_topic'] = _rev_topic.text;
-          // valuse['rev_detail'] = _rev_detail.text;
-
-          // print(_rev_topic.text);
-          // print(_rev_detail.text);
-
-          // addReviews(valuse);
-          Navigator.pushNamed(context, '/oweditmypub', arguments: {
-            '_npId': _npId,
-            '_npName': _npName,
-            '_npAbout': _npAbout,
-            '_npPhone': _npPhone,
-            '_npEmail': _npEmail,
-            '_npAdress': _npAdress,
-            '_npDistrict': _npDistrict,
-            '_npProvince': _npProvince,
-          });
-        },
+        onPressed: _pressed,
       ),
     );
   }

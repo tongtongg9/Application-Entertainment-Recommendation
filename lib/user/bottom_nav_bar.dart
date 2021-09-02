@@ -36,46 +36,50 @@ class _BottomNavBarState extends State<BottomNavBar> {
         bucket: bucket,
         child: currentScreen,
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: tPimaryColor,
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        onPressed: () {},
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: tPimaryColor,
+      //   child: Icon(
+      //     Icons.add,
+      //     color: Colors.white,
+      //   ),
+      //   onPressed: () {},
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         color: tBGColor,
-        shape: CircularNotchedRectangle(),
-        notchMargin: 6,
+        // shape: CircularNotchedRectangle(),
+        // notchMargin: 6,
         child: Container(
           height: 50,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(width: 20),
-                  // Spacer(),
-                  homeScreen(context),
-                  SizedBox(width: 20),
-                  // Spacer(),
-                  feedScreen(context),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                // crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  notiScreen(context),
-                  SizedBox(width: 20),
-                  profileScreen(context),
-                  SizedBox(width: 20),
-                ],
-              ),
+              homeScreen(context),
+              feedScreen(context),
+              notiScreen(context),
+              profileScreen(context),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   // crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     SizedBox(width: 20),
+              //     // Spacer(),
+              //     homeScreen(context),
+              //     SizedBox(width: 20),
+              //     // Spacer(),
+              //     feedScreen(context),
+              //   ],
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   // crossAxisAlignment: CrossAxisAlignment.end,
+              //   children: [
+              //     notiScreen(context),
+              //     SizedBox(width: 20),
+              //     profileScreen(context),
+              //     SizedBox(width: 20),
+              //   ],
+              // ),
             ],
           ),
         ),
