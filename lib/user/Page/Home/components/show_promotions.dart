@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/model_get_img_promotions.dart';
 import 'package:my_finalapp1/widget/colors.dart';
@@ -21,6 +22,15 @@ class ShowPromotions extends StatefulWidget {
 
 class _ShowPromotionsState extends State<ShowPromotions> {
   int activeIndex = 0;
+  int _current = 0;
+
+  List<T> map<T>(List list, Function handler) {
+    List<T> result = [];
+    for (var i = 0; i < list.length; i++) {
+      result.add(handler(i, list[i]));
+    }
+    return result;
+  }
 
   List<Imgpro> datamember = [];
 
@@ -65,29 +75,70 @@ class _ShowPromotionsState extends State<ShowPromotions> {
   Widget build(BuildContext context) => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: CarouselSlider.builder(
-              options: CarouselOptions(
-                aspectRatio: 16 / 9,
-                height: 250,
-                viewportFraction: 1,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 2),
-                enableInfiniteScroll: false,
-              ),
-              itemCount: datamember.length,
-              itemBuilder: (context, index, realIndex) {
-                return Container(
-                  // margin: EdgeInsets.symmetric(horizontal: 5),
-                  width: MediaQuery.of(context).size.width,
-                  child: imgs(datamember[index].proImg),
-                );
-              },
+          CarouselSlider.builder(
+            options: CarouselOptions(
+              aspectRatio: 16 / 9,
+              height: 250,
+              viewportFraction: 1,
+              autoPlay: true,
+              autoPlayInterval: Duration(seconds: 5),
+              enableInfiniteScroll: false,
             ),
+            itemCount: datamember.length,
+            itemBuilder: (context, index, realIndex) {
+              return Container(
+                // decoration: BoxDecoration(
+                //   borderRadius: BorderRadius.circular(10),
+                //   border: Border.all(
+                //     width: 1,
+                //     color: tPimaryColor,
+                //   ),
+                // ),
+                width: MediaQuery.of(context).size.width,
+                child: imgs(datamember[index].proImg),
+              );
+            },
           ),
+          // Container(
+          //   width: MediaQuery.of(context).size.width,
+          //   height: 200,
+          //   child: Swiper(
+          //     onIndexChanged: (index) {
+          //       setState(() {
+          //         _current = index;
+          //       });
+          //     },
+          //     autoplay: true,
+          //     layout: SwiperLayout.DEFAULT,
+          //     itemCount: datamember.length,
+          //     itemBuilder: (BuildContext context, index) {
+          //       return Container(
+          //         decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.circular(8),
+          //           // image: DecorationImage(
+          //           //   image: Image.network('${Connectapi().domainimgpro}${datamember[index].proImg}'),
+          //           // ),
+          //         ),
+          //         child: imgs(datamember[index].proImg),
+          //       );
+          //     },
+          //   ),
+          // ),
+
           SizedBox(height: 10),
           // buildIndicator(),
+          // Row(
+          //   children: map<Widget>(datamember, (index, image) {
+          //     return Container(
+          //       alignment: Alignment.center,
+          //       height: 9,
+          //       width: 9,
+          //       // margin: EdgeInsets.only(right: 8),
+          //       decoration: BoxDecoration(shape: BoxShape.circle),
+          //       color: _current == index ? tPimaryColor : tGreyColor,
+          //     );
+          //   }),
+          // )
         ],
       );
 

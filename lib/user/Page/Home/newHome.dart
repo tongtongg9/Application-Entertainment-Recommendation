@@ -61,17 +61,64 @@ class _NewwHomeState extends State<NewwHome> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ShowPromotions(),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                // child: InkWell(
-                //   onTap: () {},
-                //   child: CupertinoSearchTextField(),
-                // ),
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: ShowPromotions(),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16),
+                child: btnPromotions(),
               ),
               ShowGridNP(),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget btnPromotions() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: tBGColor,
+        border: Border.all(
+          width: 1,
+          color: tPimaryColor,
+        ),
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            SizedBox(width: 8),
+            IconButton(
+              icon: Image.asset('assets/icons/coupon.png'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/showpromotionslist');
+              },
+            ),
+            VerticalDivider(
+              indent: 5,
+              endIndent: 5,
+              thickness: 1,
+              color: Colors.black26,
+            ),
+            SizedBox(width: 8),
+            TextButton(
+              child: Text(
+                'โปรโมรชั่นจากทางร้าน',
+                style: TextStyle(
+                  color: tPimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/showpromotionslist');
+              },
+            ),
+          ],
         ),
       ),
     );

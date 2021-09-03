@@ -1,14 +1,13 @@
-class MyipAddress {
-  String ipaddress = 'http://192.168.7.100';
-  MyipAddress();
-}
+// class MyipAddress {
+//   String ipaddress = 'http://192.168.7.100';
+//   MyipAddress();
+// }
 
 class Connectapi {
-  String domain = '${MyipAddress().ipaddress}:8888';
-  String domainimgnpforuser =
-      '${MyipAddress().ipaddress}:8888/uploads/images_np/';
-  String domainimguser = '${MyipAddress().ipaddress}:8888/uploads/images/';
-  String domainimgnp = '${MyipAddress().ipaddress}:8888/uploads/img_np/';
-  String domainimgpro = '${MyipAddress().ipaddress}:8888/uploads/img_pro/';
+  String domain = 'http://192.168.7.100:8888';
+  String domainimgnpforuser = 'http://192.168.7.100:8888/uploads/images_np/';
+  String domainimguser = 'http://192.168.7.100:8888/uploads/images/';
+  String domainimgnp = 'http://192.168.7.100:8888/uploads/img_np/';
+  String domainimgpro = 'http://192.168.7.100:8888/uploads/img_pro/';
   Connectapi();
 }

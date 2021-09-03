@@ -8,6 +8,7 @@ import 'package:my_finalapp1/owner/add_promotions.dart';
 import 'package:my_finalapp1/routes/routes.dart';
 import 'package:my_finalapp1/user/Page/Home/Booking_user_detail.dart';
 import 'package:my_finalapp1/user/Page/Home/Booking_user_list.dart';
+import 'package:my_finalapp1/user/Page/Home/show_promotions_list.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 
 import 'package:my_finalapp1/MainPage.dart';
@@ -68,6 +69,8 @@ class MyApp extends StatelessWidget {
         '/upload': (context) => UploadPicture(),
         '/showdataUser': (context) => ShowDataUser(),
         '/editdataUser': (context) => EditPageUser(),
+
+        '/showpromotionslist': (context) => ShowPromotionsList(),
 
         // '/owloginpage' : ( context) => LoginPageOw(),
 
