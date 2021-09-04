@@ -137,9 +137,18 @@ class _ProfileState extends State<Profile> {
     if (udata.userImg != null) {
       child = ClipRRect(
         borderRadius: BorderRadius.circular(50),
-        child: Image.network(
-          '${Connectapi().domainimguser}${udata.userImg}',
+        child: CachedNetworkImage(
+          imageUrl: '${Connectapi().domainimguser}${udata.userImg}',
           fit: BoxFit.cover,
+          placeholder: (context, url) => Center(
+            child: CircularProgressIndicator(),
+          ),
+          errorWidget: (context, url, error) => Container(
+            child: Icon(
+              Icons.error,
+              color: tErrorColor,
+            ),
+          ),
         ),
       );
     } else {

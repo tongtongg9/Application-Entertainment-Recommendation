@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/model_get_list_promotions.dart';
@@ -253,17 +254,33 @@ class _ShowPromotionsListState extends State<ShowPromotionsList> {
     );
   }
 
+  // Widget _image(imageName) {
+  //   Widget child;
+  //   print('Imagename : $imageName');
+  //   if (imageName != null) {
+  //     child = Image.network(
+  //       '${Connectapi().domainimgpro}${imageName}',
+  //       fit: BoxFit.cover,
+  //     );
+  //   } else {
+  //     child = Image.asset('assets/images/person.png');
+  //   }
+  //   return new Container(child: child);
+  // }
+
   Widget _image(imageName) {
-    Widget child;
-    print('Imagename : $imageName');
-    if (imageName != null) {
-      child = Image.network(
-        '${Connectapi().domainimgpro}${imageName}',
-        fit: BoxFit.cover,
-      );
-    } else {
-      child = Image.asset('assets/images/person.png');
-    }
-    return new Container(child: child);
+    return CachedNetworkImage(
+      imageUrl: '${Connectapi().domainimgpro}${imageName}',
+      fit: BoxFit.cover,
+      placeholder: (context, url) => Center(
+        child: CircularProgressIndicator(),
+      ),
+      errorWidget: (context, url, error) => Container(
+        child: Icon(
+          Icons.error,
+          color: tErrorColor,
+        ),
+      ),
+    );
   }
 }

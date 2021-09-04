@@ -1,5 +1,7 @@
 import 'dart:ffi';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,6 +16,7 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class DetailNp extends StatefulWidget {
   // DetailNp({Key? key}) : super(key: key);
@@ -142,11 +145,12 @@ class _DetailNpState extends State<DetailNp> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _getOrImage();
+    _getListReviewslimit();
   }
 
   Widget checkStatus(_status) {
     Widget child;
-    print(_status);
     if (_status == 'open') {
       child = Card(
         elevation: 0,
@@ -218,7 +222,7 @@ class _DetailNpState extends State<DetailNp> {
                 return Container(
                   // margin: EdgeInsets.symmetric(horizontal: 5),
                   width: MediaQuery.of(context).size.width,
-                  child: _checkSendRepairImage('${imgsmembers[index].npImg}'),
+                  child: _imageNP('${imgsmembers[index].npImg}'),
                   // fit: BoxFit.cover,
                 );
               },
@@ -750,18 +754,20 @@ class _DetailNpState extends State<DetailNp> {
     );
   }
 
-  Widget _checkSendRepairImage(imageName) {
-    Widget child;
-    print('Imagename : $imageName');
-    if (imageName != null) {
-      child = Image.network(
-        '${Connectapi().domainimgnpforuser}${imageName}',
-        fit: BoxFit.cover,
-      );
-    } else {
-      child = Image.asset('assets/images/no_image.png');
-    }
-    return new Container(child: child);
+  Widget _imageNP(imageName) {
+    return CachedNetworkImage(
+      imageUrl: '${Connectapi().domainimgnpforuser}${imageName}',
+      fit: BoxFit.cover,
+      placeholder: (context, url) => Center(
+        child: ShowProgress().loading(),
+      ),
+      errorWidget: (context, url, error) => Container(
+        child: Icon(
+          Icons.error,
+          color: tErrorColor,
+        ),
+      ),
+    );
   }
 
   Widget imgsuser(imageName) {

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'dart:ffi';
 import 'dart:convert' as convert;
@@ -5,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/ShowImgnpforUser.dart';
 import 'package:my_finalapp1/model/getNpforuser.dart';
+import 'package:my_finalapp1/widget/colors.dart';
+import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ShowGridNP extends StatefulWidget {
@@ -96,7 +99,10 @@ class _ShowGridNPState extends State<ShowGridNP> {
                     tag: datamember,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: imgsNp('${datamember[index].npImgspro}'),
+                      child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: imgsNp('${datamember[index].npImgspro}')),
                     ),
                   ),
                   Column(
@@ -154,18 +160,31 @@ class _ShowGridNPState extends State<ShowGridNP> {
   }
 
   Widget imgsNp(imageName) {
-    Widget child;
-    print('Imagename : $imageName');
-    if (imageName != null) {
-      child = Image.network(
-        '${Connectapi().domainimgnp}${imageName}',
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        fit: BoxFit.cover,
-      );
-    } else {
-      child = Image.asset('assets/images/person.png');
-    }
-    return new Container(child: child);
+    return CachedNetworkImage(
+      imageUrl: '${Connectapi().domainimgnp}${imageName}',
+      fit: BoxFit.cover,
+      placeholder: (context, url) => Center(
+        child: ShowProgress().loading(),
+      ),
+      errorWidget: (context, url, error) => Container(
+        child: Icon(
+          Icons.error,
+          color: tErrorColor,
+        ),
+      ),
+    );
+    // Widget child;
+    // print('Imagename : $imageName');
+    // if (imageName != null) {
+    //   child = Image.network(
+    //     '${Connectapi().domainimgnp}${imageName}',
+    //     width: MediaQuery.of(context).size.width,
+    //     height: MediaQuery.of(context).size.height,
+    //     fit: BoxFit.cover,
+    //   );
+    // } else {
+    //   child = Image.asset('assets/images/person.png');
+    // }
+    // return new Container(child: child);
   }
 }

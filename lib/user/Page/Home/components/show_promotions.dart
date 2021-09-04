@@ -1,11 +1,12 @@
 import 'dart:ffi';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/model_get_img_promotions.dart';
 import 'package:my_finalapp1/widget/colors.dart';
+import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'dart:convert' as convert;
@@ -157,16 +158,18 @@ class _ShowPromotionsState extends State<ShowPromotions> {
       );
 
   Widget imgs(imageName) {
-    Widget child;
-    print('Imagename : $imageName');
-    if (imageName != null) {
-      child = Image.network(
-        '${Connectapi().domainimgpro}${imageName}',
-        fit: BoxFit.cover,
-      );
-    } else {
-      child = Image.asset('assets/images/person.png');
-    }
-    return new Container(child: child);
+    return CachedNetworkImage(
+      imageUrl: '${Connectapi().domainimgpro}${imageName}',
+      fit: BoxFit.cover,
+      placeholder: (context, url) => Center(
+        child: ShowProgress().loading(),
+      ),
+      errorWidget: (context, url, error) => Container(
+        child: Icon(
+          Icons.error,
+          color: tErrorColor,
+        ),
+      ),
+    );
   }
 }
