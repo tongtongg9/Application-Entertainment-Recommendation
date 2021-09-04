@@ -95,7 +95,7 @@ class _ShowGridNPState extends State<ShowGridNP> {
                   Hero(
                     tag: datamember,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(10),
                       child: imgsNp('${datamember[index].npImgspro}'),
                     ),
                   ),
@@ -108,7 +108,7 @@ class _ShowGridNPState extends State<ShowGridNP> {
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(10),
                           color: Colors.black54,
                         ),
                         child: Column(
@@ -137,22 +137,8 @@ class _ShowGridNPState extends State<ShowGridNP> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.normal),
                                 ),
-                                // Spacer(),
-
-                                // LikedButton()
                               ],
                             ),
-
-                            // SmoothStarRating(
-                            //   allowHalfRating: false,
-                            //   onRated: (v) {},
-                            //   starCount: 5,
-                            //   rating: place.rating,
-                            //   size: 15,
-                            //   isReadOnly: true,
-                            //   color: kRatingStarColor,
-                            //   borderColor: kRatingStarColor,
-                            // )
                           ],
                         ),
                       )
@@ -173,8 +159,8 @@ class _ShowGridNPState extends State<ShowGridNP> {
     if (imageName != null) {
       child = Image.network(
         '${Connectapi().domainimgnp}${imageName}',
-        width: double.infinity,
-        height: 200,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         fit: BoxFit.cover,
       );
     } else {

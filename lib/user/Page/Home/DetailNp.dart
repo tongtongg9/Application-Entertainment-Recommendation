@@ -79,7 +79,7 @@ class _DetailNpState extends State<DetailNp> {
   var _npId;
   var token;
 
-  Future getDataNp() {
+  Future getData() {
     _rec_member = ModalRoute.of(context).settings.arguments;
     _npId = _rec_member['np_id'];
     _npName = _rec_member['np_name'];
@@ -142,8 +142,6 @@ class _DetailNpState extends State<DetailNp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getOrImage();
-    _getListReviewslimit();
   }
 
   Widget checkStatus(_status) {
@@ -175,7 +173,7 @@ class _DetailNpState extends State<DetailNp> {
 
   @override
   Widget build(BuildContext context) {
-    getDataNp();
+    getData();
     return Scaffold(
       // extendBodyBehindAppBar: true,
       // extendBody: true,
@@ -220,7 +218,7 @@ class _DetailNpState extends State<DetailNp> {
                 return Container(
                   // margin: EdgeInsets.symmetric(horizontal: 5),
                   width: MediaQuery.of(context).size.width,
-                  child: _checkSendRepairImage(imgsmembers[index].npImg),
+                  child: _checkSendRepairImage('${imgsmembers[index].npImg}'),
                   // fit: BoxFit.cover,
                 );
               },
@@ -423,51 +421,51 @@ class _DetailNpState extends State<DetailNp> {
                           ],
                         ),
                         SizedBox(height: 5),
-                        // Card(
-                        //   elevation: 2,
-                        //   shadowColor: tBGDeepColor,
-                        //   child: SizedBox(
-                        //     width: MediaQuery.of(context).size.width,
-                        //     height: 250,
-                        //     child: Center(
-                        //       child: Text(
-                        //         'ไม่มีตำแหน่งร้าน',
-                        //         style: TextStyle(
-                        //           color: tTextColor,
-                        //           fontSize: 12,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                         Card(
                           elevation: 2,
                           shadowColor: tBGDeepColor,
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width,
                             height: 250,
-                            child: GoogleMap(
-                              initialCameraPosition: CameraPosition(
-                                target: LatLng(_npLat, _npLong),
-                                zoom: 15,
-                              ),
-                              mapType: MapType.normal,
-                              markers: <Marker>{
-                                Marker(
-                                  markerId: MarkerId('myStore'),
-                                  position: LatLng(_npLat, _npLong),
-                                  infoWindow: InfoWindow(
-                                      title: '$_npName',
-                                      snippet:
-                                          '${_npAdress} อำเภอ${_npDistrict} จังหวัด${_npProvince}',
-                                      onTap: () {
-                                        googleMap();
-                                      }),
+                            child: Center(
+                              child: Text(
+                                'ไม่มีตำแหน่งร้าน',
+                                style: TextStyle(
+                                  color: tTextColor,
+                                  fontSize: 12,
                                 ),
-                              },
+                              ),
                             ),
                           ),
                         ),
+                        // Card(
+                        //   elevation: 2,
+                        //   shadowColor: tBGDeepColor,
+                        //   child: SizedBox(
+                        //     width: MediaQuery.of(context).size.width,
+                        //     height: 250,
+                        //     child: GoogleMap(
+                        //       initialCameraPosition: CameraPosition(
+                        //         target: LatLng(_npLat, _npLong),
+                        //         zoom: 15,
+                        //       ),
+                        //       mapType: MapType.normal,
+                        //       markers: <Marker>{
+                        //         Marker(
+                        //           markerId: MarkerId('myStore'),
+                        //           position: LatLng(_npLat, _npLong),
+                        //           infoWindow: InfoWindow(
+                        //               title: '$_npName',
+                        //               snippet:
+                        //                   '${_npAdress} อำเภอ${_npDistrict} จังหวัด${_npProvince}',
+                        //               onTap: () {
+                        //                 googleMap();
+                        //               }),
+                        //         ),
+                        //       },
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(height: 10),
                         Divider(
                           thickness: 2,

@@ -77,7 +77,7 @@ class _ShowPromotionsState extends State<ShowPromotions> {
         children: [
           CarouselSlider.builder(
             options: CarouselOptions(
-              aspectRatio: 16 / 9,
+              aspectRatio: 3 / 2,
               height: 250,
               viewportFraction: 1,
               autoPlay: true,
@@ -95,7 +95,10 @@ class _ShowPromotionsState extends State<ShowPromotions> {
                 //   ),
                 // ),
                 width: MediaQuery.of(context).size.width,
-                child: imgs(datamember[index].proImg),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: imgs(datamember[index].proImg),
+                ),
               );
             },
           ),

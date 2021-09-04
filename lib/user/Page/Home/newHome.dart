@@ -62,7 +62,7 @@ class _NewwHomeState extends State<NewwHome> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                padding: const EdgeInsets.all(10),
                 child: ShowPromotions(),
               ),
               Padding(

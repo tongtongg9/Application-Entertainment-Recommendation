@@ -73,15 +73,15 @@ class _FeedState extends State<Feed> {
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          width: double.infinity,
+          width: MediaQuery.of(context).size.height,
           padding: EdgeInsets.only(bottom: 30),
-          child: _reviewList(),
+          child: _listView(),
         ),
       ),
     );
   }
 
-  Widget _reviewList() {
+  Widget _listView() {
     var dateformate = DateFormat.yMMMEd();
 
     return SingleChildScrollView(
