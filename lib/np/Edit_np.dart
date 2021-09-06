@@ -329,20 +329,20 @@ class _EditPagenpState extends State<EditPagenp> {
 
   Widget btnSubmit() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: RaisedButton(
-        color: tPimaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+      width: MediaQuery.of(context).size.width * 0.9,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          primary: tPimaryColor,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'บันทึก',
-            style: TextStyle(
-              fontSize: 16,
-              color: tTextColor,
-            ),
+        child: Text(
+          'บันทึก',
+          style: TextStyle(
+            fontSize: 16,
+            color: tTextWColor,
           ),
         ),
         onPressed: () {

@@ -22,6 +22,7 @@ class _ShowPromotionsListState extends State<ShowPromotionsList> {
   List<Showpromotions> datamember = [];
 
   var token;
+
   Future<Void> showfeedreviews() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');

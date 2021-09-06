@@ -5,6 +5,8 @@ import 'package:my_finalapp1/np/Edit_np.dart';
 import 'package:my_finalapp1/owner/Booking_ow_detail.dart';
 import 'package:my_finalapp1/owner/Booking_ow_list.dart';
 import 'package:my_finalapp1/owner/add_promotions.dart';
+import 'package:my_finalapp1/owner/show_promotions_detail_np.dart';
+import 'package:my_finalapp1/owner/show_promotions_list_np.dart';
 import 'package:my_finalapp1/routes/routes.dart';
 import 'package:my_finalapp1/user/Page/Home/Booking_user_detail.dart';
 import 'package:my_finalapp1/user/Page/Home/Booking_user_list.dart';
@@ -73,6 +75,9 @@ class MyApp extends StatelessWidget {
 
         '/showpromotionslist': (context) => ShowPromotionsList(),
         '/showpromotionsdetail': (context) => ShowPromotionsDetail(),
+
+        '/showpromotionslistnp': (context) => ShowPromotionsListNp(),
+        '/showpromotionsdetailnp': (context) => ShowPromotionsDetailNp(),
 
         // '/owloginpage' : ( context) => LoginPageOw(),
 

@@ -5,14 +5,14 @@ import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 
-class ShowPromotionsDetail extends StatefulWidget {
-  // ShowPromotionsDetail({Key? key}) : super(key: key);
+class ShowPromotionsDetailNp extends StatefulWidget {
+  // ShowPromotionsDetailNp({Key? key}) : super(key: key);
 
   @override
-  _ShowPromotionsDetailState createState() => _ShowPromotionsDetailState();
+  _ShowPromotionsDetailNpState createState() => _ShowPromotionsDetailNpState();
 }
 
-class _ShowPromotionsDetailState extends State<ShowPromotionsDetail> {
+class _ShowPromotionsDetailNpState extends State<ShowPromotionsDetailNp> {
   var token;
 
   Map<String, dynamic> _rec_member;
@@ -25,16 +25,16 @@ class _ShowPromotionsDetailState extends State<ShowPromotionsDetail> {
   var _proImg;
 
   var _npId;
-  var _npName;
-  var _npAbout;
-  var _npPhone;
-  var _npEmail;
-  var _npAdress;
-  var _npDistrict;
-  var _npProvince;
-  var _npLat;
-  var _npLong;
-  var _npBkStatus;
+  // var _npName;
+  // var _npAbout;
+  // var _npPhone;
+  // var _npEmail;
+  // var _npAdress;
+  // var _npDistrict;
+  // var _npProvince;
+  // var _npLat;
+  // var _npLong;
+  // var _npBkStatus;
 
   Future getData() {
     _rec_member = ModalRoute.of(context).settings.arguments;
@@ -45,16 +45,16 @@ class _ShowPromotionsDetailState extends State<ShowPromotionsDetail> {
     _proEnd = _rec_member['pro_end'];
     _proImg = _rec_member['pro_img'];
     _npId = _rec_member['np_id'];
-    _npName = _rec_member['np_name'];
-    _npAbout = _rec_member['np_about'];
-    _npPhone = _rec_member['np_phone'];
-    _npEmail = _rec_member['np_email'];
-    _npAdress = _rec_member['np_adress'];
-    _npDistrict = _rec_member['np_district'];
-    _npProvince = _rec_member['np_province'];
-    _npLat = _rec_member['np_lat'];
-    _npLong = _rec_member['np_long'];
-    _npBkStatus = _rec_member['np_bk_status'];
+    // _npName = _rec_member['np_name'];
+    // _npAbout = _rec_member['np_about'];
+    // _npPhone = _rec_member['np_phone'];
+    // _npEmail = _rec_member['np_email'];
+    // _npAdress = _rec_member['np_adress'];
+    // _npDistrict = _rec_member['np_district'];
+    // _npProvince = _rec_member['np_province'];
+    // _npLat = _rec_member['np_lat'];
+    // _npLong = _rec_member['np_long'];
+    // _npBkStatus = _rec_member['np_bk_status'];
 
     print(_rec_member);
   }
@@ -70,16 +70,6 @@ class _ShowPromotionsDetailState extends State<ShowPromotionsDetail> {
   Widget build(BuildContext context) {
     getData();
     return Scaffold(
-      // extendBodyBehindAppBar: true,
-      // extendBody: true,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   leading: CustomBackButton(
-      //     tapBack: () {
-      //       Navigator.pop(context);
-      //     },
-      //   ),
-      // ),
       body: Stack(
         children: [
           SizedBox(
@@ -154,7 +144,7 @@ class _ShowPromotionsDetailState extends State<ShowPromotionsDetail> {
                         Column(
                           children: [
                             Text(
-                              '[$_npName] $_proTopic',
+                              '$_proTopic',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.normal,
@@ -266,30 +256,15 @@ class _ShowPromotionsDetailState extends State<ShowPromotionsDetail> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      primary: tPimaryColor,
+                      primary: tErrorColor,
                     ),
                     child: Text(
-                      'ไปที่ร้าน',
+                      'ลบโปรโมชั่น',
                       style: TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/showdetailnp', arguments: {
-                        'np_id': _npId,
-                        'np_name': _npName,
-                        'np_about': _npAbout,
-                        'np_phone': _npPhone,
-                        'np_email': _npEmail,
-                        'np_adress': _npAdress,
-                        'np_district': _npDistrict,
-                        'np_province': _npProvince,
-                        'np_lat': _npLat,
-                        'np_long': _npLong,
-                        'np_bk_status': _npBkStatus,
-                      });
-                      print(_npName);
-                    },
+                    onPressed: () {},
                   ),
                 )
               ],
@@ -299,20 +274,6 @@ class _ShowPromotionsDetailState extends State<ShowPromotionsDetail> {
       ),
     );
   }
-
-  // Widget _image(imageName) {
-  //   Widget child;
-  //   print('Imagename : $imageName');
-  //   if (imageName != null) {
-  //     child = Image.network(
-  //       '${Connectapi().domainimgpro}${imageName}',
-  //       fit: BoxFit.cover,
-  //     );
-  //   } else {
-  //     child = Image.asset('assets/images/person.png');
-  //   }
-  //   return new Container(child: child);
-  // }
 
   Widget _image(imageName) {
     return CachedNetworkImage(

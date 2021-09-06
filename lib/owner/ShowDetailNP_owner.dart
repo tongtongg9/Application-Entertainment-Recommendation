@@ -177,7 +177,6 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
 
   Widget checkStatus(_status) {
     Widget child;
-    print(_status);
     if (_status == 'open') {
       child = Card(
         elevation: 0,
@@ -489,7 +488,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                           ),
                         ),
                       ),
-                      //! Card(
+                      // ! Card(
                       //   elevation: 2,
                       //   shadowColor: tBGDeepColor,
                       //   child: SizedBox(
@@ -548,11 +547,12 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                   },
                 ),
                 btnBottombar(
-                  'เพิ่มโปรโมชั่น',
+                  'จัดการโปรโมชั่น',
                   () {
-                    Navigator.pushNamed(context, '/addpromotions', arguments: {
-                      '_npId': _npId,
-                    });
+                    Navigator.pushNamed(context, '/showpromotionslistnp',
+                        arguments: {
+                          '_npId': _npId,
+                        });
                   },
                 ),
                 btnBottombar(

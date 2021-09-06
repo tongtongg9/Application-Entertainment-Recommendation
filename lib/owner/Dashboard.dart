@@ -164,14 +164,14 @@ class _DashboardState extends State<Dashboard> {
                   title: "รายการสำรองที่นั่ง",
                   // subtitle: "subtitle",
                 ),
-                GridMenu(
-                  press: () {
-                    print('โปรโมชั่น');
-                  },
-                  img: "assets/images/megaphone.png",
-                  title: "โปรโมชั่น",
-                  // subtitle: "subtitle",
-                ),
+                // GridMenu(
+                //   press: () {
+                //     print('โปรโมชั่น');
+                //   },
+                //   img: "assets/images/megaphone.png",
+                //   title: "โปรโมชั่น",
+                //   // subtitle: "subtitle",
+                // ),
                 GridMenu(
                   press: () {
                     _logout();
