@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:my_finalapp1/model/Connectapi.dart';
-import 'package:my_finalapp1/model/getNpforuser.dart';
+import 'package:my_finalapp1/model/model_get_grid_np_for_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
@@ -106,7 +106,7 @@ class _HomeState extends State<Home> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[ 
+                              children: <Widget>[
                                 // Padding(
                                 //   padding: const EdgeInsets.only(left: 20,bottom: 30),
                                 Container(

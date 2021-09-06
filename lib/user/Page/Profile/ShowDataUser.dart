@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
-import 'package:my_finalapp1/model/Member.dart';
+import 'package:my_finalapp1/model/model_get_data_user.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
+import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ffi';
 import 'dart:convert' as convert;
@@ -15,7 +17,7 @@ class ShowDataUser extends StatefulWidget {
 
 class _ShowDataUserState extends State<ShowDataUser> {
   String userId;
-  UserInfo udata;
+  Infouser udata;
   //connect server api
   Future<Void> _getInfoUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -33,16 +35,15 @@ class _ShowDataUserState extends State<ShowDataUser> {
     //check response
     if (response.statusCode == 200) {
       //แปลงjson ให้อยู่ในรูปแบบ model members
-      UserMember members =
-          UserMember.fromJson(convert.jsonDecode(response.body));
+      DataUser members = DataUser.fromJson(convert.jsonDecode(response.body));
       //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
       setState(() {
-        udata = members.info;
+        udata = members.infouser;
       });
     }
   }
 
-  Future onGoBack(dynamic value) {
+  Future onGoBack() {
     setState(() {
       _getInfoUser();
     });
@@ -54,6 +55,7 @@ class _ShowDataUserState extends State<ShowDataUser> {
     super.initState();
     //call _getAPI
     _getInfoUser();
+    onGoBack();
   }
 
   @override
@@ -204,25 +206,17 @@ class _ShowDataUserState extends State<ShowDataUser> {
     );
   } //! >> class Proile Picture
 
-  Widget imgsuser() {
-    Widget child;
-    if (udata.userImg != null) {
-      child = ClipRRect(
+  Widget imgsuser() => ClipRRect(
         borderRadius: BorderRadius.circular(50),
-        child: Image.network(
-          '${Connectapi().domainimguser}${udata.userImg}',
+        child: CachedNetworkImage(
+          key: UniqueKey(),
+          imageUrl: '${Connectapi().domainimguser}${udata.userImg}',
           fit: BoxFit.cover,
+          placeholder: (context, imageUrl) => ShowProgress().loading(),
+          errorWidget: (context, imageUrl, error) =>
+              Image.asset('assets/images/person.png'),
         ),
       );
-    } else {
-      child = Image.asset(
-        'assets/images/person.png',
-        fit: BoxFit.cover,
-      );
-    }
-    print('Imagename : $udata.userImg');
-    return new ClipRRect(child: child);
-  }
 } //! main class
 
 class Infotype extends StatelessWidget {

@@ -53,54 +53,26 @@ class _RegisUserState extends State<RegisUser> {
     }
   }
 
-  //Upload Images อัพโหลดรูปภาพ =====================
-  //ตัวแปรเกี่ยวกับ อัพโหลดรูปภาพ
-  // File _image;
-  // File _camera;
-  // String imgstatus = '';
-  // String error = 'Error';
-  var filename;
-  var token;
-  var userId;
+  //! aad profile <<<<<
+
+  var _filename;
+
   // ตัวแปรเกี่ยวกับ อัพโหลดรูปภาพ
 
   //multi_image_picker
-  List<Asset> images = <Asset>[];
-  Asset asset;
-  String _error = 'No Error Dectected';
+  List<Asset> _images = <Asset>[];
+  Asset _asset;
+  String error = 'No Error Dectected';
 
-  Future _getprefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token');
-    userId = prefs.getInt('id');
-    print('uId = $userId');
-    print('token = $token');
-  }
-
-  //สร้าง GridView
-  Widget buildGridView() {
-    return GridView.count(
-      crossAxisCount: 3,
-      children: List.generate(images.length, (index) {
-        // asset = images[index];
-        return AssetThumb(
-          asset: images[index],
-          width: 300,
-          height: 300,
-        );
-      }),
-    );
-  }
-
-  // ? LoadAssets
-  Future<void> loadAssets() async {
+  //LoadAssets
+  Future<void> _loadAssets() async {
     List<Asset> resultList = <Asset>[];
     String error = 'No Error Detected';
     try {
       resultList = await MultiImagePicker.pickImages(
-        maxImages: 10,
+        maxImages: 1,
         enableCamera: true,
-        selectedAssets: images,
+        selectedAssets: _images,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
           actionBarColor: "#abcdef",
@@ -119,18 +91,18 @@ class _RegisUserState extends State<RegisUser> {
     // setState to update our non-existent appearance.
     if (!mounted) return;
     setState(() {
-      images = resultList;
-      print('path : ${images.length}');
-      _error = error;
+      _images = resultList;
+      print('path : ${_images.length}');
+      error = error;
     });
   }
 
 //multi_image_picker
-  Future<String> _multiUploadimage(ast) async {
-    var _urlUpload = '${Connectapi().domain}/uploads/$userId';
+  Future<String> multiUploadimage(ast) async {
+    var urlUpload = '${Connectapi().domain}/uploadsprofileuser';
 // create multipart request
     MultipartRequest request =
-        http.MultipartRequest("PUT", Uri.parse(_urlUpload));
+        http.MultipartRequest("POST", Uri.parse(urlUpload));
     ByteData byteData = await ast.getByteData();
     List<int> imageData = byteData.buffer.asUint8List();
 
@@ -149,12 +121,12 @@ class _RegisUserState extends State<RegisUser> {
   }
 
   //Loop รูปภาพ
-  Future<void> _sendPathImage() async {
-    print('path : ${images.length}');
-    for (int i = 0; i < images.length; i++) {
-      asset = images[i];
+  Future<void> sendImage() async {
+    print('path : ${_images.length}');
+    for (int i = 0; i < _images.length; i++) {
+      _asset = _images[i];
       print('image : $i');
-      var res = _multiUploadimage(asset);
+      var res = multiUploadimage(_asset);
     }
   }
 
@@ -251,7 +223,57 @@ class _RegisUserState extends State<RegisUser> {
                       dateForm(),
                     ],
                   ),
-                  SizedBox(height: 25),
+                  SizedBox(height: 10),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.black12,
+                  ),
+                  SizedBox(height: 10),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    'เพิ่มรูปภาพโปรไฟล์ของคุณ',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: tTextColor,
+                                    ),
+                                  ),
+                                  Text(
+                                    '*',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: tErrorColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                'ขนาดของรูปภาพต้องไม่เกิน 5 MB',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: tGreyColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          addImgs(_loadAssets),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      buildImagesProfile(),
+                    ],
+                  ),
+                  SizedBox(height: 50),
                   btnSubmit(),
                 ],
               ),
@@ -468,27 +490,93 @@ class _RegisUserState extends State<RegisUser> {
     );
   }
 
-  Widget btnSubmit() {
+  Widget addImgs(VoidCallback onload) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
+      width: 100,
+      height: 50,
       child: RaisedButton(
-        color: tPimaryColor,
+        elevation: 0,
+        color: tBGDeepColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Center(
           child: Text(
-            'บันทึก',
+            'เพิ่มรูปภาพ',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               color: tTextColor,
             ),
           ),
         ),
-        onPressed: () {
-          // Navigator.pop(context, '/LoginPage');
+        onPressed: onload,
+      ),
+    );
+  }
 
+  Widget buildImagesProfile() {
+    return SizedBox(
+      height: 150,
+      child: _images.length <= 0
+          ? Card(
+              elevation: 0,
+              color: tBGDeepColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: SizedBox(
+                height: 150,
+                child: Center(
+                  child: Text(
+                    'เพิ่มรูปภาพของคุณ',
+                    style: TextStyle(
+                      color: tTextColor,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          : Card(
+              elevation: 0,
+              color: tBGDeepColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: Padding(
+                padding: const EdgeInsets.all(2),
+                child: ListView.builder(
+                  itemCount: _images.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) => Card(
+                    child: AssetThumb(
+                      asset: _images[index],
+                      width: 150,
+                      height: 150,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+    );
+  }
+
+  Widget btnSubmit() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.9,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          primary: tPimaryColor,
+        ),
+        child: Text(
+          'ยืนยัน',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        onPressed: () {
           if (_uid.currentState.validate()) {
             Map<String, dynamic> valuse = Map();
             valuse['user_username'] = _uuser.text;
@@ -497,8 +585,6 @@ class _RegisUserState extends State<RegisUser> {
             valuse['user_lastname'] = _ulname.text;
             valuse['user_phone'] = _upho.text;
             valuse['user_email'] = _uemail.text;
-            // valuse['user_gender'] = _ugender.text;
-            // valuse['user_age'] = _uage.text;
             valuse['user_gender'] = _choseGender.toString();
             valuse['user_bday'] = _date.toString();
 
@@ -508,12 +594,14 @@ class _RegisUserState extends State<RegisUser> {
             print(_ulname.text);
             print(_upho.text);
             print(_uemail.text);
-            // print(_ugender.text);
-            // print(_uage.text);
             print(_choseGender.toString());
             print(_date.toString());
 
             register(valuse);
+
+            sendImage();
+
+            Navigator.pop(context);
           }
         },
       ),

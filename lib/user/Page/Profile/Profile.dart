@@ -1,12 +1,13 @@
 import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:my_finalapp1/MainPage.dart';
+import 'package:my_finalapp1/model/model_get_data_user.dart';
 import 'package:my_finalapp1/widget/colors.dart';
+import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:my_finalapp1/model/Connectapi.dart';
-import 'package:my_finalapp1/model/Member.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class Profile extends StatefulWidget {
@@ -17,8 +18,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String userId;
-  UserInfo udata;
+  Infouser udata;
   //connect server api
   Future<Void> _getInfoUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -36,11 +36,10 @@ class _ProfileState extends State<Profile> {
     //check response
     if (response.statusCode == 200) {
       //แปลงjson ให้อยู่ในรูปแบบ model members
-      UserMember members =
-          UserMember.fromJson(convert.jsonDecode(response.body));
+      DataUser members = DataUser.fromJson(convert.jsonDecode(response.body));
       //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
       setState(() {
-        udata = members.info;
+        udata = members.infouser;
       });
     }
   }
@@ -120,36 +119,36 @@ class _ProfileState extends State<Profile> {
     );
   } //! >> class Proile Picture
 
-  // Widget imgsuser() => ClipRRect(
-  //       borderRadius: BorderRadius.circular(50),
-  //       child: CachedNetworkImage(
-  //         key: UniqueKey(),
-  //         imageUrl: '${Connectapi().domainimguser}${udata.userImg}',
-  //         fit: BoxFit.cover,
-  //         placeholder: (context, imageUrl) => new CircularProgressIndicator(),
-  //         errorWidget: (context, imageUrl, error) =>
-  //             Image.asset('assets/images/person.png'),
-  //       ),
-  //     );
+  Widget imgsuser() => ClipRRect(
+        borderRadius: BorderRadius.circular(50),
+        child: CachedNetworkImage(
+          key: UniqueKey(),
+          imageUrl: '${Connectapi().domainimguser}${udata.userImg}',
+          fit: BoxFit.cover,
+          placeholder: (context, imageUrl) => ShowProgress().loading(),
+          errorWidget: (context, imageUrl, error) =>
+              Image.asset('assets/images/person.png'),
+        ),
+      );
 
-  Widget imgsuser() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(50),
-      child: CachedNetworkImage(
-        imageUrl: '${Connectapi().domainimguser}${udata.userImg}',
-        fit: BoxFit.cover,
-        placeholder: (context, url) => Center(
-          child: CircularProgressIndicator(),
-        ),
-        errorWidget: (context, url, error) => Container(
-          child: Icon(
-            Icons.error,
-            color: tErrorColor,
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget imgsuser() {
+  //   return ClipRRect(
+  //     borderRadius: BorderRadius.circular(50),
+  //     child: CachedNetworkImage(
+  //       imageUrl: '${Connectapi().domainimguser}${udata.userImg}',
+  //       fit: BoxFit.cover,
+  //       placeholder: (context, url) => Center(
+  //         child: CircularProgressIndicator(),
+  //       ),
+  //       errorWidget: (context, url, error) => Container(
+  //         child: Icon(
+  //           Icons.error,
+  //           color: tErrorColor,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Padding btnLogout() {
     return Padding(

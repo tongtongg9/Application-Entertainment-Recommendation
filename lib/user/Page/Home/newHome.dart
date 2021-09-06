@@ -3,7 +3,6 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
-import 'package:my_finalapp1/model/Member.dart';
 import 'package:my_finalapp1/user/Page/Home/components/app_bar.dart';
 import 'package:my_finalapp1/user/Page/Home/components/grid_np.dart';
 import 'package:my_finalapp1/user/Page/Home/components/show_promotions.dart';

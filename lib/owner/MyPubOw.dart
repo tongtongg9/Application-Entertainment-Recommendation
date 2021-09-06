@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:my_finalapp1/model/Connectapi.dart';
-import 'package:my_finalapp1/model/Member.dart';
+import 'package:my_finalapp1/model/model_get_listdata_np_for_ow.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
 import 'package:my_finalapp1/widget/loading_widget.dart';

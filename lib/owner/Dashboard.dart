@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:my_finalapp1/MainPage.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
-import 'package:my_finalapp1/model/Member.dart';
+import 'package:my_finalapp1/model/model_get_data_owner.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

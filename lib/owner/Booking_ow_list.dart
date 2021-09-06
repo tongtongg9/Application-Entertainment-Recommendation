@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
-import 'package:my_finalapp1/model/Get_Bookings_by_ow.dart';
+import 'package:my_finalapp1/model/model_get_list_bookings_owner.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:my_finalapp1/widget/colors.dart';
