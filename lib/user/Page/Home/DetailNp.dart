@@ -521,7 +521,7 @@ class _DetailNpState extends State<DetailNp> {
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 btnReserve(),
                 btnReview(),
@@ -564,10 +564,11 @@ class _DetailNpState extends State<DetailNp> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Card(
-                      elevation: 0,
+                      elevation: 5,
+                      shadowColor: tBGDeepColor,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      color: tBGDeepColor,
+                      color: Colors.white,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -653,41 +654,22 @@ class _DetailNpState extends State<DetailNp> {
     );
   }
 
-  // Widget useravatar() {
-  //   return SizedBox(
-  //     height: 40,
-  //     width: 40,
-  //     child: Stack(
-  //       overflow: Overflow.visible,
-  //       fit: StackFit.expand,
-  //       children: [
-  //         ClipRRect(
-  //           borderRadius: BorderRadius.circular(50),
-  //           child: imgsuser('${userImg}'),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   Widget btnReserve() {
     return _npBkStatus == 'open'
         ? SizedBox(
-            width: 210,
-            // height: 50,
-            child: RaisedButton(
-              color: tPimaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+            width: MediaQuery.of(context).size.width * 0.45,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                primary: tPimaryColor,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  'สำรองที่นั่ง',
-                  style: TextStyle(
-                    color: tTextWColor,
-                    fontSize: 18,
-                  ),
+              child: Text(
+                'สำรองที่นั่ง',
+                style: TextStyle(
+                  fontSize: 16,
                 ),
               ),
               onPressed: () {
@@ -699,21 +681,19 @@ class _DetailNpState extends State<DetailNp> {
             ),
           )
         : SizedBox(
-            width: 210,
-            // height: 50,
-            child: RaisedButton(
-              color: tGreyColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+            width: MediaQuery.of(context).size.width * 0.45,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                primary: tPimaryColor,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  'สำรองที่นั่ง',
-                  style: TextStyle(
-                    color: tTextWColor,
-                    fontSize: 18,
-                  ),
+              child: Text(
+                'สำรองที่นั่ง',
+                style: TextStyle(
+                  fontSize: 16,
                 ),
               ),
               onPressed: () {
@@ -728,23 +708,36 @@ class _DetailNpState extends State<DetailNp> {
 
   Widget btnReview() {
     return SizedBox(
-      width: 210,
-      // height: 50,
-      child: RaisedButton(
-        color: tPimaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+      width: MediaQuery.of(context).size.width * 0.45,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          primary: tPimaryColor,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'เขียนรีวิว',
-            style: TextStyle(
-              color: tTextWColor,
-              fontSize: 18,
-            ),
+        child: Text(
+          'เขียนรีวิว',
+          style: TextStyle(
+            fontSize: 16,
           ),
         ),
+        // child: RaisedButton(
+        //   color: tPimaryColor,
+        //   shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular(10),
+        //   ),
+        //   child: Padding(
+        //     padding: const EdgeInsets.symmetric(vertical: 10),
+        //     child: Text(
+        //       'เขียนรีวิว',
+        //       style: TextStyle(
+        //         color: tTextWColor,
+        //         fontSize: 18,
+        //       ),
+        //     ),
+        //   ),
         onPressed: () {
           Navigator.pushNamed(context, '/reviewpage', arguments: {
             '_npId': _npId,

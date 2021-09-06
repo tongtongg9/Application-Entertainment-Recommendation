@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -80,156 +81,129 @@ class _MyPubOwState extends State<MyPubOw> {
           color: Colors.white,
         ),
       ),
-      body: ListView.builder(
-        shrinkWrap: true,
-        primary: false,
-        scrollDirection: Axis.vertical,
-        itemCount: datamember.length,
-        itemBuilder: (context, index) {
-          // children: <Widget>[
-          return Padding(
-            padding: const EdgeInsets.all(20),
-            child: Container(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/showdetailnpowner',
-                      arguments: {
-                        'np_id': datamember[index].npId,
-                        'np_name': datamember[index].npName,
-                        'np_about': datamember[index].npAbout,
-                        'np_phone': datamember[index].npPhone,
-                        'np_email': datamember[index].npEmail,
-                        'np_adress': datamember[index].npAdress,
-                        'np_district': datamember[index].npDistrict,
-                        'np_province': datamember[index].npProvince,
-                        'np_lat': datamember[index].npLat,
-                        'np_long': datamember[index].npLong,
-                        'np_bk_status': datamember[index].npBkStatus,
-                      });
-                },
-                child: Card(
-                  color: tBGDeepColor,
-                  elevation: 8,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+      body: SafeArea(
+        child: datamember.length <= 0
+            ? Card(
+                color: tBGDeepColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                child: SizedBox(
+                  height: 200,
+                  child: Center(
+                    child: Text(
+                      'ไม่มีร้าน',
+                      style: TextStyle(
+                        color: tTextColor,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(16),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  primary: false,
+                  scrollDirection: Axis.vertical,
+                  itemCount: datamember.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/showdetailnpowner',
+                            arguments: {
+                              'np_id': datamember[index].npId,
+                              'np_name': datamember[index].npName,
+                              'np_about': datamember[index].npAbout,
+                              'np_phone': datamember[index].npPhone,
+                              'np_email': datamember[index].npEmail,
+                              'np_adress': datamember[index].npAdress,
+                              'np_district': datamember[index].npDistrict,
+                              'np_province': datamember[index].npProvince,
+                              'np_lat': datamember[index].npLat,
+                              'np_long': datamember[index].npLong,
+                              'np_bk_status': datamember[index].npBkStatus,
+                            });
+                      },
+                      child: Card(
+                        color: Colors.white,
+                        shadowColor: tBGDeepColor,
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
                         child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          // child: mynpDetails(),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              // Padding(
-                              //   padding: const EdgeInsets.only(left: 20,bottom: 30),
-                              Container(
-                                child: Text(
-                                  "${datamember[index].npName}",
-                                  style: TextStyle(
-                                      color: tTextColor,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                              Container(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    // Container(
-                                    //   child: Text(
-                                    //     // "${datamember[index].npAbout}",
-                                    //     'About',
-                                    //     style: TextStyle(
-                                    //       color: Colors.white,
-                                    //       fontSize: 16,
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    Container(
-                                      child: Text(
-                                        "${datamember[index].npAdress} ${datamember[index].npDistrict}",
-                                        style: TextStyle(
-                                          color: tTextColor,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "${datamember[index].npProvince}",
-                                        style: TextStyle(
-                                          color: tTextColor,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "ติดต่อ ${datamember[index].npPhone}",
-                                        style: TextStyle(
-                                            color: tTextColor,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500),
-                                      ),
+                              SizedBox(
+                                width: 150,
+                                height: 100,
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: imgsNp(
+                                          '${datamember[index].npImgspro}'),
                                     ),
                                   ],
                                 ),
+                              ),
+                              SizedBox(width: 15),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${datamember[index].npName}",
+                                    style: TextStyle(
+                                      color: tTextColor,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${datamember[index].npAdress} ${datamember[index].npDistrict}",
+                                    style: TextStyle(
+                                      color: tTextColor,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${datamember[index].npProvince}",
+                                    style: TextStyle(
+                                      color: tTextColor,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         ),
                       ),
-                      Container(
-                        width: 150,
-                        height: 100,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: imgsNp('${datamember[index].npImgspro}'),
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
-            ),
-          );
-        },
       ),
     );
   }
 
   Widget imgsNp(imageName) {
-    Widget child;
-    print('Imagename : $imageName');
-
-    if (imageName != null) {
-      child = Image.network(
-        '${Connectapi().domainimgnp}${imageName}',
-        width: double.infinity,
-        height: 200,
-        fit: BoxFit.cover,
-      );
-    } else {
-      child = Image.asset(
-        'assets/images/no_image.png',
-        width: double.infinity,
-        height: 200,
-        fit: BoxFit.cover,
-      );
-      // child = Image.network(
-      //   '${Connectapi().domainonimgnp}',
-      //   width: double.infinity,
-      //   height: 200,
-      //   fit: BoxFit.cover,
-      // );
-    }
-    return new Container(child: child);
+    return CachedNetworkImage(
+      imageUrl: '${Connectapi().domainimgnp}${imageName}',
+      fit: BoxFit.cover,
+      placeholder: (context, url) => Center(
+        child: CircularProgressIndicator(),
+      ),
+      errorWidget: (context, url, error) => Container(
+        child: Icon(
+          Icons.error,
+          color: tErrorColor,
+        ),
+      ),
+    );
   }
 
   Widget mynpPhotos() {

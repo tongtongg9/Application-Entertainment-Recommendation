@@ -681,21 +681,20 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
 
   Widget btnBottombar(final String _text, final VoidCallback _pressed) {
     return SizedBox(
-      width: 135,
-      // height: 50,
-      child: RaisedButton(
-        color: tPimaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+      width: MediaQuery.of(context).size.width * 0.3,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          primary: tPimaryColor,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            _text,
-            style: TextStyle(
-              fontSize: 16,
-              color: tTextWColor,
-            ),
+        child: Text(
+          _text,
+          style: TextStyle(
+            fontSize: 16,
+            color: tTextWColor,
           ),
         ),
         onPressed: _pressed,

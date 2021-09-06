@@ -528,7 +528,7 @@ class _BookingDetailowState extends State<BookingDetailow> {
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 btnL(),
                 btnR(),
@@ -543,21 +543,20 @@ class _BookingDetailowState extends State<BookingDetailow> {
 
   Widget btnL() {
     return SizedBox(
-      width: 210,
-      // height: 50,
-      child: RaisedButton(
-        color: tErrorColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+      width: MediaQuery.of(context).size.width * 0.45,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          primary: tErrorColor,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'ยกเลิก',
-            style: TextStyle(
-              color: tTextWColor,
-              fontSize: 18,
-            ),
+        child: Text(
+          'ยกเลิก',
+          style: TextStyle(
+            color: tTextWColor,
+            fontSize: 18,
           ),
         ),
         onPressed: () {
@@ -573,21 +572,20 @@ class _BookingDetailowState extends State<BookingDetailow> {
 
   Widget btnR() {
     return SizedBox(
-      width: 210,
-      // height: 50,
-      child: RaisedButton(
-        color: Colors.green,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+      width: MediaQuery.of(context).size.width * 0.45,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          primary: Colors.green,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'ยืนยันการสำรองที่นั่ง',
-            style: TextStyle(
-              color: tTextWColor,
-              fontSize: 18,
-            ),
+        child: Text(
+          'ยืนยันการสำรองที่นั่ง',
+          style: TextStyle(
+            color: tTextWColor,
+            fontSize: 18,
           ),
         ),
         onPressed: () {

@@ -348,21 +348,19 @@ class _ReservePageState extends State<ReservePage> {
 
   Widget btnSummitReview() {
     return SizedBox(
-      width: 425,
-      // height: 50,
-      child: RaisedButton(
-        color: tPimaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+      width: MediaQuery.of(context).size.width * 0.9,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          primary: tPimaryColor,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'ยืนยัน',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white,
-            ),
+        child: Text(
+          'ยืนยัน',
+          style: TextStyle(
+            fontSize: 16,
           ),
         ),
         onPressed: () {

@@ -449,20 +449,20 @@ class _BookingDetailuserState extends State<BookingDetailuser> {
               children: <Widget>[
                 _bkStatus == '0'
                     ? SizedBox(
-                        width: 210,
-                        child: RaisedButton(
-                          color: tErrorColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            primary: tErrorColor,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              'ยกเลิกการจอง',
-                              style: TextStyle(
-                                color: tTextWColor,
-                                fontSize: 18,
-                              ),
+                          child: Text(
+                            'ยกเลิกการจอง',
+                            style: TextStyle(
+                              color: tTextWColor,
+                              fontSize: 18,
                             ),
                           ),
                           onPressed: () {
@@ -475,20 +475,20 @@ class _BookingDetailuserState extends State<BookingDetailuser> {
                         ),
                       )
                     : SizedBox(
-                        width: 210,
-                        child: RaisedButton(
-                          color: Colors.black26,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            primary: Colors.grey,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              'ยกเลิกการจอง',
-                              style: TextStyle(
-                                color: tTextWColor,
-                                fontSize: 18,
-                              ),
+                          child: Text(
+                            'ยกเลิกการจอง',
+                            style: TextStyle(
+                              color: tTextWColor,
+                              fontSize: 18,
                             ),
                           ),
                           onPressed: () {

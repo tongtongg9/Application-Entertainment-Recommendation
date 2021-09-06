@@ -1,5 +1,6 @@
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 
@@ -63,6 +64,7 @@ class _ShowPromotionsDetailState extends State<ShowPromotionsDetail> {
     super.initState();
   }
 
+  var dateformate = DateFormat.yMMMd();
   @override
   Widget build(BuildContext context) {
     getData();
@@ -140,7 +142,6 @@ class _ShowPromotionsDetailState extends State<ShowPromotionsDetail> {
                   child: SingleChildScrollView(
                     controller: scrollController,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Container(
                         //   alignment: Alignment.center,
@@ -149,223 +150,96 @@ class _ShowPromotionsDetailState extends State<ShowPromotionsDetail> {
                         //     child: Image.asset('assets/icons/coupon2.png'),
                         //   ),
                         // ),
-                        Row(
+                        Column(
                           children: [
                             Text(
-                              '$_npName',
+                              '[$_npName] $_proTopic',
                               style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                fontWeight: FontWeight.normal,
                                 color: tTextColor,
                               ),
                             ),
-                            Spacer(),
-                            // checkStatus(_npBkStatus),
+                            SizedBox(height: 20),
+                            IntrinsicHeight(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        'วันที่เริ่มโปรโมชั่น',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                          color: tTextColor,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${dateformate.format(DateTime.parse(_proStart))}',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: tTextColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  VerticalDivider(
+                                    indent: 0,
+                                    endIndent: 0,
+                                    thickness: 1,
+                                    color: Colors.black12,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        'วันที่สิ้นสุดโปรโมชั่น',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                          color: tTextColor,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${dateformate.format(DateTime.parse(_proEnd))}',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: tTextColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 20),
                           ],
                         ),
                         Divider(
-                          thickness: 2,
+                          thickness: 1,
                           color: Colors.black12,
                         ),
                         SizedBox(height: 15),
                         Text(
-                          'รายละเอียดร้าน',
+                          'รายละเอียดโปรโมชั่น',
                           style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                             color: tTextColor,
                           ),
                         ),
                         SizedBox(height: 10),
                         Text(
-                          '$_npAbout',
+                          '$_proDetail',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color: tTextColor,
                           ),
                         ),
-                        SizedBox(height: 0),
-                        Text(
-                          'ข้อมูลติดต่อ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: tTextColor,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Text(
-                              'เบอร์โทรศัพท์  : ',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
-                                color: tTextColor,
-                              ),
-                            ),
-                            Text(
-                              '$_npPhone',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
-                                color: tTextColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'Email  : ',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
-                                color: tTextColor,
-                              ),
-                            ),
-                            Text(
-                              '$_npEmail',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
-                                color: tTextColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Divider(
-                          thickness: 2,
-                          color: Colors.black12,
-                        ),
-                        SizedBox(height: 10),
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                // Text(
-                                //   'ที่อยู่ร้าน',
-                                //   style: TextStyle(
-                                //     fontSize: 18,
-                                //     fontWeight: FontWeight.w700,
-                                //     color: tTextColor,
-                                //   ),
-                                // ),
-                                // TextButton.icon(
-                                //   onPressed: () {
-                                //     googleMap();
-                                //     print(googleMap);
-                                //   },
-                                //   icon: Icon(
-                                //     Icons.location_pin,
-                                //     color: tPimaryColor,
-                                //   ),
-                                //   label: Text(
-                                //     '$_npName',
-                                //     style: TextStyle(
-                                //       color: tPimaryColor,
-                                //       fontSize: 16,
-                                //     ),
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  '${_npAdress} อำเภอ${_npDistrict} จังหวัด${_npProvince}',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                    color: tTextColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 5),
-                        Card(
-                          elevation: 2,
-                          shadowColor: tBGDeepColor,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 250,
-                            child: Center(
-                              child: Text(
-                                'ไม่มีตำแหน่งร้าน',
-                                style: TextStyle(
-                                  color: tTextColor,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        // Card(
-                        //   elevation: 2,
-                        //   shadowColor: tBGDeepColor,
-                        //   child: SizedBox(
-                        //     width: MediaQuery.of(context).size.width,
-                        //     height: 250,
-                        //     child: GoogleMap(
-                        //       initialCameraPosition: CameraPosition(
-                        //         target: LatLng(_npLat, _npLong),
-                        //         zoom: 15,
-                        //       ),
-                        //       mapType: MapType.normal,
-                        //       markers: <Marker>{
-                        //         Marker(
-                        //           markerId: MarkerId('myStore'),
-                        //           position: LatLng(_npLat, _npLong),
-                        //           infoWindow: InfoWindow(
-                        //               title: '$_npName',
-                        //               snippet:
-                        //                   '${_npAdress} อำเภอ${_npDistrict} จังหวัด${_npProvince}',
-                        //               onTap: () {
-                        //                 googleMap();
-                        //               }),
-                        //         ),
-                        //       },
-                        //     ),
-                        //   ),
-                        // ),
-                        SizedBox(height: 10),
-                        Divider(
-                          thickness: 2,
-                          color: Colors.black12,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "รีวิวจากผู้ใช้บริการ",
-                              style: TextStyle(
-                                color: tTextColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                            Spacer(),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/reviewlistnp',
-                                    arguments: {
-                                      '_npId': _npId,
-                                    });
-                              },
-                              child: Text(
-                                'ดูทั้งหมด',
-                                style: TextStyle(
-                                  color: tPimaryColor,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // _reviewList(),
                       ],
                     ),
                   )),
@@ -375,18 +249,48 @@ class _ShowPromotionsDetailState extends State<ShowPromotionsDetail> {
       ),
       bottomNavigationBar: BottomAppBar(
         color: Theme.of(context).scaffoldBackgroundColor,
-        // color: Colors.transparent,
-        // shape: CircularNotchedRectangle(),
-        // notchMargin: 6,
         child: Container(
+          width: MediaQuery.of(context).size.width,
           height: 60,
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // btnReserve(),
-                // btnReview(),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      primary: tPimaryColor,
+                    ),
+                    child: Text(
+                      'ไปที่ร้าน',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/showdetailnp', arguments: {
+                        'np_id': _npId,
+                        'np_name': _npName,
+                        'np_about': _npAbout,
+                        'np_phone': _npPhone,
+                        'np_email': _npEmail,
+                        'np_adress': _npAdress,
+                        'np_district': _npDistrict,
+                        'np_province': _npProvince,
+                        'np_lat': _npLat,
+                        'np_long': _npLong,
+                        'np_bk_status': _npBkStatus,
+                      });
+                      print(_npName);
+                    },
+                  ),
+                )
               ],
             ),
           ),

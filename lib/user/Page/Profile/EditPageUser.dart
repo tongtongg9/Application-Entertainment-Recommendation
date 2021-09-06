@@ -81,17 +81,6 @@ class _EditPageUserState extends State<EditPageUser> {
             Navigator.pop(context);
           },
         ),
-        actions: [
-          TextButton(
-            onPressed: save,
-            child: Text(
-              'บันทึก',
-              style: TextStyle(
-                color: tPimaryColor,
-              ),
-            ),
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -118,6 +107,8 @@ class _EditPageUserState extends State<EditPageUser> {
                 frmGender(true),
                 SizedBox(height: 10),
                 frmBday(true),
+                SizedBox(height: 50),
+                btnSummit(),
               ],
             ),
           ),
@@ -477,25 +468,44 @@ class _EditPageUserState extends State<EditPageUser> {
     );
   }
 
-// ? Fn save bottom
-  void save() {
-    Map<String, dynamic> valuse = Map();
-    valuse['user_id'] = uId;
-    //valuse['u_user'] = _user.text;
-    //valuse['u_pass'] = _password.text;
-    valuse['user_name'] = user_name.text;
-    valuse['user_lastname'] = user_lname.text;
-    valuse['user_phone'] = user_phone.text;
-    valuse['user_email'] = user_email.text;
+  Widget btnSummit() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.9,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          primary: tPimaryColor,
+        ),
+        child: Text(
+          'บันทึก',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        onPressed: () {
+          Map<String, dynamic> valuse = Map();
+          valuse['user_id'] = uId;
+          //valuse['u_user'] = _user.text;
+          //valuse['u_pass'] = _password.text;
+          valuse['user_name'] = user_name.text;
+          valuse['user_lastname'] = user_lname.text;
+          valuse['user_phone'] = user_phone.text;
+          valuse['user_email'] = user_email.text;
 
-    print(user_name.text);
-    print(user_lname.text);
-    print(user_phone.text);
-    print(user_email.text);
+          print(user_name.text);
+          print(user_lname.text);
+          print(user_phone.text);
+          print(user_email.text);
 
-    _updateMember(valuse);
-    Navigator.pop(context, '/editdataUser');
-    // Navigator.pushReplacement(context,
-    //     MaterialPageRoute(builder: (BuildContext context) => EditPageUser()));
+          _updateMember(valuse);
+          Navigator.pop(context, '/editdataUser');
+          // Navigator.pushReplacement(context,
+          //     MaterialPageRoute(builder: (BuildContext context) => EditPageUser()));
+        },
+      ),
+    );
   }
 }

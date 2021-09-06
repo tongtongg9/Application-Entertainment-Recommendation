@@ -119,10 +119,11 @@ class _ReviewListNpState extends State<ReviewListNp> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Card(
-                      elevation: 0,
+                      elevation: 5,
+                      shadowColor: tBGDeepColor,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
-                      color: tBGDeepColor,
+                      color: Colors.white,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,

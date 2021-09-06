@@ -73,7 +73,6 @@ class _ShowPromotionsListState extends State<ShowPromotionsList> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.only(bottom: 30),
           child: _listView(),
         ),
       ),
@@ -148,8 +147,8 @@ class _ShowPromotionsListState extends State<ShowPromotionsList> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 SizedBox(
-                                  width: 120,
-                                  height: 80,
+                                  width: 150,
+                                  height: 100,
                                   child: Stack(
                                     fit: StackFit.expand,
                                     children: [

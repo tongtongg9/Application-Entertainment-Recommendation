@@ -245,9 +245,9 @@ class _RegisUserState extends State<RegisUser> {
                   ),
                   SizedBox(height: 10),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       genderForm(),
-                      SizedBox(width: 20),
                       dateForm(),
                     ],
                   ),
@@ -333,7 +333,7 @@ class _RegisUserState extends State<RegisUser> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(right: 135),
+          padding: const EdgeInsets.only(right: 120),
           child: Row(
             children: [
               Text(
@@ -358,7 +358,7 @@ class _RegisUserState extends State<RegisUser> {
         SizedBox(height: 5),
         DropdownButtonHideUnderline(
           child: Container(
-            width: 170,
+            width: MediaQuery.of(context).size.width * 0.35,
             height: 65,
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -434,7 +434,7 @@ class _RegisUserState extends State<RegisUser> {
         ),
         SizedBox(height: 5),
         Container(
-          width: 220,
+          width: MediaQuery.of(context).size.width * 0.52,
           height: 65,
           child: DateTimeFormField(
             onDateSelected: (DateTime value) {

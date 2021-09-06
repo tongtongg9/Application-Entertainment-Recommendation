@@ -133,32 +133,22 @@ class _ProfileState extends State<Profile> {
   //     );
 
   Widget imgsuser() {
-    Widget child;
-    if (udata.userImg != null) {
-      child = ClipRRect(
-        borderRadius: BorderRadius.circular(50),
-        child: CachedNetworkImage(
-          imageUrl: '${Connectapi().domainimguser}${udata.userImg}',
-          fit: BoxFit.cover,
-          placeholder: (context, url) => Center(
-            child: CircularProgressIndicator(),
-          ),
-          errorWidget: (context, url, error) => Container(
-            child: Icon(
-              Icons.error,
-              color: tErrorColor,
-            ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(50),
+      child: CachedNetworkImage(
+        imageUrl: '${Connectapi().domainimguser}${udata.userImg}',
+        fit: BoxFit.cover,
+        placeholder: (context, url) => Center(
+          child: CircularProgressIndicator(),
+        ),
+        errorWidget: (context, url, error) => Container(
+          child: Icon(
+            Icons.error,
+            color: tErrorColor,
           ),
         ),
-      );
-    } else {
-      child = Image.asset(
-        'assets/images/person.png',
-        fit: BoxFit.cover,
-      );
-    }
-    print('Imagename : $udata.userImg');
-    return new ClipRRect(child: child);
+      ),
+    );
   }
 
   Padding btnLogout() {

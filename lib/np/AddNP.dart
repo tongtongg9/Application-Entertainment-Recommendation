@@ -397,7 +397,7 @@ class _AddNPState extends State<AddNP> {
                       buildImagesList(),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 50),
                   btnSubmit(),
                 ],
               ),
@@ -757,20 +757,19 @@ class _AddNPState extends State<AddNP> {
 
   Widget btnSubmit() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: RaisedButton(
-        color: tPimaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+      width: MediaQuery.of(context).size.width * 0.9,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          primary: tPimaryColor,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'บันทึก',
-            style: TextStyle(
-              fontSize: 16,
-              color: tTextColor,
-            ),
+        child: Text(
+          'ยืนยัน',
+          style: TextStyle(
+            fontSize: 16,
           ),
         ),
         onPressed: () {
