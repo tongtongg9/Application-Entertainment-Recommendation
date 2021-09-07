@@ -5,6 +5,7 @@ import 'package:my_finalapp1/np/Edit_np.dart';
 import 'package:my_finalapp1/owner/Booking_ow_detail.dart';
 import 'package:my_finalapp1/owner/Booking_ow_list.dart';
 import 'package:my_finalapp1/owner/add_promotions.dart';
+import 'package:my_finalapp1/owner/show_notification_list_owner.dart';
 import 'package:my_finalapp1/owner/show_promotions_detail_np.dart';
 import 'package:my_finalapp1/owner/show_promotions_list_np.dart';
 import 'package:my_finalapp1/routes/routes.dart';
@@ -78,7 +79,7 @@ class MyApp extends StatelessWidget {
 
         '/showpromotionslistnp': (context) => ShowPromotionsListNp(),
         '/showpromotionsdetailnp': (context) => ShowPromotionsDetailNp(),
-
+        '/shownotibkow': (context) => NotificationListOw(),
         // '/owloginpage' : ( context) => LoginPageOw(),
 
         //  '/': ( context) => LoginPageOw(),

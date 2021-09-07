@@ -3,21 +3,22 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
-import 'package:my_finalapp1/model/model_get_list_notification_user.dart';
+import 'package:my_finalapp1/model/model_get_list_notification_owner.dart';
 import 'package:my_finalapp1/widget/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:my_finalapp1/widget/custom_back_button.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Nontification extends StatefulWidget {
-  // Nontification({Key? key}) : super(key: key);
+class NotificationListOw extends StatefulWidget {
+  // NotificationListOw({Key? key}) : super(key: key);
 
   @override
-  _NontificationState createState() => _NontificationState();
+  _NotificationListOwState createState() => _NotificationListOwState();
 }
 
-class _NontificationState extends State<Nontification> {
-  List<Rsnotibookbyuser> datamembers = [];
+class _NotificationListOwState extends State<NotificationListOw> {
+  List<Rsnotibookbyow> datamembers = [];
 
   var token;
   var userID;
@@ -36,7 +37,7 @@ class _NontificationState extends State<Nontification> {
     userID = prefs.getInt('id');
     print('id = $userID');
     print('token = $token');
-    var url = '${Connectapi().domain}/getnotibookingsbyuser/$userID';
+    var url = '${Connectapi().domain}/getnotibookingsbyow/$userID';
     //conect
     var response = await http.get(Uri.parse(url), headers: {
       'Connect-type': 'application/json',
@@ -46,11 +47,11 @@ class _NontificationState extends State<Nontification> {
     //check response
     if (response.statusCode == 200) {
       //แปลงjson ให้อยู่ในรูปแบบ model members
-      BkNotificationforUser members =
-          BkNotificationforUser.fromJson(convert.jsonDecode(response.body));
+      BkNotificationforOwner members =
+          BkNotificationforOwner.fromJson(convert.jsonDecode(response.body));
       //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
       setState(() {
-        datamembers = members.rsnotibookbyuser;
+        datamembers = members.rsnotibookbyow;
         // load = false;
       });
     }
@@ -113,17 +114,11 @@ class _NontificationState extends State<Nontification> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
-        automaticallyImplyLeading: false,
-        // backgroundColor: Theme.of(context).backgroundColor,
-        elevation: 0,
-        title: Text(
-          'แจ้งเตือน',
-          style: TextStyle(
-            color: tTextColor,
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-          ),
+        title: Text('การแจ้งเตือน'),
+        leading: CustomBackButton(
+          tapBack: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: SafeArea(
@@ -171,8 +166,9 @@ class _NontificationState extends State<Nontification> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/showdetailbookinguser',
+                      Navigator.pushNamed(context, '/showdetailbookingow',
                           arguments: {
+                            'ow_id': datamembers[index].owId,
                             'bk_id': datamembers[index].bkId,
                             'bk_seat': datamembers[index].bkSeat,
                             'bk_detail': datamembers[index].bkDetail,
@@ -190,7 +186,7 @@ class _NontificationState extends State<Nontification> {
                             'user_phone': datamembers[index].userPhone,
                             'user_email': datamembers[index].userEmail,
                           });
-                      print(datamembers[index]);
+                      print(datamembers[index].npName);
                     },
                     child: Card(
                       elevation: 5,
@@ -224,7 +220,7 @@ class _NontificationState extends State<Nontification> {
                                       Row(
                                         children: [
                                           Text(
-                                            'คำขอการสำรองที่นั่งร้าน  ',
+                                            'คำขอการสำรองที่นั่งจากคุณ  ',
                                             style: TextStyle(
                                               color: tTextColor,
                                               fontWeight: FontWeight.normal,
@@ -232,7 +228,7 @@ class _NontificationState extends State<Nontification> {
                                             ),
                                           ),
                                           Text(
-                                            '${datamembers[index].npName}',
+                                            '${datamembers[index].userName}',
                                             style: TextStyle(
                                               color: tTextColor,
                                               fontWeight: FontWeight.normal,

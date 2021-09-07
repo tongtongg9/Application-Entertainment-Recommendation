@@ -471,6 +471,7 @@ class _BookingDetailuserState extends State<BookingDetailuser> {
                             valuse['bk_status'] = _updatestatus2;
                             print(_updatestatus2);
                             _update(valuse);
+                            Navigator.pop(context);
                           },
                         ),
                       )

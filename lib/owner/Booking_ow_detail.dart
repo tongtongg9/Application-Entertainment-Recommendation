@@ -565,6 +565,7 @@ class _BookingDetailowState extends State<BookingDetailow> {
           valuse['bk_status'] = _updatestatus2;
           print(_updatestatus2);
           _update(valuse);
+          Navigator.pop(context);
         },
       ),
     );
@@ -594,6 +595,7 @@ class _BookingDetailowState extends State<BookingDetailow> {
           valuse['bk_status'] = _updatestatus1;
           print(_updatestatus1);
           _update(valuse);
+          Navigator.pop(context);
         },
       ),
     );

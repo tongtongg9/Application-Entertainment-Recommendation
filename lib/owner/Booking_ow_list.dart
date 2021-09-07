@@ -133,13 +133,7 @@ class _ShowBookingOwnerState extends State<ShowBookingOwner> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 0,
-              right: 0,
-            ),
-            child: _reviewList(),
-          ),
+          child: _reviewList(),
         ),
       ),
     );
@@ -148,21 +142,26 @@ class _ShowBookingOwnerState extends State<ShowBookingOwner> {
   Widget _reviewList() {
     return SingleChildScrollView(
       child: datamember.length <= 0
-          ? Card(
-              elevation: 0,
-              color: tBGDeepColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: SizedBox(
-                height: 100,
-                child: Center(
-                  child: Text(
-                    'ไม่มีรีวิวจากผู้ใช้อื่น',
-                    style: TextStyle(
-                      color: tTextColor,
-                      fontSize: 16,
+          ? Container(
+              child: Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.2,
                     ),
-                  ),
+                    Icon(
+                      Icons.error,
+                      size: 100,
+                      color: Colors.grey,
+                    ),
+                    Text(
+                      'ไม่มีรายการ',
+                      style: TextStyle(
+                        color: tTextGColor,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             )

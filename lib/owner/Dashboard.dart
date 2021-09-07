@@ -149,6 +149,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 GridMenu(
                   press: () {
+                    Navigator.pushNamed(context, '/shownotibkow');
                     print('การแจ้งเตือน');
                   },
                   img: "assets/images/bell.png",
