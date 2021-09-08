@@ -340,11 +340,6 @@ class _RegisUserState extends State<RegisUser> {
               fontSize: 16,
               color: tGreyColor,
             ),
-            // icon: ImageIcon(
-            //   new AssetImage(_icon),
-            //   color: tTextColor,
-            //   size: 30,
-            // ),
           ),
         ),
       ],

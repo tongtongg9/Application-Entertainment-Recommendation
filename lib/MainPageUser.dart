@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_finalapp1/user/LoginPage.dart';
+import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'model/LoginModel.dart';
+import 'user/bottom_nav_bar.dart';
 
 class MainPageUser extends StatefulWidget {
   @override
@@ -8,6 +13,47 @@ class MainPageUser extends StatefulWidget {
 }
 
 class _MainPageUserState extends State<MainPageUser> {
+  TextEditingController _fusername = TextEditingController();
+  TextEditingController _fpassword = TextEditingController();
+  final _formkey = GlobalKey<FormState>();
+
+  LoginModel login = LoginModel();
+
+  // ? ดึง token เพื่อ Login
+  Future doLogin() async {
+    if (_formkey.currentState.validate()) {
+      try {
+        var rs = await login.doLogin(_fusername.text, _fpassword.text);
+        print(_fusername.text);
+        print(_fpassword.text);
+        if (rs.statusCode == 200) {
+          print(rs.body);
+          var jsonRes = json.decode(rs.body);
+
+          if (jsonRes['ok']) {
+            String token = jsonRes['token'];
+            var id = jsonRes['id'];
+            print(token);
+            print(id);
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            await prefs.setString('token', token);
+            await prefs.setInt('id', id);
+
+            //re
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => BottomNavBar()));
+          } else {
+            print(jsonRes['error']);
+          }
+        } else {
+          print('connect error');
+        }
+      } catch (error) {
+        print(error);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,69 +65,143 @@ class _MainPageUserState extends State<MainPageUser> {
         ),
         // title: Text("เข้าสู่ระบบ"),
       ),
-      backgroundColor: Theme.of(context).backgroundColor,
       body: Center(
           child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _btnMLogin(),
-            SizedBox(height: 20),
-            _btnMRegis(),
+            usernameField(),
+            SizedBox(height: 10),
+            passwordField(),
+            SizedBox(height: 50),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _btnMRegis(),
+                _btnMLogin(),
+              ],
+            ),
           ],
         ),
       )),
     );
   }
 
-  Widget _btnMLogin() {
-    return Padding(
-      padding: EdgeInsets.all(0),
-      child: SizedBox(
-        width: double.infinity,
-        // height: 50,
-        child: RaisedButton(
-          child: Text(
-            'เข้าสู่ระบบ',
-            style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700),
-          ),
-          color: Theme.of(context).primaryColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          onPressed: () {
-            // Navigator.pushNamed(context, '/uloginpage');
-            Navigator.pushNamed(context, '/uloginpage');
-          },
+  Widget usernameField() {
+    return TextFormField(
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'กรุณากรอกชื่อผู้ใช้';
+        }
+      },
+      controller: _fusername,
+      style: TextStyle(
+        color: tTextColor,
+        fontSize: 16,
+      ),
+      cursorColor: tPimaryColor,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: tBGDeepColor,
+        hintText: 'ชื่อผู้ใช้',
+        hintStyle: TextStyle(
+          fontSize: 16,
+          color: tGreyColor,
+        ),
+        icon: ImageIcon(
+          new AssetImage('assets/icons/user.png'),
+          color: tPimaryColor,
+          // size: 30,
         ),
       ),
     );
   }
 
-  Widget _btnMRegis() {
-    return Padding(
-        padding: EdgeInsets.only(right: 0),
-        child: SizedBox(
-          width: double.infinity,
-          // height: 50,
-          child: RaisedButton(
-            child: Text(
-              'สมัครสมาชิก',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            ),
-            color: Theme.of(context).primaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, '/uregisterpage');
-            },
-          ),
-        ));
+  Widget passwordField() {
+    return TextFormField(
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'กรุณากรอกรหัสผ่าน';
+        }
+      },
+      controller: _fpassword,
+      obscureText: true,
+      style: TextStyle(
+        color: tTextColor,
+        fontSize: 16,
+      ),
+      cursorColor: tPimaryColor,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: tBGDeepColor,
+        hintText: 'รหัสผ่าน',
+        hintStyle: TextStyle(
+          fontSize: 16,
+          color: tGreyColor,
+        ),
+        icon: ImageIcon(
+          new AssetImage('assets/icons/lock.png'),
+          color: tPimaryColor,
+          // size: 30,
+        ),
+      ),
+    );
   }
-} // ! m class
+
+  Widget _btnMLogin() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.4,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          primary: tPimaryColor,
+        ),
+        child: Text(
+          'เข้าสู่ระบบ',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, '/uloginpage');
+        },
+      ),
+    );
+  }
+
+  Widget _btnMRegis() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.4,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          primary: tPimaryColor,
+        ),
+        child: Text(
+          'สมัครสมาชิก',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, '/uregisterpage');
+        },
+      ),
+    );
+  }
+} // ! m class 
