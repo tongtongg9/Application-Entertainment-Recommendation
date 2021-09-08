@@ -5,6 +5,8 @@ import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
+import 'package:my_finalapp1/widget/colors.dart';
+import 'package:my_finalapp1/widget/custom_back_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UploadPicture extends StatefulWidget {
@@ -42,13 +44,13 @@ class _UploadPictureState extends State<UploadPicture> {
   //สร้าง GridView
   Widget buildGridView() {
     return GridView.count(
-      crossAxisCount: 3,
+      crossAxisCount: 1,
       children: List.generate(images.length, (index) {
         // asset = images[index];
         return AssetThumb(
           asset: images[index],
-          width: 300,
-          height: 300,
+          width: 500,
+          height: 500,
         );
       }),
     );
@@ -60,14 +62,14 @@ class _UploadPictureState extends State<UploadPicture> {
     String error = 'No Error Detected';
     try {
       resultList = await MultiImagePicker.pickImages(
-        maxImages: 10,
+        maxImages: 1,
         enableCamera: true,
         selectedAssets: images,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
-          actionBarColor: "#abcdef",
-          actionBarTitle: "Example App",
-          allViewTitle: "All Photos",
+          actionBarColor: "#9147ff",
+          actionBarTitle: "รูปภาพจากแกลอรี่",
+          allViewTitle: "รูปภาพทั้งหมด",
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",
         ),
@@ -120,31 +122,6 @@ class _UploadPictureState extends State<UploadPicture> {
     }
   }
 
-// add gallery
-  Widget _addImg() {
-    return Container(
-      child: Column(
-        children: [
-          FloatingActionButton(
-            backgroundColor: Colors.red,
-            onPressed: loadAssets,
-            child: Icon(
-              Icons.add_photo_alternate_outlined,
-              size: 40,
-            ),
-          ),
-          SizedBox(
-            height: 7,
-          ),
-          Text(
-            'เพิ่มรูปภาพ',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -154,16 +131,27 @@ class _UploadPictureState extends State<UploadPicture> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Form(
-          child: Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                _addImg(),
-                Expanded(child: buildGridView()),
-                btnSubmit(),
-              ],
+      appBar: AppBar(
+        title: Text('เปลี่ยนรูปภาพ'),
+        leading: CustomBackButton(
+          tapBack: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Form(
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  Expanded(child: buildGridView()),
+                  _addImg(),
+                  SizedBox(height: 10),
+                  btnSubmit(),
+                ],
+              ),
             ),
           ),
         ),
@@ -171,19 +159,70 @@ class _UploadPictureState extends State<UploadPicture> {
     );
   }
 
-  Widget btnSubmit() {
+// add gallery
+  Widget _addImg() {
     return SizedBox(
-      width: 100,
-      height: 50,
-      child: RaisedButton(
-        child: Text('Submit'),
-        color: Colors.cyanAccent,
+      width: MediaQuery.of(context).size.width * 0.9,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          primary: tPimaryColor,
+        ),
+        child: Text(
+          'เลือกรูปภาพ',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
         onPressed: () {
-          _sendPathImage();
+          loadAssets();
         },
       ),
     );
   }
+
+  Widget btnSubmit() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.9,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          primary: tPimaryColor,
+        ),
+        child: Text(
+          'บันทึก',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        onPressed: () {
+          _sendPathImage();
+
+          Navigator.pop(context, '/showdetailnp');
+        },
+      ),
+    );
+  }
+
+  // Widget {
+  //   return SizedBox(
+  //     width: 100,
+  //     height: 50,
+  //     child: RaisedButton(
+  //       child: Text('Submit'),
+  //       color: Colors.cyanAccent,
+  //       onPressed: () {
+
+  //       },
+  //     ),
+  //   );
+  // }
 }
 
 // import 'dart:typed_data';

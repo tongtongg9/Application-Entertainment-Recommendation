@@ -75,9 +75,9 @@ class _RegisUserState extends State<RegisUser> {
         selectedAssets: _images,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
-          actionBarColor: "#abcdef",
-          actionBarTitle: "Example App",
-          allViewTitle: "All Photos",
+          actionBarColor: "#9147ff",
+          actionBarTitle: "รูปภาพจากแกลอรี่",
+          allViewTitle: "รูปภาพทั้งหมด",
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",
         ),
