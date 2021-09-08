@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_finalapp1/user/LoginPage.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
 import 'dart:convert';
@@ -57,6 +56,8 @@ class _MainPageUserState extends State<MainPageUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
       appBar: AppBar(
         leading: CustomBackButton(
           tapBack: () {
@@ -65,97 +66,177 @@ class _MainPageUserState extends State<MainPageUser> {
         ),
         // title: Text("เข้าสู่ระบบ"),
       ),
-      body: Center(
+      body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            usernameField(),
-            SizedBox(height: 10),
-            passwordField(),
-            SizedBox(height: 50),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _btnMRegis(),
-                _btnMLogin(),
-              ],
-            ),
-          ],
+        child: Form(
+          key: _formkey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Image.asset(
+                'assets/images/pub.png',
+                width: MediaQuery.of(context).size.width * 0.3,
+              ),
+              SizedBox(height: 50),
+              loginfrom(),
+              SizedBox(height: 50),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _btnMRegis(),
+                  _btnMLogin(),
+                ],
+              ),
+            ],
+          ),
         ),
       )),
     );
   }
 
-  Widget usernameField() {
-    return TextFormField(
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'กรุณากรอกชื่อผู้ใช้';
-        }
-      },
-      controller: _fusername,
-      style: TextStyle(
-        color: tTextColor,
-        fontSize: 16,
-      ),
-      cursorColor: tPimaryColor,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: tBGDeepColor,
-        hintText: 'ชื่อผู้ใช้',
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: tGreyColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/user.png'),
-          color: tPimaryColor,
-          // size: 30,
-        ),
+  Widget loginfrom() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.9,
+      child: Column(
+        children: [
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'กรุณากรอกชื่อผู้ใช้';
+              }
+            },
+            controller: _fusername,
+            style: TextStyle(
+              color: tTextColor,
+              fontSize: 16,
+            ),
+            cursorColor: tPimaryColor,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: tBGDeepColor,
+              hintText: 'ชื่อผู้ใช้',
+              hintStyle: TextStyle(
+                fontSize: 16,
+                color: tGreyColor,
+              ),
+              icon: ImageIcon(
+                new AssetImage('assets/icons/user.png'),
+                color: tPimaryColor,
+                // size: 30,
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'กรุณากรอกรหัสผ่าน';
+              }
+            },
+            controller: _fpassword,
+            obscureText: true,
+            style: TextStyle(
+              color: tTextColor,
+              fontSize: 16,
+            ),
+            cursorColor: tPimaryColor,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: tBGDeepColor,
+              hintText: 'รหัสผ่าน',
+              hintStyle: TextStyle(
+                fontSize: 16,
+                color: tGreyColor,
+              ),
+              icon: ImageIcon(
+                new AssetImage('assets/icons/lock.png'),
+                color: tPimaryColor,
+                // size: 30,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget passwordField() {
-    return TextFormField(
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'กรุณากรอกรหัสผ่าน';
-        }
-      },
-      controller: _fpassword,
-      obscureText: true,
-      style: TextStyle(
-        color: tTextColor,
-        fontSize: 16,
-      ),
-      cursorColor: tPimaryColor,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
-        ),
-        filled: true,
-        fillColor: tBGDeepColor,
-        hintText: 'รหัสผ่าน',
-        hintStyle: TextStyle(
-          fontSize: 16,
-          color: tGreyColor,
-        ),
-        icon: ImageIcon(
-          new AssetImage('assets/icons/lock.png'),
-          color: tPimaryColor,
-          // size: 30,
-        ),
-      ),
-    );
-  }
+  // Widget usernameField() {
+  //   return TextFormField(
+  //     validator: (value) {
+  //       if (value.isEmpty) {
+  //         return 'กรุณากรอกชื่อผู้ใช้';
+  //       }
+  //     },
+  //     controller: _fusername,
+  //     style: TextStyle(
+  //       color: tTextColor,
+  //       fontSize: 16,
+  //     ),
+  //     cursorColor: tPimaryColor,
+  //     decoration: InputDecoration(
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(10),
+  //         borderSide: BorderSide.none,
+  //       ),
+  //       filled: true,
+  //       fillColor: tBGDeepColor,
+  //       hintText: 'ชื่อผู้ใช้',
+  //       hintStyle: TextStyle(
+  //         fontSize: 16,
+  //         color: tGreyColor,
+  //       ),
+  //       icon: ImageIcon(
+  //         new AssetImage('assets/icons/user.png'),
+  //         color: tPimaryColor,
+  //         // size: 30,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget passwordField() {
+  //   return TextFormField(
+  //     validator: (value) {
+  //       if (value.isEmpty) {
+  //         return 'กรุณากรอกรหัสผ่าน';
+  //       }
+  //     },
+  //     controller: _fpassword,
+  //     obscureText: true,
+  //     style: TextStyle(
+  //       color: tTextColor,
+  //       fontSize: 16,
+  //     ),
+  //     cursorColor: tPimaryColor,
+  //     decoration: InputDecoration(
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(10),
+  //         borderSide: BorderSide.none,
+  //       ),
+  //       filled: true,
+  //       fillColor: tBGDeepColor,
+  //       hintText: 'รหัสผ่าน',
+  //       hintStyle: TextStyle(
+  //         fontSize: 16,
+  //         color: tGreyColor,
+  //       ),
+  //       icon: ImageIcon(
+  //         new AssetImage('assets/icons/lock.png'),
+  //         color: tPimaryColor,
+  //         // size: 30,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _btnMLogin() {
     return SizedBox(
@@ -175,7 +256,8 @@ class _MainPageUserState extends State<MainPageUser> {
           ),
         ),
         onPressed: () {
-          Navigator.pushNamed(context, '/uloginpage');
+          doLogin();
+          // Navigator.pushNamed(context, '/uloginpage');
         },
       ),
     );
