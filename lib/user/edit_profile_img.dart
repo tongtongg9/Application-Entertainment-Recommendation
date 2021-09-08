@@ -209,20 +209,6 @@ class _UploadPictureState extends State<UploadPicture> {
       ),
     );
   }
-
-  // Widget {
-  //   return SizedBox(
-  //     width: 100,
-  //     height: 50,
-  //     child: RaisedButton(
-  //       child: Text('Submit'),
-  //       color: Colors.cyanAccent,
-  //       onPressed: () {
-
-  //       },
-  //     ),
-  //   );
-  // }
 }
 
 // import 'dart:typed_data';

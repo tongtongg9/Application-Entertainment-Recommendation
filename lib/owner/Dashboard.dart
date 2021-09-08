@@ -82,9 +82,7 @@ class _DashboardState extends State<Dashboard> {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
-                    SizedBox(
-                      height: 4,
-                    ),
+                    SizedBox(height: 4),
                     Row(
                       children: [
                         Text(

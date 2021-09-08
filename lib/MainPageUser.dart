@@ -67,31 +67,32 @@ class _MainPageUserState extends State<MainPageUser> {
         // title: Text("เข้าสู่ระบบ"),
       ),
       body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formkey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Image.asset(
-                'assets/images/pub.png',
-                width: MediaQuery.of(context).size.width * 0.3,
-              ),
-              SizedBox(height: 50),
-              loginfrom(),
-              SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _btnMRegis(),
-                  _btnMLogin(),
-                ],
-              ),
-            ],
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formkey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Image.asset(
+                  'assets/images/pub.png',
+                  width: MediaQuery.of(context).size.width * 0.3,
+                ),
+                SizedBox(height: 50),
+                loginfrom(),
+                SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _btnMRegis(),
+                    _btnMLogin(),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      )),
+      ),
     );
   }
 
