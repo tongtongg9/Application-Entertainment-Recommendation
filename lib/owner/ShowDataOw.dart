@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/model_get_data_owner.dart';
 import 'package:my_finalapp1/widget/colors.dart';
@@ -49,6 +50,8 @@ class _ShowDataOwState extends State<ShowDataOw> {
     _getInfoOw();
   }
 
+  var dateformate = DateFormat.yMMMd();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,20 +91,12 @@ class _ShowDataOwState extends State<ShowDataOw> {
         padding: EdgeInsets.all(20), // todo ระยะห่างจากขอบจอ !!
         child: Column(
           children: [
-            // profilePic(), //? -- > Profile Picture
-            // TextButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, '/upload');
-            //   },
-            //   child: Text(
-            //     'เปลี่ยนรูปโปร์ไฟล์',
-            //     style: TextStyle(color: tPimaryColor),
-            //   ),
-            // ),
-            // Divider(
-            //   thickness: 3,
-            //   color: Colors.white10,
-            // ),
+            profilePic(), //? -- > Profile Picture
+            SizedBox(height: 25),
+            Divider(
+              thickness: 2,
+              color: Colors.black12,
+            ),
             SizedBox(height: 25),
             Row(
               children: [
@@ -164,7 +159,7 @@ class _ShowDataOwState extends State<ShowDataOw> {
                   type: 'วันเกิด',
                 ),
                 Infodata(
-                  data: '${odata.owBday}',
+                  data: '${dateformate.format(DateTime.parse(odata.owBday))}',
                 ),
               ],
             ),
@@ -173,6 +168,24 @@ class _ShowDataOwState extends State<ShowDataOw> {
       ),
     );
   }
+
+  // ? Proile Picture
+  SizedBox profilePic() {
+    return SizedBox(
+      height: 100,
+      width: 100,
+      child: Stack(
+        overflow: Overflow.visible,
+        fit: StackFit.expand,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Image.asset('assets/images/person.png'),
+          ),
+        ],
+      ),
+    );
+  } //! >> class Proile Picture
 } //! main class
 
 class Infotype extends StatelessWidget {

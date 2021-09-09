@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/model_get_data_user.dart';
 import 'package:my_finalapp1/widget/colors.dart';
@@ -57,6 +58,8 @@ class _ShowDataUserState extends State<ShowDataUser> {
     _getInfoUser();
     onGoBack();
   }
+
+  var dateformate = DateFormat.yMMMd();
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +181,7 @@ class _ShowDataUserState extends State<ShowDataUser> {
                   type: 'วันเกิด',
                 ),
                 Infodata(
-                  data: '${udata.userBday}',
+                  data: '${dateformate.format(DateTime.parse(udata.userBday))}',
                 ),
               ],
             ),
