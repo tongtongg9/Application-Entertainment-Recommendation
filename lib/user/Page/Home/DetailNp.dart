@@ -763,19 +763,30 @@ class _DetailNpState extends State<DetailNp> {
     );
   }
 
-  Widget imgsuser(imageName) {
-    Widget child;
-    print('Imagename : $imageName');
-    if (imageName != null) {
-      child = Image.network(
-        '${Connectapi().domainimguser}${imageName}',
-        fit: BoxFit.cover,
+  // Widget imgsuser(imageName) {
+  //   Widget child;
+  //   print('Imagename : $imageName');
+  //   if (imageName != null) {
+  //     child = Image.network(
+  //       '${Connectapi().domainimguser}${imageName}',
+  //       fit: BoxFit.cover,
+  //     );
+  //   } else {
+  //     child = Image.asset('assets/images/person.png');
+  //   }
+  //   return new Container(child: child);
+  // }
+  Widget imgsuser(imageName) => ClipRRect(
+        borderRadius: BorderRadius.circular(50),
+        child: CachedNetworkImage(
+          key: UniqueKey(),
+          imageUrl: '${Connectapi().domainimguser}${imageName}',
+          fit: BoxFit.cover,
+          placeholder: (context, imageUrl) => ShowProgress().loading(),
+          errorWidget: (context, imageUrl, error) =>
+              Image.asset('assets/images/person.png'),
+        ),
       );
-    } else {
-      child = Image.asset('assets/images/person.png');
-    }
-    return new Container(child: child);
-  }
 
   // Widget _reviewList() {
   //   return Container(

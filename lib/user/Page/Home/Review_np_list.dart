@@ -1,9 +1,11 @@
 import 'dart:ffi';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/model_get_list_reviews_for_np.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
+import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -211,14 +213,25 @@ class _ReviewListNpState extends State<ReviewListNp> {
     );
   }
 
-  Widget imgsuser(imageName) {
-    Widget child;
-    print('Imagename : $imageName');
-    if (imageName != null) {
-      child = Image.network('${Connectapi().domainimguser}${imageName}');
-    } else {
-      child = Image.asset('assets/images/person.png');
-    }
-    return new Container(child: child);
-  }
+  // Widget imgsuser(imageName) {
+  //   Widget child;
+  //   print('Imagename : $imageName');
+  //   if (imageName != null) {
+  //     child = Image.network('${Connectapi().domainimguser}${imageName}');
+  //   } else {
+  //     child = Image.asset('assets/images/person.png');
+  //   }
+  //   return new Container(child: child);
+  // }
+  Widget imgsuser(imageName) => ClipRRect(
+        borderRadius: BorderRadius.circular(50),
+        child: CachedNetworkImage(
+          key: UniqueKey(),
+          imageUrl: '${Connectapi().domainimguser}${imageName}',
+          fit: BoxFit.cover,
+          placeholder: (context, imageUrl) => ShowProgress().loading(),
+          errorWidget: (context, imageUrl, error) =>
+              Image.asset('assets/images/person.png'),
+        ),
+      );
 }
