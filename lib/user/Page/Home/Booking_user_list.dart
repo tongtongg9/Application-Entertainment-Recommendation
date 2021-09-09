@@ -120,11 +120,7 @@ class _ShowBookingUserState extends State<ShowBookingUser> {
         ),
       ),
       body: SafeArea(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: _reviewList(),
-        ),
+        child: _reviewList(),
       ),
     );
   }
