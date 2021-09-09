@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/model_get_data_owner.dart';
 import 'package:my_finalapp1/widget/colors.dart';
+import 'package:my_finalapp1/widget/custom_back_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ffi';
 import 'dart:convert' as convert;
@@ -58,6 +59,11 @@ class _ShowDataOwState extends State<ShowDataOw> {
       appBar: AppBar(
         title: Text(
           'ข้อมูลส่วนตัว',
+        ),
+        leading: CustomBackButton(
+          tapBack: () {
+            Navigator.pop(context);
+          },
         ),
         actions: [
           IconButton(
