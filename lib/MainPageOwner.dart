@@ -76,8 +76,8 @@ class _MainPageOwnerState extends State<MainPageOwner> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Image.asset(
-                'assets/images/pub.png',
-                width: MediaQuery.of(context).size.width * 0.3,
+                'assets/images/logo_text.png',
+                width: MediaQuery.of(context).size.width * 0.4,
               ),
               SizedBox(height: 50),
               loginfrom(),

@@ -470,51 +470,51 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                         ],
                       ),
                       SizedBox(height: 5),
+                      // Card(
+                      //   elevation: 2,
+                      //   shadowColor: tBGDeepColor,
+                      //   child: SizedBox(
+                      //     width: MediaQuery.of(context).size.width,
+                      //     height: 250,
+                      //     child: Center(
+                      //       child: Text(
+                      //         'ไม่มีตำแหน่งร้าน',
+                      //         style: TextStyle(
+                      //           color: tTextColor,
+                      //           fontSize: 12,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       Card(
                         elevation: 2,
                         shadowColor: tBGDeepColor,
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 250,
-                          child: Center(
-                            child: Text(
-                              'ไม่มีตำแหน่งร้าน',
-                              style: TextStyle(
-                                color: tTextColor,
-                                fontSize: 12,
-                              ),
+                          child: GoogleMap(
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(_npLat, _npLong),
+                              zoom: 15,
                             ),
+                            mapType: MapType.normal,
+                            markers: <Marker>{
+                              Marker(
+                                markerId: MarkerId('myStore'),
+                                position: LatLng(_npLat, _npLong),
+                                infoWindow: InfoWindow(
+                                    title: '$_npName',
+                                    snippet:
+                                        '$_npAdress อำเภอ$_npDistrict จังหวัด$_npProvince',
+                                    onTap: () {
+                                      googleMap();
+                                    }),
+                              ),
+                            },
                           ),
                         ),
                       ),
-                      // ! Card(
-                      //   elevation: 2,
-                      //   shadowColor: tBGDeepColor,
-                      //   child: SizedBox(
-                      //     width: MediaQuery.of(context).size.width,
-                      //     height: 250,
-                      //     child: GoogleMap(
-                      //       initialCameraPosition: CameraPosition(
-                      //         target: LatLng(_npLat, _npLong),
-                      //         zoom: 15,
-                      //       ),
-                      //       mapType: MapType.normal,
-                      //       markers: <Marker>{
-                      //         Marker(
-                      //           markerId: MarkerId('myStore'),
-                      //           position: LatLng(_npLat, _npLong),
-                      //           infoWindow: InfoWindow(
-                      //               title: '$_npName',
-                      //               snippet:
-                      //                   '${_npAdress} อำเภอ${_npDistrict} จังหวัด${_npProvince}',
-                      //               onTap: () {
-                      //                 googleMap();
-                      //               }),
-                      //         ),
-                      //       },
-                      //     ),
-                      //   ),
-                      //! ),
                     ],
                   ),
                 ),

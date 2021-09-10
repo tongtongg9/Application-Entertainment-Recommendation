@@ -18,7 +18,7 @@ class _MainPageState extends State<MainPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset(
-              'assets/images/pub.png',
+              'assets/images/logo_text.png',
               width: MediaQuery.of(context).size.width * 0.5,
             ),
             SizedBox(height: 50),

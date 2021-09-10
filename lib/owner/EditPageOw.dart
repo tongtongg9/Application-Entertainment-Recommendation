@@ -75,15 +75,6 @@ class _EditPageOwState extends State<EditPageOw> {
     return Scaffold(
       appBar: AppBar(
         title: Text('แก้ไขข้อมูล'),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.check,
-              color: tPimaryColor,
-            ),
-            onPressed: save,
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -110,6 +101,8 @@ class _EditPageOwState extends State<EditPageOw> {
                 frmGender(true),
                 SizedBox(height: 10),
                 frmBday(true),
+                SizedBox(height: 50),
+                btnSummit(),
               ],
             ),
           ),
@@ -423,24 +416,49 @@ class _EditPageOwState extends State<EditPageOw> {
     );
   }
 
+  Widget btnSummit() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.9,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          primary: tPimaryColor,
+        ),
+        child: Text(
+          'บันทึก',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        onPressed: () {
+          Map<String, dynamic> valuse = Map();
+          valuse['ow_id'] = owId;
+          //valuse['u_ow'] = _ow.text;
+          //valuse['u_pass'] = _password.text;
+          valuse['ow_name'] = ow_name.text;
+          valuse['ow_lastname'] = ow_lname.text;
+          valuse['ow_phone'] = ow_phone.text;
+          valuse['ow_email'] = ow_email.text;
+
+          print(ow_name.text);
+          print(ow_lname.text);
+          print(ow_phone.text);
+          print(ow_email.text);
+
+          _updateMember(valuse);
+          Navigator.pop(context, '/oweditdata');
+          // Navigator.pushReplacement(context,
+          //     MaterialPageRoute(builder: (BuildContext context) => EditPageUser()));
+        },
+      ),
+    );
+  }
+
 // ? Fn save bottom
   void save() {
-    Map<String, dynamic> valuse = Map();
-    valuse['ow_id'] = owId;
-    //valuse['u_ow'] = _ow.text;
-    //valuse['u_pass'] = _password.text;
-    valuse['ow_name'] = ow_name.text;
-    valuse['ow_lastname'] = ow_lname.text;
-    valuse['ow_phone'] = ow_phone.text;
-    valuse['ow_email'] = ow_email.text;
-
-    print(ow_name.text);
-    print(ow_lname.text);
-    print(ow_phone.text);
-    print(ow_email.text);
-
-    _updateMember(valuse);
-    Navigator.pop(context, '/oweditdata');
     // Navigator.pushReplacement(context,
     //     MaterialPageRoute(builder: (BuildContext context) => EditPageUser()));
   }

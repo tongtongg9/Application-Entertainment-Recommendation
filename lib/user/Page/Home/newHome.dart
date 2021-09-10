@@ -49,12 +49,12 @@ class _NewwHomeState extends State<NewwHome> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.search),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(Icons.search),
+        //   ),
+        // ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
