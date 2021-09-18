@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
+import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'dart:convert' as convert;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +23,7 @@ class _EditPageUserState extends State<EditPageUser> {
   TextEditingController user_email;
   TextEditingController user_gender;
   TextEditingController user_bday;
+  var user_img;
 
   Map<String, dynamic> _rec_member;
 
@@ -65,6 +68,7 @@ class _EditPageUserState extends State<EditPageUser> {
     user_email = TextEditingController(text: _rec_member['user_email']);
     user_gender = TextEditingController(text: _rec_member['user_gender']);
     user_bday = TextEditingController(text: _rec_member['user_bday']);
+    user_img = _rec_member['user_img'];
   }
 
   bool isObscurePassword = true;
@@ -90,6 +94,16 @@ class _EditPageUserState extends State<EditPageUser> {
                 EdgeInsets.fromLTRB(20, 0, 20, 20), // todo ระยะห่างจากขอบจอ !!
             child: Column(
               children: [
+                profilePic(),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/upload');
+                  },
+                  child: Text(
+                    'เปลี่ยนรูปโปร์ไฟล์',
+                    style: TextStyle(color: tPimaryColor),
+                  ),
+                ),
                 SizedBox(height: 15),
                 // test(true, false),
                 frmUsername(true),
@@ -467,6 +481,36 @@ class _EditPageUserState extends State<EditPageUser> {
       ],
     );
   }
+
+  // ? Proile Picture
+  SizedBox profilePic() {
+    return SizedBox(
+      height: 100,
+      width: 100,
+      child: Stack(
+        overflow: Overflow.visible,
+        fit: StackFit.expand,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: imgsuser(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget imgsuser() => ClipRRect(
+        borderRadius: BorderRadius.circular(50),
+        child: CachedNetworkImage(
+          key: UniqueKey(),
+          imageUrl: '${Connectapi().domainimguser}${user_img}',
+          fit: BoxFit.cover,
+          placeholder: (context, imageUrl) => ShowProgress().loading(),
+          errorWidget: (context, imageUrl, error) =>
+              Image.asset('assets/images/person.png'),
+        ),
+      );
 
   Widget btnSummit() {
     return SizedBox(

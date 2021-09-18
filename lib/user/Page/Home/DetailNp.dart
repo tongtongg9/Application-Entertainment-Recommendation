@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dio/dio.dart';
 import 'package:my_finalapp1/model/model_get_img_np.dart';
 import 'package:my_finalapp1/model/model_get_list_limit_reviews_for_np.dart';
 import 'package:my_finalapp1/widget/loading_widget.dart';
@@ -129,6 +130,17 @@ class _DetailNpState extends State<DetailNp> {
         // load = false;
       });
     }
+  }
+
+  Future<Null> refreshModel() async {
+    var urlModel = '${Connectapi().domain}/getlistreviewslimit/$_npId';
+    print(urlModel);
+    await Dio().get(urlModel).then((value) {
+      setState(() {
+        _getListReviewslimit();
+      });
+    });
+    print('รีรีรีรี');
   }
 
   void googleMap() async {
@@ -741,7 +753,7 @@ class _DetailNpState extends State<DetailNp> {
         onPressed: () {
           Navigator.pushNamed(context, '/reviewpage', arguments: {
             '_npId': _npId,
-          });
+          }).then((value) => refreshModel());
         },
       ),
     );

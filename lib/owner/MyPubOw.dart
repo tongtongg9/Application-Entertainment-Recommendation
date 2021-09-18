@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -58,6 +59,19 @@ class _MyPubOwState extends State<MyPubOw> {
     _getListNpbyOwPage();
   }
 
+  Future<Null> refreshModel() async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // var userId = prefs.getInt('id');
+    var urlModel = '${Connectapi().domain}/getdatanpbyow/$uId';
+    print(urlModel);
+    await Dio().get(urlModel).then((value) {
+      setState(() {
+        _getListNpbyOwPage();
+      });
+    });
+    print('รีรีรีรี');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +86,8 @@ class _MyPubOwState extends State<MyPubOw> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.pushNamed(context, '/owaddmypub');
+          Navigator.pushNamed(context, '/owaddmypub')
+              .then((value) => refreshModel());
         },
         label: Text('เพิ่มร้านของคุณ'),
         backgroundColor: tPimaryColor,

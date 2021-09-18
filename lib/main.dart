@@ -40,6 +40,8 @@ import 'package:my_finalapp1/owner/RegisterPageOw.dart';
 import 'package:my_finalapp1/user/Page/Profile/ShowDataUser.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MyApp());
 
   Intl.defaultLocale = "th";

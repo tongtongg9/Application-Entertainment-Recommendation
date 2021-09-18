@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:my_finalapp1/MainPage.dart';
 import 'package:my_finalapp1/model/model_get_data_user.dart';
@@ -20,7 +21,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   Infouser udata;
   //connect server api
-  Future<Void> _getInfoUser() async {
+  Future<Void> getInfoUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
     var userId = prefs.getInt('id');
@@ -44,18 +45,25 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  Future onGoBack(dynamic value) {
-    setState(() {
-      _getInfoUser();
-    });
-  }
-
   @override
   void initState() {
     // TODO implement initState
     super.initState();
     //call _getAPI
-    _getInfoUser();
+    getInfoUser();
+  }
+
+  Future<Null> refreshModel() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = prefs.getInt('id');
+    var urlModel = '${Connectapi().domain}/getprofileuser/$userId';
+    print(urlModel);
+    await Dio().get(urlModel).then((value) {
+      setState(() {
+        getInfoUser();
+      });
+    });
+    print('รีรีรีรี');
   }
 
   Future _logout() async {
@@ -87,7 +95,8 @@ class _ProfileState extends State<Profile> {
           icon: "assets/icons/user.png",
           text: "บัญชีผู้ใช้",
           press: () {
-            Navigator.pushNamed(context, '/showdataUser');
+            Navigator.pushNamed(context, '/showdataUser')
+                .then((value) => refreshModel());
             print("บัญชีผู้ใช้");
           },
         ),

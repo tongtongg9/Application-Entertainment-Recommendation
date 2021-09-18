@@ -1,4 +1,7 @@
+// import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
@@ -20,7 +23,7 @@ class _ShowDataUserState extends State<ShowDataUser> {
   String userId;
   Infouser udata;
   //connect server api
-  Future<Void> _getInfoUser() async {
+  Future<Void> getInfoUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
     var userId = prefs.getInt('id');
@@ -44,19 +47,33 @@ class _ShowDataUserState extends State<ShowDataUser> {
     }
   }
 
-  Future onGoBack() {
-    setState(() {
-      _getInfoUser();
-    });
-  }
+  // Future<Null> refreshModel() async {
+  //   setState(() {
+  //     _getInfoUser();
+  //   });
+  //   print('รีรีรีรี');
+  // }
 
   @override
   void initState() {
     // TODO implement initState
     super.initState();
     //call _getAPI
-    _getInfoUser();
-    onGoBack();
+    getInfoUser();
+    // refreshModel();
+  }
+
+  Future<Null> refreshModel() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var userId = prefs.getInt('id');
+    var urlModel = '${Connectapi().domain}/getprofileuser/$userId';
+    print(urlModel);
+    await Dio().get(urlModel).then((value) {
+      setState(() {
+        getInfoUser();
+      });
+    });
+    print('รีรีรีรี');
   }
 
   var dateformate = DateFormat.yMMMd();
@@ -88,7 +105,8 @@ class _ShowDataUserState extends State<ShowDataUser> {
                 'user_email': udata.userEmail,
                 'user_gender': udata.userGender,
                 'user_bday': udata.userBday,
-              });
+                'user_img': udata.userImg,
+              }).then((value) => refreshModel());
               print(udata.userName);
               print(udata.userUsername);
               print(udata.userPassword);
@@ -97,6 +115,7 @@ class _ShowDataUserState extends State<ShowDataUser> {
               print(udata.userEmail);
               print(udata.userGender);
               print(udata.userBday);
+              print(udata.userImg);
             },
           ),
         ],
@@ -106,15 +125,17 @@ class _ShowDataUserState extends State<ShowDataUser> {
         child: Column(
           children: [
             profilePic(), //? -- > Profile Picture
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/upload');
-              },
-              child: Text(
-                'เปลี่ยนรูปโปร์ไฟล์',
-                style: TextStyle(color: tPimaryColor),
-              ),
-            ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/upload')
+            //         .then((value) => refreshModel());
+            //   },
+            //   child: Text(
+            //     'เปลี่ยนรูปโปร์ไฟล์',
+            //     style: TextStyle(color: tPimaryColor),
+            //   ),
+            // ),
+            SizedBox(height: 10),
             Divider(
               thickness: 2,
               color: Colors.black12,

@@ -2,12 +2,14 @@ import 'dart:ffi';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:delayed_display/delayed_display.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:my_finalapp1/NewHome.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
+import 'package:my_finalapp1/model/model_get_data_np.dart';
 import 'package:my_finalapp1/model/model_get_img_np.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/loading_widget.dart';
@@ -26,36 +28,62 @@ class ShowDetailNPowner extends StatefulWidget {
 class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
   final keyRefresh = GlobalKey<RefreshIndicatorState>();
 
+  InfoNp npdata;
+
+  Future<Void> getInfoNp() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    var userId = prefs.getInt('id');
+    print('uId = $userId');
+    print('token = $token');
+    var url = '${Connectapi().domain}/getdetailnp/$_npId';
+    //conect
+    var response = await http.get(Uri.parse(url), headers: {
+      'Connect-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    //check response
+    if (response.statusCode == 200) {
+      //แปลงjson ให้อยู่ในรูปแบบ model members
+      GetDataNp members = GetDataNp.fromJson(convert.jsonDecode(response.body));
+      //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
+      setState(() {
+        npdata = members.infoNp;
+      });
+    }
+  }
+
   Map<String, dynamic> _rec_member;
   var _npId;
   var token;
-  var _npName;
-  var _npAbout;
-  var _npPhone;
-  var _npEmail;
-  var _npAdress;
-  var _npDistrict;
-  var _npProvince;
-  var _npLat;
-  var _npLong;
-  var _npBkStatus;
+  // var _npName;
+  // var _npAbout;
+  // var _npPhone;
+  // var _npEmail;
+  // var _npAdress;
+  // var _npDistrict;
+  // var _npProvince;
+  // var _npLat;
+  // var _npLong;
+  // var _npBkStatus;
 
   Future getDataNp() {
     _rec_member = ModalRoute.of(context).settings.arguments;
     _npId = _rec_member['np_id'];
-    _npName = _rec_member['np_name'];
-    _npAbout = _rec_member['np_about'];
-    _npPhone = _rec_member['np_phone'];
-    _npEmail = _rec_member['np_email'];
-    _npAdress = _rec_member['np_adress'];
-    _npDistrict = _rec_member['np_district'];
-    _npProvince = _rec_member['np_province'];
-    _npLat = _rec_member['np_lat'];
-    _npLong = _rec_member['np_long'];
-    _npBkStatus = _rec_member['np_bk_status'];
+    // _npName = _rec_member['np_name'];
+    // _npAbout = _rec_member['np_about'];
+    // _npPhone = _rec_member['np_phone'];
+    // _npEmail = _rec_member['np_email'];
+    // _npAdress = _rec_member['np_adress'];
+    // _npDistrict = _rec_member['np_district'];
+    // _npProvince = _rec_member['np_province'];
+    // _npLat = _rec_member['np_lat'];
+    // _npLong = _rec_member['np_long'];
+    // _npBkStatus = _rec_member['np_bk_status'];
     print(_npId);
-    print(_npName);
-    print(_npBkStatus);
+    // print(_npName);
+    // print(_npBkStatus);
   }
 
   List<Imgsrows> imgsmembers = [];
@@ -107,6 +135,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
       print('Update Fail!!');
     }
   }
+
   // List<Revlimit> datamembers = [];
   // //connect server api
   // Future<Void> _getListReviewslimit() async {
@@ -143,6 +172,20 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
     _getOrImage();
     // _getListReviewslimit();
     // rerere();
+    getInfoNp();
+  }
+
+  Future<Null> refreshModel() async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // var userId = prefs.getInt('id');
+    var urlModel = '${Connectapi().domain}/getdetailnp/$_npId';
+    print(urlModel);
+    await Dio().get(urlModel).then((value) {
+      setState(() {
+        getInfoNp();
+      });
+    });
+    print('รีรีรีรี');
   }
 
   Future<void> rerere() async {
@@ -202,7 +245,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
 
   void googleMap() async {
     String googleUrl =
-        'https://www.google.com/maps/search/?api=1&query=$_npLat,$_npLong';
+        'https://www.google.com/maps/search/?api=1&query=${npdata.npLat},${npdata.npLong}';
 
     if (await canLaunch(googleUrl)) {
       await launch(googleUrl);
@@ -314,7 +357,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                       Row(
                         children: [
                           Text(
-                            '$_npName',
+                            '${npdata.npName}',
                             style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
@@ -322,19 +365,22 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                             ),
                           ),
                           SizedBox(width: 5),
-                          checkStatus(_npBkStatus),
+                          checkStatus(npdata.npBkStatus),
                           Spacer(),
                           CupertinoSwitch(
                             value: isSwiteched =
-                                (_npBkStatus != 'open') ? false : true,
+                                (npdata.npBkStatus != 'open') ? false : true,
                             onChanged: (bool npStatus) {
                               isSwiteched
                                   ? showCupertinoDialog(
-                                      context: context, builder: closeDialog)
+                                          context: context,
+                                          builder: closeDialog)
+                                      .then((value) => refreshModel())
                                   : showCupertinoDialog(
-                                      context: context, builder: openDialog);
+                                          context: context, builder: openDialog)
+                                      .then((value) => refreshModel());
                               setState(() {
-                                (_npBkStatus != 'open')
+                                (npdata.npBkStatus != 'open')
                                     ? setState(() {
                                         isSwiteched = true;
                                       })
@@ -362,7 +408,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                       ),
                       SizedBox(height: 15),
                       Text(
-                        '$_npAbout',
+                        '${npdata.npAbout}',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
@@ -390,7 +436,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                             ),
                           ),
                           Text(
-                            '$_npPhone',
+                            '${npdata.npPhone}',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
@@ -410,7 +456,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                             ),
                           ),
                           Text(
-                            '$_npEmail',
+                            '${npdata.npEmail}',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
@@ -446,7 +492,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                                   color: tPimaryColor,
                                 ),
                                 label: Text(
-                                  '$_npName',
+                                  '${npdata.npName}',
                                   style: TextStyle(
                                     color: tPimaryColor,
                                     fontSize: 16,
@@ -458,7 +504,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                           Row(
                             children: [
                               Text(
-                                '${_npAdress} อำเภอ${_npDistrict} จังหวัด${_npProvince}',
+                                '${npdata.npAdress} อำเภอ${npdata.npDistrict} จังหวัด${npdata.npProvince}',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal,
@@ -495,18 +541,18 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                           height: 250,
                           child: GoogleMap(
                             initialCameraPosition: CameraPosition(
-                              target: LatLng(_npLat, _npLong),
+                              target: LatLng(npdata.npLat, npdata.npLong),
                               zoom: 15,
                             ),
                             mapType: MapType.normal,
                             markers: <Marker>{
                               Marker(
                                 markerId: MarkerId('myStore'),
-                                position: LatLng(_npLat, _npLong),
+                                position: LatLng(npdata.npLat, npdata.npLong),
                                 infoWindow: InfoWindow(
-                                    title: '$_npName',
+                                    title: '$npdata.npName',
                                     snippet:
-                                        '$_npAdress อำเภอ$_npDistrict จังหวัด$_npProvince',
+                                        '${npdata.npAdress} อำเภอ${npdata.npDistrict} จังหวัด${npdata.npProvince}',
                                     onTap: () {
                                       googleMap();
                                     }),
@@ -559,14 +605,16 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                   () {
                     Navigator.pushNamed(context, '/oweditmypub', arguments: {
                       '_npId': _npId,
-                      '_npName': _npName,
-                      '_npAbout': _npAbout,
-                      '_npPhone': _npPhone,
-                      '_npEmail': _npEmail,
-                      '_npAdress': _npAdress,
-                      '_npDistrict': _npDistrict,
-                      '_npProvince': _npProvince,
-                    });
+                      '_npName': npdata.npName,
+                      '_npAbout': npdata.npAbout,
+                      '_npPhone': npdata.npPhone,
+                      '_npEmail': npdata.npEmail,
+                      '_npAdress': npdata.npAdress,
+                      '_npDistrict': npdata.npDistrict,
+                      '_npProvince': npdata.npProvince,
+                      '_npLat': npdata.npLat,
+                      '_npLong': npdata.npLong,
+                    }).then((value) => refreshModel());
                   },
                 ),
               ],

@@ -62,6 +62,8 @@ class _EditPagenpState extends State<EditPagenp> {
   var _npAdress;
   var _npDistrict;
   var _npProvince;
+  var _npLat;
+  var _npLong;
 
   Future getDataNp() {
     _rec_member = ModalRoute.of(context).settings.arguments;
@@ -73,9 +75,9 @@ class _EditPagenpState extends State<EditPagenp> {
     _npAdress = TextEditingController(text: _rec_member['_npAdress']);
     _npDistrict = TextEditingController(text: _rec_member['_npDistrict']);
     _npProvince = TextEditingController(text: _rec_member['_npProvince']);
-    print(_npId);
-    print(_npName);
-    print(_npPhone);
+    _npLat = _rec_member['_npLat'];
+    _npLong = _rec_member['_npLong'];
+    print(_rec_member);
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
@@ -51,6 +52,17 @@ class _ShowDataOwState extends State<ShowDataOw> {
     _getInfoOw();
   }
 
+  Future<Null> refreshModel() async {
+    var urlModel = '${Connectapi().domain}/getprofileowner/$owId';
+    print(urlModel);
+    await Dio().get(urlModel).then((value) {
+      setState(() {
+        _getInfoOw();
+      });
+    });
+    print('รีรีรีรี');
+  }
+
   var dateformate = DateFormat.yMMMd();
 
   @override
@@ -79,7 +91,7 @@ class _ShowDataOwState extends State<ShowDataOw> {
                 'ow_email': odata.owEmail,
                 'ow_gender': odata.owGender,
                 'ow_bday': odata.owBday,
-              });
+              }).then((value) => refreshModel());
               print(odata.owId);
               print(odata.owUsername);
               print(odata.owPassword);
