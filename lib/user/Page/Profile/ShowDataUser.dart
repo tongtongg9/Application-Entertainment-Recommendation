@@ -1,7 +1,6 @@
 // import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
@@ -68,7 +67,7 @@ class _ShowDataUserState extends State<ShowDataUser> {
     var userId = prefs.getInt('id');
     var urlModel = '${Connectapi().domain}/getprofileuser/$userId';
     print(urlModel);
-    await Dio().get(urlModel).then((value) {
+    await http.get(Uri.parse(urlModel)).then((value) {
       setState(() {
         getInfoUser();
       });

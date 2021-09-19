@@ -2,7 +2,6 @@ import 'dart:ffi';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:delayed_display/delayed_display.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -180,7 +179,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
     // var userId = prefs.getInt('id');
     var urlModel = '${Connectapi().domain}/getdetailnp/$_npId';
     print(urlModel);
-    await Dio().get(urlModel).then((value) {
+    await http.get(Uri.parse(urlModel)).then((value) {
       setState(() {
         getInfoNp();
       });

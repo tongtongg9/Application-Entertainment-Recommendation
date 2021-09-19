@@ -1,5 +1,4 @@
 import 'dart:ffi';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:my_finalapp1/MainPage.dart';
 import 'package:my_finalapp1/model/model_get_data_user.dart';
@@ -58,7 +57,7 @@ class _ProfileState extends State<Profile> {
     var userId = prefs.getInt('id');
     var urlModel = '${Connectapi().domain}/getprofileuser/$userId';
     print(urlModel);
-    await Dio().get(urlModel).then((value) {
+    await http.get(Uri.parse(urlModel)).then((value) {
       setState(() {
         getInfoUser();
       });

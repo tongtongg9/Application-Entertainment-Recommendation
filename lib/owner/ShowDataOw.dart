@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
@@ -55,7 +54,7 @@ class _ShowDataOwState extends State<ShowDataOw> {
   Future<Null> refreshModel() async {
     var urlModel = '${Connectapi().domain}/getprofileowner/$owId';
     print(urlModel);
-    await Dio().get(urlModel).then((value) {
+    await http.get(Uri.parse(urlModel)).then((value) {
       setState(() {
         _getInfoOw();
       });

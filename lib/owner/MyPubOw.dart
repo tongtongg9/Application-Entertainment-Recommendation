@@ -1,7 +1,6 @@
 import 'dart:ffi';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -64,7 +63,7 @@ class _MyPubOwState extends State<MyPubOw> {
     // var userId = prefs.getInt('id');
     var urlModel = '${Connectapi().domain}/getdatanpbyow/$uId';
     print(urlModel);
-    await Dio().get(urlModel).then((value) {
+    await http.get(Uri.parse(urlModel)).then((value) {
       setState(() {
         _getListNpbyOwPage();
       });

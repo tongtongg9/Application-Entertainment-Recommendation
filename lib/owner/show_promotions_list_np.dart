@@ -66,6 +66,17 @@ class _ShowPromotionsListNpState extends State<ShowPromotionsListNp> {
     showlist();
   }
 
+  Future<Null> refreshModel() async {
+    var urlModel = '${Connectapi().domain}/getpromotionsnp/$_npId';
+    print(urlModel);
+    await http.get(Uri.parse(urlModel)).then((value) {
+      setState(() {
+        showlist();
+      });
+    });
+    print('รีรีรีรี');
+  }
+
   var dateformate = DateFormat.yMMMd();
 
   @override
@@ -85,7 +96,7 @@ class _ShowPromotionsListNpState extends State<ShowPromotionsListNp> {
         onPressed: () {
           Navigator.pushNamed(context, '/addpromotions', arguments: {
             '_npId': _npId,
-          });
+          }).then((value) => refreshModel());
         },
         label: Text('เพิ่มโปรโมชั่นร้านของคุณ'),
         backgroundColor: tPimaryColor,
