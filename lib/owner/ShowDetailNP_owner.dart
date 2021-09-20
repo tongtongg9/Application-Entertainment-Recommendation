@@ -11,6 +11,7 @@ import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/model_get_data_np.dart';
 import 'package:my_finalapp1/model/model_get_img_np.dart';
 import 'package:my_finalapp1/widget/colors.dart';
+import 'package:my_finalapp1/widget/custom_dialog.dart';
 import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' as convert;
@@ -624,88 +625,38 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
     );
   }
 
-  Widget closeDialog(BuildContext context) => CupertinoAlertDialog(
-        title: Text(
-          'บริการสำรองที่นั่ง',
-          style: TextStyle(fontFamily: 'IBMPlexSansThai'),
-        ),
-        content: Text(
-          'คุณต้องการปิดบริการสำรองที่นั่งหรือไม่?',
-          style: TextStyle(fontFamily: 'IBMPlexSansThai'),
-        ),
-        actions: <Widget>[
-          CupertinoDialogAction(
-            child: Text(
-              'ยกเลิก',
-              style: TextStyle(
-                color: tErrorColor,
-                fontFamily: 'IBMPlexSansThai',
-              ),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          CupertinoDialogAction(
-            child: Text(
-              'ตกลง',
-              style: TextStyle(
-                fontFamily: 'IBMPlexSansThai',
-              ),
-            ),
-            onPressed: () {
-              Map<String, dynamic> valuse = Map();
-              valuse['np_bk_status'] = _closeBk;
-              print(_closeBk);
-              _updateStatus(valuse);
-              Navigator.pop(context);
-            },
-          )
-        ],
+  Widget closeDialog(BuildContext context) => CustomDialog(
+        title: 'ปิดบริการสำรองที่นั่ง',
+        descriptoin: 'คุณต้องการปิดบริการสำรองที่นั่งหรือไม่?',
+        textsubmitButton: 'ตกลง',
+        submit: () {
+          Map<String, dynamic> valuse = Map();
+          valuse['np_bk_status'] = _closeBk;
+          print(_closeBk);
+          _updateStatus(valuse);
+          Navigator.pop(context);
+        },
+        textcancelButton: 'ยกเลิก',
+        cancel: () {
+          Navigator.pop(context);
+        },
       );
-  Widget openDialog(BuildContext context) => CupertinoAlertDialog(
-        title: Text(
-          'บริการสำรองที่นั่ง',
-          style: TextStyle(
-            fontFamily: 'IBMPlexSansThai',
-          ),
-        ),
-        content: Text(
-          'คุณต้องการเปิดบริการสำรองที่นั่งหรือไม่?',
-          style: TextStyle(
-            fontFamily: 'IBMPlexSansThai',
-          ),
-        ),
-        actions: <Widget>[
-          CupertinoDialogAction(
-            child: Text(
-              'ยกเลิก',
-              style: TextStyle(
-                color: tErrorColor,
-                fontFamily: 'IBMPlexSansThai',
-              ),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          CupertinoDialogAction(
-            child: Text(
-              'ตกลง',
-              style: TextStyle(
-                fontFamily: 'IBMPlexSansThai',
-              ),
-            ),
-            onPressed: () {
-              Map<String, dynamic> valuse = Map();
-              valuse['np_bk_status'] = _openBk;
-              print(_openBk);
-              _updateStatus(valuse);
-              // rerere();
-              Navigator.pop(context);
-            },
-          )
-        ],
+  Widget openDialog(BuildContext context) => CustomDialog(
+        title: 'เปิดบริการสำรองที่นั่ง',
+        descriptoin: 'คุณต้องการเปิดบริการสำรองที่นั่งหรือไม่?',
+        textsubmitButton: 'ตกลง',
+        submit: () {
+          Map<String, dynamic> valuse = Map();
+          valuse['np_bk_status'] = _openBk;
+          print(_openBk);
+          _updateStatus(valuse);
+          // rerere();
+          Navigator.pop(context);
+        },
+        textcancelButton: 'ยกเลิก',
+        cancel: () {
+          Navigator.pop(context);
+        },
       );
 
   Widget useravatar() {
