@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_finalapp1/widget/colors.dart';
+import 'colors.dart';
 
 class CustomDialog extends StatelessWidget {
   final String title, descriptoin, textsubmitButton, textcancelButton;
