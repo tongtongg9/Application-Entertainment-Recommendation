@@ -97,20 +97,26 @@ class _MyPubOwState extends State<MyPubOw> {
       ),
       body: SafeArea(
         child: datamember.length <= 0
-            ? Card(
-                color: tBGDeepColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                child: SizedBox(
-                  height: 200,
-                  child: Center(
-                    child: Text(
-                      'ไม่มีร้าน',
-                      style: TextStyle(
-                        color: tTextColor,
-                        fontSize: 16,
+            ? Container(
+                child: Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.2,
                       ),
-                    ),
+                      Icon(
+                        Icons.error,
+                        size: 100,
+                        color: Colors.grey,
+                      ),
+                      Text(
+                        'ไม่มีรายการ',
+                        style: TextStyle(
+                          color: tTextGColor,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               )
@@ -177,14 +183,21 @@ class _MyPubOwState extends State<MyPubOw> {
                                     ),
                                   ),
                                   Text(
-                                    "${datamember[index].npAdress} ${datamember[index].npDistrict}",
+                                    "${datamember[index].npAdress}",
                                     style: TextStyle(
                                       color: tTextColor,
                                       fontSize: 16,
                                     ),
                                   ),
                                   Text(
-                                    "${datamember[index].npProvince}",
+                                    "${datamember[index].npDistrict}",
+                                    style: TextStyle(
+                                      color: tTextColor,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  Text(
+                                    "จังหวัด${datamember[index].npProvince}",
                                     style: TextStyle(
                                       color: tTextColor,
                                       fontSize: 16,

@@ -303,7 +303,7 @@ class _DetailNpState extends State<DetailNp> {
                             Text(
                               '$_npName',
                               style: TextStyle(
-                                fontSize: 28,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: tTextColor,
                               ),

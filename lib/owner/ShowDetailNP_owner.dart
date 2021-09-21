@@ -359,14 +359,14 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                           Text(
                             '${npdata.npName}',
                             style: TextStyle(
-                              fontSize: 28,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: tTextColor,
                             ),
                           ),
+                          Spacer(),
                           SizedBox(width: 5),
                           checkStatus(npdata.npBkStatus),
-                          Spacer(),
                           CupertinoSwitch(
                             value: isSwiteched =
                                 (npdata.npBkStatus != 'open') ? false : true,
@@ -550,7 +550,7 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                                 markerId: MarkerId('myStore'),
                                 position: LatLng(npdata.npLat, npdata.npLong),
                                 infoWindow: InfoWindow(
-                                    title: '$npdata.npName',
+                                    title: '${npdata.npName}',
                                     snippet:
                                         '${npdata.npAdress} อำเภอ${npdata.npDistrict} จังหวัด${npdata.npProvince}',
                                     onTap: () {

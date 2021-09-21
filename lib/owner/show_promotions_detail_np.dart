@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/widget/colors.dart';
+import 'package:my_finalapp1/widget/custom_dialog.dart';
+import 'package:http/http.dart' as http;
 
 class ShowPromotionsDetailNp extends StatefulWidget {
   // ShowPromotionsDetailNp({Key? key}) : super(key: key);
@@ -63,6 +65,25 @@ class _ShowPromotionsDetailNpState extends State<ShowPromotionsDetailNp> {
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  Future<void> dodelete() async {
+    var url = '${Connectapi().domain}/delpromotions/$_proId';
+    print(url);
+    var response = await http.delete(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print('delete Success!');
+      // Navigator.pop(context, true);
+    } else {
+      print('delete Fail!!');
+    }
   }
 
   var dateformate = DateFormat.yMMMd();
@@ -264,7 +285,27 @@ class _ShowPromotionsDetailNpState extends State<ShowPromotionsDetailNp> {
                         fontSize: 16,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => CustomDialog(
+                                title: 'ลบโปรโมชั่นร้าน',
+                                descriptoin:
+                                    'คุณต้องการลบโปรโมชั่นร้านหรือไม่?',
+                                textsubmitButton: 'ตกลง',
+                                submit: () {
+                                  dodelete();
+                                  Navigator.popUntil(
+                                      context,
+                                      ModalRoute.withName(
+                                          '/showpromotionslistnp'));
+                                },
+                                textcancelButton: 'ยกเลิก',
+                                cancel: () {
+                                  Navigator.pop(context);
+                                },
+                              ));
+                    },
                   ),
                 )
               ],

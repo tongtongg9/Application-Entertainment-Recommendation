@@ -118,20 +118,26 @@ class _ShowPromotionsListNpState extends State<ShowPromotionsListNp> {
   Widget _listView() {
     return SingleChildScrollView(
       child: datamember.length <= 0
-          ? Card(
-              color: tBGDeepColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: SizedBox(
-                height: 200,
-                child: Center(
-                  child: Text(
-                    'ไม่มีโปรโมชั่น',
-                    style: TextStyle(
-                      color: tTextColor,
-                      fontSize: 16,
+          ? Container(
+              child: Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.2,
                     ),
-                  ),
+                    Icon(
+                      Icons.error,
+                      size: 100,
+                      color: Colors.grey,
+                    ),
+                    Text(
+                      'ไม่มีรายการ',
+                      style: TextStyle(
+                        color: tTextGColor,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             )
@@ -164,7 +170,7 @@ class _ShowPromotionsListNpState extends State<ShowPromotionsListNp> {
                             // 'np_lat': datamember[index].npLat,
                             // 'np_long': datamember[index].npLong,
                             // 'np_bk_status': datamember[index].npBkStatus,
-                          });
+                          }).then((value) => refreshModel());
                     },
                     child: Card(
                       elevation: 5,

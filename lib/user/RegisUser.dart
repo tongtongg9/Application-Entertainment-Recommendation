@@ -168,6 +168,7 @@ class _RegisUserState extends State<RegisUser> {
                     'ชื่อผู้ใช้',
                     'กรุณากรอกชื่อผู้ใช้',
                     'assets/icons/user.png',
+                    TextInputType.text,
                     false,
                   ),
                   SizedBox(height: 10),
@@ -177,6 +178,7 @@ class _RegisUserState extends State<RegisUser> {
                     'รหัสผ่าน',
                     'กรุณากรอกรหัสผ่าน',
                     'assets/icons/user.png',
+                    TextInputType.text,
                     true,
                   ),
                   SizedBox(height: 10),
@@ -186,6 +188,7 @@ class _RegisUserState extends State<RegisUser> {
                     'ชื่อ',
                     'กรุณากรอกชื่อ',
                     'assets/icons/user.png',
+                    TextInputType.text,
                     false,
                   ),
                   SizedBox(height: 10),
@@ -195,6 +198,7 @@ class _RegisUserState extends State<RegisUser> {
                     'นามสกุล',
                     'กรุณากรอกนามสกุล',
                     'assets/icons/user.png',
+                    TextInputType.text,
                     false,
                   ),
                   SizedBox(height: 10),
@@ -204,6 +208,7 @@ class _RegisUserState extends State<RegisUser> {
                     'เบอร์โทรศัพท์',
                     'กรุณากรอกเบอร์โทรศัพท์',
                     'assets/icons/user.png',
+                    TextInputType.phone,
                     false,
                   ),
                   SizedBox(height: 10),
@@ -213,6 +218,7 @@ class _RegisUserState extends State<RegisUser> {
                     'E-mail',
                     'กรุณากรอก E-mail',
                     'assets/icons/user.png',
+                    TextInputType.emailAddress,
                     false,
                   ),
                   SizedBox(height: 10),
@@ -290,6 +296,7 @@ class _RegisUserState extends State<RegisUser> {
     final String _hintText,
     final String _validator,
     final String _icon,
+    final TextInputType _textType,
     final bool isPasswordTextField,
   ) {
     return Column(
@@ -323,6 +330,7 @@ class _RegisUserState extends State<RegisUser> {
               return _validator;
             }
           },
+          keyboardType: _textType,
           style: TextStyle(
             color: tTextColor,
             fontSize: 16,
