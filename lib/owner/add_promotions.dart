@@ -300,6 +300,7 @@ class _AddPromotionsState extends State<AddPromotions> {
               width: 180,
               height: 65,
               child: DateTimeFormField(
+                firstDate: DateTime.now(),
                 onDateSelected: (DateTime value) {
                   setState(() {
                     _dateStart = value;
@@ -364,6 +365,7 @@ class _AddPromotionsState extends State<AddPromotions> {
               width: 200,
               height: 65,
               child: DateTimeFormField(
+                firstDate: DateTime.now(),
                 onDateSelected: (DateTime value) {
                   setState(() {
                     _dateEnd = value;

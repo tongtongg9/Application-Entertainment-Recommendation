@@ -317,6 +317,7 @@ class _ReservePageState extends State<ReservePage> {
       width: 220,
       height: 65,
       child: DateTimeFormField(
+        firstDate: DateTime.now(),
         onDateSelected: (DateTime value) {
           setState(() {
             _date = value;
