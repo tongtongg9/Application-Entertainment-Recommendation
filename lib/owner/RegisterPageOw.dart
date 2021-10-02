@@ -76,17 +76,39 @@ class _RegisterPageState extends State<RegisterPageOw> {
                     _ouser,
                     'ชื่อผู้ใช้',
                     'ชื่อผู้ใช้',
-                    'กรุณากรอกชื่อผู้ใช้',
+                    (values) {
+                      if (values.isEmpty) {
+                        return 'กรุณากรอกชื่อผู้ใช้';
+                      }
+                      return null;
+                    },
                     'assets/icons/user.png',
+                    TextInputType.text,
                     false,
                   ),
                   SizedBox(height: 10),
-                  regisForm(
+                  regispasswordForm(
                     _opass,
                     'รหัสผ่าน',
-                    'รหัสผ่าน',
-                    'กรุณากรอกรหัสผ่าน',
+                    'รหัสผ่าน (ไม่น้อยกว่า 8 ตัวอักษร)',
+                    (values) {
+                      if (values.isEmpty) {
+                        return 'กรุณากรอกรหัสผ่าน';
+                      }
+                      if (values.length < 8) {
+                        return 'กรุณากรอกรหัสผ่านไม่น้อยกว่า 8 ตัวอักษร';
+                      }
+                      if (!RegExp(r'[a-zA-Z]').hasMatch(values) ||
+                          !RegExp(r'[0-9]').hasMatch(values)) {
+                        return 'รหัสผ่านของคุณต้องมีอักษร a-z A-Z และตัวเลขอย่างน้อย 1 ตัวเลข';
+                      }
+                      // if (!RegExp(r'[0-9]').hasMatch(values)) {
+                      //   return 'รหัสผ่านของคุณต้องมีตัวเลขอย่างน้อย 1 ตัวเลข';
+                      // }
+                      return null;
+                    },
                     'assets/icons/user.png',
+                    TextInputType.text,
                     true,
                   ),
                   SizedBox(height: 10),
@@ -94,35 +116,54 @@ class _RegisterPageState extends State<RegisterPageOw> {
                     _oname,
                     'ชื่อ',
                     'ชื่อ',
-                    'กรุณากรอกชื่อ',
+                    (values) {
+                      if (values.isEmpty) {
+                        return 'กรุณากรอกชื่อ';
+                      }
+                      return null;
+                    },
                     'assets/icons/user.png',
-                    false,
-                  ),
-                  SizedBox(height: 10),
-                  regisForm(
-                    _olname,
-                    'นามสกุล',
-                    'นามสกุล',
-                    'กรุณากรอกนามสกุล',
-                    'assets/icons/user.png',
+                    TextInputType.text,
                     false,
                   ),
                   SizedBox(height: 10),
                   regisForm(
                     _opho,
-                    'เบอร์โทรศัพท์',
-                    'เบอร์โทรศัพท์',
-                    'กรุณากรอกเบอร์โทรศัพท์',
+                    'นามสกุล',
+                    'นามสกุล',
+                    (values) {
+                      if (values.isEmpty) {
+                        return 'กรุณากรอกนามสกุล';
+                      }
+                      return null;
+                    },
                     'assets/icons/user.png',
+                    TextInputType.text,
                     false,
                   ),
                   SizedBox(height: 10),
                   regisForm(
                     _oemail,
-                    'E-mail',
-                    'E-mail',
-                    'กรุณากรอก E-mail',
+                    'เบอร์โทรศัพท์',
+                    'เบอร์โทรศัพท์ (081234****)',
+                    (values) {
+                      if (values.isEmpty) {
+                        return 'กรุณากรอกเบอร์โทรศัพท์';
+                      }
+                      if (values.length < 10) {
+                        return 'กรุณากรอกเบอร์โทรศัพท์ให้ครบ';
+                      }
+                      if (values.length > 10) {
+                        return 'คุณกรอกเบอร์โทรศัพท์เกินจำนวน';
+                      }
+                      if (!RegExp(r'^(?:[+0][1-9])?[0-9]{10,12}$')
+                          .hasMatch(values)) {
+                        return 'กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง';
+                      }
+                      return null;
+                    },
                     'assets/icons/user.png',
+                    TextInputType.number,
                     false,
                   ),
                   SizedBox(height: 10),
@@ -148,8 +189,10 @@ class _RegisterPageState extends State<RegisterPageOw> {
     final TextEditingController _controller,
     final String _hText,
     final String _hintText,
-    final String _validator,
+    // final String _validator,
+    final FormFieldValidator _validator,
     final String _icon,
+    final TextInputType _textType,
     final bool isPasswordTextField,
   ) {
     return Column(
@@ -178,11 +221,13 @@ class _RegisterPageState extends State<RegisterPageOw> {
         TextFormField(
           controller: _controller,
           obscureText: isPasswordTextField ? isObscurePassword : false,
-          validator: (values) {
-            if (values.isEmpty) {
-              return _validator;
-            }
-          },
+          validator: _validator,
+          // (values) {
+          //   if (values.isEmpty) {
+          //     return _validator;
+          //   }
+          // },
+          keyboardType: _textType,
           style: TextStyle(
             color: tTextColor,
             fontSize: 16,
@@ -199,6 +244,88 @@ class _RegisterPageState extends State<RegisterPageOw> {
             hintStyle: TextStyle(
               fontSize: 16,
               color: tGreyColor,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget regispasswordForm(
+    final TextEditingController _controller,
+    final String _hText,
+    final String _hintText,
+    // final String _validator,
+    final FormFieldValidator _validator,
+    final String _icon,
+    final TextInputType _textType,
+    final bool isPasswordTextField,
+  ) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              _hText,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: tTextColor,
+              ),
+            ),
+            Text(
+              '*',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: tErrorColor,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 5),
+        TextFormField(
+          controller: _controller,
+          obscureText: isPasswordTextField ? isObscurePassword : false,
+          validator: _validator,
+          // (values) {
+          //   if (values.isEmpty) {
+          //     return _validator;
+          //   }
+          // },
+          keyboardType: _textType,
+          style: TextStyle(
+            color: tTextColor,
+            fontSize: 16,
+          ),
+          cursorColor: tPimaryColor,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
+            ),
+            filled: true,
+            fillColor: tBGDeepColor,
+            hintText: _hintText,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              color: tGreyColor,
+            ),
+            suffixIcon: IconButton(
+              onPressed: () {
+                setState(() {
+                  isObscurePassword = !isObscurePassword;
+                });
+              },
+              icon: isObscurePassword
+                  ? Icon(
+                      Icons.visibility,
+                      color: tGreyColor,
+                    )
+                  : Icon(
+                      Icons.visibility_off,
+                      color: Colors.grey,
+                    ),
             ),
           ),
         ),
