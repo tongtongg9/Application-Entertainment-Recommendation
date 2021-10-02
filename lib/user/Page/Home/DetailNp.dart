@@ -699,7 +699,7 @@ class _DetailNpState extends State<DetailNp> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
-                primary: tPimaryColor,
+                // primary: tGreyColor,
               ),
               child: Text(
                 'สำรองที่นั่ง',
@@ -707,12 +707,7 @@ class _DetailNpState extends State<DetailNp> {
                   fontSize: 16,
                 ),
               ),
-              onPressed: () {
-                // Navigator.pushNamed(context, '/reservepage', arguments: {
-                //   '_npId': _npId,
-                //   '_npName': _npName,
-                // });
-              },
+              onPressed: null,
             ),
           );
   }
