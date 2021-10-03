@@ -6,6 +6,7 @@ import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_dialog.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_finalapp1/widget/loading_widget.dart';
 
 class ShowPromotionsDetailNp extends StatefulWidget {
   // ShowPromotionsDetailNp({Key? key}) : super(key: key);
@@ -65,7 +66,10 @@ class _ShowPromotionsDetailNpState extends State<ShowPromotionsDetailNp> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    isBTNLoading = false;
   }
+
+  bool isBTNLoading = true;
 
   Future<void> dodelete() async {
     var url = '${Connectapi().domain}/delpromotions/$_proId';
@@ -294,6 +298,7 @@ class _ShowPromotionsDetailNpState extends State<ShowPromotionsDetailNp> {
                                     'คุณต้องการลบโปรโมชั่นร้านหรือไม่?',
                                 textsubmitButton: 'ตกลง',
                                 submit: () {
+                                  Future.delayed(Duration(seconds: 2));
                                   dodelete();
                                   Navigator.popUntil(
                                       context,

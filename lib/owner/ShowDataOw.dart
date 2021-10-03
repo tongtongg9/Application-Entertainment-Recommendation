@@ -4,6 +4,7 @@ import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/model_get_data_owner.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
+import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ffi';
 import 'dart:convert' as convert;
@@ -39,9 +40,12 @@ class _ShowDataOwState extends State<ShowDataOw> {
       //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
       setState(() {
         odata = members.info;
+        loadScreen = false;
       });
     }
   }
+
+  bool loadScreen = true;
 
   @override
   void initState() {
@@ -104,85 +108,88 @@ class _ShowDataOwState extends State<ShowDataOw> {
           ),
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(20), // todo ระยะห่างจากขอบจอ !!
-        child: Column(
-          children: [
-            profilePic(), //? -- > Profile Picture
-            SizedBox(height: 25),
-            Divider(
-              thickness: 2,
-              color: Colors.black12,
+      body: loadScreen
+          ? ShowProgress().loadingScreen()
+          : Container(
+              padding: EdgeInsets.all(20), // todo ระยะห่างจากขอบจอ !!
+              child: Column(
+                children: [
+                  profilePic(), //? -- > Profile Picture
+                  SizedBox(height: 25),
+                  Divider(
+                    thickness: 2,
+                    color: Colors.black12,
+                  ),
+                  SizedBox(height: 25),
+                  Row(
+                    children: [
+                      Infotype(
+                        type: 'ชื่อผู้ใช้',
+                      ),
+                      Infodata(
+                        data: '${odata.owUsername}',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Infotype(
+                        type: 'ชื่อ-สกุล',
+                      ),
+                      Infodata(
+                        data: '${odata.owName} ${odata.owLastname}',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Infotype(
+                        type: 'เบอร์โทร',
+                      ),
+                      Infodata(
+                        data: '${odata.owPhone}',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Infotype(
+                        type: 'Email',
+                      ),
+                      Infodata(
+                        data: '${odata.owEmail}',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Infotype(
+                        type: 'เพศ',
+                      ),
+                      Infodata(
+                        data: '${odata.owGender}',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Infotype(
+                        type: 'วันเกิด',
+                      ),
+                      Infodata(
+                        data:
+                            '${dateformate.format(DateTime.parse(odata.owBday))}',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            SizedBox(height: 25),
-            Row(
-              children: [
-                Infotype(
-                  type: 'ชื่อผู้ใช้',
-                ),
-                Infodata(
-                  data: '${odata.owUsername}',
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Infotype(
-                  type: 'ชื่อ-สกุล',
-                ),
-                Infodata(
-                  data: '${odata.owName} ${odata.owLastname}',
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Infotype(
-                  type: 'เบอร์โทร',
-                ),
-                Infodata(
-                  data: '${odata.owPhone}',
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Infotype(
-                  type: 'Email',
-                ),
-                Infodata(
-                  data: '${odata.owEmail}',
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Infotype(
-                  type: 'เพศ',
-                ),
-                Infodata(
-                  data: '${odata.owGender}',
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Infotype(
-                  type: 'วันเกิด',
-                ),
-                Infodata(
-                  data: '${dateformate.format(DateTime.parse(odata.owBday))}',
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
     );
   }
 

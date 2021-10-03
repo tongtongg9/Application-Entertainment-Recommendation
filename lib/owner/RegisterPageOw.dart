@@ -102,9 +102,7 @@ class _RegisterPageState extends State<RegisterPageOw> {
                           !RegExp(r'[0-9]').hasMatch(values)) {
                         return 'รหัสผ่านของคุณต้องมีอักษร a-z A-Z และตัวเลขอย่างน้อย 1 ตัวเลข';
                       }
-                      // if (!RegExp(r'[0-9]').hasMatch(values)) {
-                      //   return 'รหัสผ่านของคุณต้องมีตัวเลขอย่างน้อย 1 ตัวเลข';
-                      // }
+
                       return null;
                     },
                     'assets/icons/user.png',
@@ -126,9 +124,8 @@ class _RegisterPageState extends State<RegisterPageOw> {
                     TextInputType.text,
                     false,
                   ),
-                  SizedBox(height: 10),
                   regisForm(
-                    _opho,
+                    _olname,
                     'นามสกุล',
                     'นามสกุล',
                     (values) {
@@ -143,7 +140,7 @@ class _RegisterPageState extends State<RegisterPageOw> {
                   ),
                   SizedBox(height: 10),
                   regisForm(
-                    _oemail,
+                    _opho,
                     'เบอร์โทรศัพท์',
                     'เบอร์โทรศัพท์ (081234****)',
                     (values) {
@@ -164,6 +161,25 @@ class _RegisterPageState extends State<RegisterPageOw> {
                     },
                     'assets/icons/user.png',
                     TextInputType.number,
+                    false,
+                  ),
+                  SizedBox(height: 10),
+                  regisForm(
+                    _oemail,
+                    'E-mail',
+                    'you@example.com',
+                    (values) {
+                      if (values.isEmpty) {
+                        return 'กรุณากรอก E-mail';
+                      }
+                      if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                          .hasMatch(values)) {
+                        return 'กรุณากรอก E-mail ให้ถูกต้อง';
+                      }
+                      return null;
+                    },
+                    'assets/icons/user.png',
+                    TextInputType.emailAddress,
                     false,
                   ),
                   SizedBox(height: 10),

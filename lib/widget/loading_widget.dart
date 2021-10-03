@@ -9,4 +9,37 @@ class ShowProgress {
       ),
     );
   }
+
+  Widget loadingScreen() {
+    return Center(
+      child: CircularProgressIndicator(
+        color: tPimaryColor,
+      ),
+    );
+  }
+
+  Widget loadingBotton() {
+    return Center(
+      child: CircularProgressIndicator(
+        color: Colors.white,
+      ),
+    );
+  }
+
+  Widget loadingDialog() {
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      elevation: 20,
+      backgroundColor: tBGColor,
+      child: Container(
+        width: 100,
+        height: 100,
+        child: Center(
+          child: CircularProgressIndicator(
+            color: tPimaryColor,
+          ),
+        ),
+      ),
+    );
+  }
 }

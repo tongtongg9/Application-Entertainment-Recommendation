@@ -6,6 +6,7 @@ import 'package:my_finalapp1/MainPage.dart';
 import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/model_get_data_owner.dart';
 import 'package:my_finalapp1/widget/colors.dart';
+import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
@@ -40,9 +41,12 @@ class _DashboardState extends State<Dashboard> {
       //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
       setState(() {
         odata = members.info;
+        loadScreen = false;
       });
     }
   }
+
+  bool loadScreen = true;
 
   Future _logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -64,127 +68,129 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 75),
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "สวัสดี คุณ,",
-                      style: TextStyle(
-                        color: tTextColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Text(
-                          '${odata.owName}',
-                          style: TextStyle(
-                            // color: Colors.white,
-                            color: tPimaryColor,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          "ขอต้อนรับสู่ร้านของคุณ",
-                          style: TextStyle(
-                            color: tTextColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 15),
-          Divider(
-            height: 5,
-            thickness: 2,
-          ),
-          Flexible(
-            //? << Grid Dashboard
-            child: GridView.count(
-              // scrollDirection: Axis.vertical,
-              // shrinkWrap: true,
-              childAspectRatio: 1.0,
-              padding: EdgeInsets.all(10),
-              crossAxisCount: 3,
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 5,
-              primary: true,
+      body: loadScreen
+          ? ShowProgress().loadingScreen()
+          : Column(
               children: [
-                GridMenu(
-                  press: () {
-                    print('ข้อมูลส่วนตัว');
-                    Navigator.pushNamed(context, '/owshowdata');
-                  },
-                  img: "assets/images/person.png",
-                  title: "ข้อมูลส่วนตัว",
-                  // subtitle: "subtitle",
+                Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16, top: 75),
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "สวัสดี คุณ,",
+                            style: TextStyle(
+                              color: tTextColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Text(
+                                '${odata.owName}',
+                                style: TextStyle(
+                                  // color: Colors.white,
+                                  color: tPimaryColor,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                "ขอต้อนรับสู่ร้านของคุณ",
+                                style: TextStyle(
+                                  color: tTextColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                GridMenu(
-                  press: () {
-                    Navigator.pushNamed(context, '/owmypub');
-                    print('ร้านของฉัน');
-                  },
-                  img: "assets/images/pub.png",
-                  title: "ร้านของฉัน",
-                  // subtitle: "subtitle",
+                SizedBox(height: 15),
+                Divider(
+                  height: 5,
+                  thickness: 2,
                 ),
-                GridMenu(
-                  press: () {
-                    Navigator.pushNamed(context, '/shownotibkow');
-                    print('การแจ้งเตือน');
-                  },
-                  img: "assets/images/bell.png",
-                  title: "การแจ้งเตือน",
-                  // subtitle: "subtitle",
-                ),
-                GridMenu(
-                  press: () {
-                    Navigator.pushNamed(context, '/showbookingowner');
-                    print('รายการสำรองที่นั่ง');
-                  },
-                  img: "assets/images/checklist.png",
-                  title: "รายการสำรองที่นั่ง",
-                  // subtitle: "subtitle",
-                ),
-                // GridMenu(
-                //   press: () {
-                //     print('โปรโมชั่น');
-                //   },
-                //   img: "assets/images/megaphone.png",
-                //   title: "โปรโมชั่น",
-                //   // subtitle: "subtitle",
-                // ),
-                GridMenu(
-                  press: () {
-                    _logout();
-                    print('ตั้งค่า');
-                  },
-                  img: "assets/images/settings.png",
-                  title: "ตั้งค่า",
-                  // subtitle: "subtitle",
+                Flexible(
+                  //? << Grid Dashboard
+                  child: GridView.count(
+                    // scrollDirection: Axis.vertical,
+                    // shrinkWrap: true,
+                    childAspectRatio: 1.0,
+                    padding: EdgeInsets.all(10),
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
+                    primary: true,
+                    children: [
+                      GridMenu(
+                        press: () {
+                          print('ข้อมูลส่วนตัว');
+                          Navigator.pushNamed(context, '/owshowdata');
+                        },
+                        img: "assets/images/person.png",
+                        title: "ข้อมูลส่วนตัว",
+                        // subtitle: "subtitle",
+                      ),
+                      GridMenu(
+                        press: () {
+                          Navigator.pushNamed(context, '/owmypub');
+                          print('ร้านของฉัน');
+                        },
+                        img: "assets/images/pub.png",
+                        title: "ร้านของฉัน",
+                        // subtitle: "subtitle",
+                      ),
+                      GridMenu(
+                        press: () {
+                          Navigator.pushNamed(context, '/shownotibkow');
+                          print('การแจ้งเตือน');
+                        },
+                        img: "assets/images/bell.png",
+                        title: "การแจ้งเตือน",
+                        // subtitle: "subtitle",
+                      ),
+                      GridMenu(
+                        press: () {
+                          Navigator.pushNamed(context, '/showbookingowner');
+                          print('รายการสำรองที่นั่ง');
+                        },
+                        img: "assets/images/checklist.png",
+                        title: "รายการสำรองที่นั่ง",
+                        // subtitle: "subtitle",
+                      ),
+                      // GridMenu(
+                      //   press: () {
+                      //     print('โปรโมชั่น');
+                      //   },
+                      //   img: "assets/images/megaphone.png",
+                      //   title: "โปรโมชั่น",
+                      //   // subtitle: "subtitle",
+                      // ),
+                      GridMenu(
+                        press: () {
+                          _logout();
+                          print('ตั้งค่า');
+                        },
+                        img: "assets/images/settings.png",
+                        title: "ตั้งค่า",
+                        // subtitle: "subtitle",
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -12,6 +12,7 @@ import 'package:my_finalapp1/np/Keys.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
+import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddNP extends StatefulWidget {
@@ -93,9 +94,9 @@ class _AddNPState extends State<AddNP> {
         selectedAssets: _images,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
-          actionBarColor: "#abcdef",
-          actionBarTitle: "Example App",
-          allViewTitle: "All Photos",
+          actionBarColor: "#9147ff",
+          actionBarTitle: "รูปภาพจากแกลอรี่",
+          allViewTitle: "รูปภาพทั้งหมด",
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",
         ),
@@ -230,7 +231,10 @@ class _AddNPState extends State<AddNP> {
     super.initState();
     //call _getAPI
     getNP();
+    isBTNLoading = false;
   }
+
+  bool isBTNLoading = true;
 
   PickResult selectedPlace;
   var apikeys = new Keys();
@@ -766,13 +770,15 @@ class _AddNPState extends State<AddNP> {
           ),
           primary: tPimaryColor,
         ),
-        child: Text(
-          'ยืนยัน',
-          style: TextStyle(
-            fontSize: 16,
-          ),
-        ),
-        onPressed: () {
+        child: isBTNLoading
+            ? ShowProgress().loadingBotton()
+            : Text(
+                'ยืนยัน',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+        onPressed: () async {
           if (_owid.currentState.validate()) {
             Map<String, dynamic> valuse = Map();
             // var lat = selectedPlace.geometry.location.lat;
@@ -796,10 +802,14 @@ class _AddNPState extends State<AddNP> {
             print(_npprov.text);
             print(selectedPlace.geometry.location.lat);
             print(selectedPlace.geometry.location.lng);
-
+            setState(() => isBTNLoading = true);
+            await Future.delayed(Duration(seconds: 1));
             registernip(valuse);
+            await Future.delayed(Duration(seconds: 2));
             sendPathImage();
+            await Future.delayed(Duration(seconds: 2));
             sendPathImageProfile();
+            await Future.delayed(Duration(seconds: 3));
             Navigator.pop(context);
             // Navigator.pushNamed(context, '/addimgsnp');
           }

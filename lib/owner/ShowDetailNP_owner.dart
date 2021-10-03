@@ -50,9 +50,12 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
       //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
       setState(() {
         npdata = members.infoNp;
+        loadScreen = false;
       });
     }
   }
+
+  bool loadScreen = true;
 
   Map<String, dynamic> _rec_member;
   var _npId;
@@ -351,218 +354,224 @@ class _ShowDetailNPownerState extends State<ShowDetailNPowner> {
                 child: SingleChildScrollView(
                   controller: scrollController,
                   primary: false,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            '${npdata.npName}',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: tTextColor,
-                            ),
-                          ),
-                          Spacer(),
-                          SizedBox(width: 5),
-                          checkStatus(npdata.npBkStatus),
-                          CupertinoSwitch(
-                            value: isSwiteched =
-                                (npdata.npBkStatus != 'open') ? false : true,
-                            onChanged: (bool npStatus) {
-                              isSwiteched
-                                  ? showCupertinoDialog(
-                                          context: context,
-                                          builder: closeDialog)
-                                      .then((value) => refreshModel())
-                                  : showCupertinoDialog(
-                                          context: context, builder: openDialog)
-                                      .then((value) => refreshModel());
-                              setState(() {
-                                (npdata.npBkStatus != 'open')
-                                    ? setState(() {
-                                        isSwiteched = true;
-                                      })
-                                    : setState(() {
-                                        isSwiteched = false;
-                                      });
-                                // isSwiteched = npStatus;
-                              });
-                            },
-                          )
-                        ],
-                      ),
-                      Divider(
-                        thickness: 2,
-                        color: Colors.black12,
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'รายละเอียดร้าน',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: tTextColor,
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        '${npdata.npAbout}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.normal,
-                          color: tTextColor,
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'ข้อมูลติดต่อ',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: tTextColor,
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      Row(
-                        children: [
-                          Text(
-                            'เบอร์โทรศัพท์  : ',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: tTextColor,
-                            ),
-                          ),
-                          Text(
-                            '${npdata.npPhone}',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: tTextColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'Email  : ',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: tTextColor,
-                            ),
-                          ),
-                          Text(
-                            '${npdata.npEmail}',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: tTextColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        thickness: 2,
-                        color: Colors.black12,
-                      ),
-                      SizedBox(height: 10),
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              // Text(
-                              //   'ที่อยู่ร้าน',
-                              //   style: TextStyle(
-                              //     fontSize: 18,
-                              //     fontWeight: FontWeight.w700,
-                              //     color: tTextColor,
-                              //   ),
-                              // ),
-                              TextButton.icon(
-                                onPressed: () {
-                                  googleMap();
-                                  print(googleMap);
-                                },
-                                icon: Icon(
-                                  Icons.location_pin,
-                                  color: tPimaryColor,
-                                ),
-                                label: Text(
+                  child: loadScreen
+                      ? ShowProgress().loadingScreen()
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
                                   '${npdata.npName}',
                                   style: TextStyle(
-                                    color: tPimaryColor,
-                                    fontSize: 16,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: tTextColor,
                                   ),
                                 ),
+                                Spacer(),
+                                SizedBox(width: 5),
+                                checkStatus(npdata.npBkStatus),
+                                CupertinoSwitch(
+                                  value: isSwiteched =
+                                      (npdata.npBkStatus != 'open')
+                                          ? false
+                                          : true,
+                                  onChanged: (bool npStatus) {
+                                    isSwiteched
+                                        ? showCupertinoDialog(
+                                                context: context,
+                                                builder: closeDialog)
+                                            .then((value) => refreshModel())
+                                        : showCupertinoDialog(
+                                                context: context,
+                                                builder: openDialog)
+                                            .then((value) => refreshModel());
+                                    setState(() {
+                                      (npdata.npBkStatus != 'open')
+                                          ? setState(() {
+                                              isSwiteched = true;
+                                            })
+                                          : setState(() {
+                                              isSwiteched = false;
+                                            });
+                                      // isSwiteched = npStatus;
+                                    });
+                                  },
+                                )
+                              ],
+                            ),
+                            Divider(
+                              thickness: 2,
+                              color: Colors.black12,
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              'รายละเอียดร้าน',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: tTextColor,
                               ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                '${npdata.npAdress} อำเภอ${npdata.npDistrict} จังหวัด${npdata.npProvince}',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal,
-                                  color: tTextColor,
+                            ),
+                            SizedBox(height: 15),
+                            Text(
+                              '${npdata.npAbout}',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: tTextColor,
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              'ข้อมูลติดต่อ',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: tTextColor,
+                              ),
+                            ),
+                            SizedBox(height: 15),
+                            Row(
+                              children: [
+                                Text(
+                                  'เบอร์โทรศัพท์  : ',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                    color: tTextColor,
+                                  ),
+                                ),
+                                Text(
+                                  '${npdata.npPhone}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                    color: tTextColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Email  : ',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                    color: tTextColor,
+                                  ),
+                                ),
+                                Text(
+                                  '${npdata.npEmail}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                    color: tTextColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Divider(
+                              thickness: 2,
+                              color: Colors.black12,
+                            ),
+                            SizedBox(height: 10),
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    // Text(
+                                    //   'ที่อยู่ร้าน',
+                                    //   style: TextStyle(
+                                    //     fontSize: 18,
+                                    //     fontWeight: FontWeight.w700,
+                                    //     color: tTextColor,
+                                    //   ),
+                                    // ),
+                                    TextButton.icon(
+                                      onPressed: () {
+                                        googleMap();
+                                        print(googleMap);
+                                      },
+                                      icon: Icon(
+                                        Icons.location_pin,
+                                        color: tPimaryColor,
+                                      ),
+                                      label: Text(
+                                        '${npdata.npName}',
+                                        style: TextStyle(
+                                          color: tPimaryColor,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${npdata.npAdress} อำเภอ${npdata.npDistrict} จังหวัด${npdata.npProvince}',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.normal,
+                                        color: tTextColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 5),
+                            // Card(
+                            //   elevation: 2,
+                            //   shadowColor: tBGDeepColor,
+                            //   child: SizedBox(
+                            //     width: MediaQuery.of(context).size.width,
+                            //     height: 250,
+                            //     child: Center(
+                            //       child: Text(
+                            //         'ไม่มีตำแหน่งร้าน',
+                            //         style: TextStyle(
+                            //           color: tTextColor,
+                            //           fontSize: 12,
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+                            Card(
+                              elevation: 2,
+                              shadowColor: tBGDeepColor,
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: 250,
+                                child: GoogleMap(
+                                  initialCameraPosition: CameraPosition(
+                                    target: LatLng(npdata.npLat, npdata.npLong),
+                                    zoom: 15,
+                                  ),
+                                  mapType: MapType.normal,
+                                  markers: <Marker>{
+                                    Marker(
+                                      markerId: MarkerId('myStore'),
+                                      position:
+                                          LatLng(npdata.npLat, npdata.npLong),
+                                      infoWindow: InfoWindow(
+                                          title: '${npdata.npName}',
+                                          snippet:
+                                              '${npdata.npAdress} อำเภอ${npdata.npDistrict} จังหวัด${npdata.npProvince}',
+                                          onTap: () {
+                                            googleMap();
+                                          }),
+                                    ),
+                                  },
                                 ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                      // Card(
-                      //   elevation: 2,
-                      //   shadowColor: tBGDeepColor,
-                      //   child: SizedBox(
-                      //     width: MediaQuery.of(context).size.width,
-                      //     height: 250,
-                      //     child: Center(
-                      //       child: Text(
-                      //         'ไม่มีตำแหน่งร้าน',
-                      //         style: TextStyle(
-                      //           color: tTextColor,
-                      //           fontSize: 12,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      Card(
-                        elevation: 2,
-                        shadowColor: tBGDeepColor,
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 250,
-                          child: GoogleMap(
-                            initialCameraPosition: CameraPosition(
-                              target: LatLng(npdata.npLat, npdata.npLong),
-                              zoom: 15,
                             ),
-                            mapType: MapType.normal,
-                            markers: <Marker>{
-                              Marker(
-                                markerId: MarkerId('myStore'),
-                                position: LatLng(npdata.npLat, npdata.npLong),
-                                infoWindow: InfoWindow(
-                                    title: '${npdata.npName}',
-                                    snippet:
-                                        '${npdata.npAdress} อำเภอ${npdata.npDistrict} จังหวัด${npdata.npProvince}',
-                                    onTap: () {
-                                      googleMap();
-                                    }),
-                              ),
-                            },
-                          ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
             ),

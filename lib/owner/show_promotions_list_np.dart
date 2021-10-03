@@ -7,6 +7,7 @@ import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/model/model_get_list_promotions_np.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
+import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -19,6 +20,8 @@ class ShowPromotionsListNp extends StatefulWidget {
 }
 
 class _ShowPromotionsListNpState extends State<ShowPromotionsListNp> {
+  bool loadScreen = true;
+
   List<Rsprobynp> datamember = [];
 
   var token;
@@ -45,6 +48,7 @@ class _ShowPromotionsListNpState extends State<ShowPromotionsListNp> {
       setState(() {
         datamember = members.rsprobynp;
         // load = false;
+        loadScreen = false;
       });
     }
   }
@@ -109,7 +113,7 @@ class _ShowPromotionsListNpState extends State<ShowPromotionsListNp> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.height,
-          child: _listView(),
+          child: loadScreen ? ShowProgress().loadingScreen() : _listView(),
         ),
       ),
     );

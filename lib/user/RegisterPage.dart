@@ -9,7 +9,7 @@ class RegisterPage extends StatefulWidget {
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
- 
+
 class _RegisterPageState extends State<RegisterPage> {
   final _uid = GlobalKey<FormState>();
   final _uuser = TextEditingController();
@@ -130,6 +130,15 @@ class _RegisterPageState extends State<RegisterPage> {
         if (values.isEmpty) {
           return 'กรุณากรอกรหัสผ่าน';
         }
+        if (values.length < 8) {
+          return 'กรุณากรอกรหัสผ่านไม่น้อยกว่า 8 ตัวอักษร';
+        }
+        if (!RegExp(r'[a-zA-Z]').hasMatch(values) ||
+            !RegExp(r'[0-9]').hasMatch(values)) {
+          return 'รหัสผ่านของคุณต้องมีอักษร a-z A-Z และตัวเลขอย่างน้อย 1 ตัวเลข';
+        }
+
+        return null;
       },
     );
   }
@@ -283,7 +292,7 @@ class _RegisterPageState extends State<RegisterPage> {
             valuse['user_password'] = _upass.text;
             valuse['user_name'] = _uname.text;
             valuse['user_lastname'] = _ulname.text;
-            valuse['user_phone'] = _upho .text;
+            valuse['user_phone'] = _upho.text;
             valuse['user_email'] = _uemail.text;
             valuse['user_gender'] = _ugender.text;
             valuse['user_age'] = _uage.text;

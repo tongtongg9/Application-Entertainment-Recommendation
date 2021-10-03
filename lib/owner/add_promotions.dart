@@ -9,6 +9,7 @@ import 'package:my_finalapp1/model/Connectapi.dart';
 import 'package:my_finalapp1/owner/add_promptions_img.dart';
 import 'package:my_finalapp1/widget/colors.dart';
 import 'package:my_finalapp1/widget/custom_back_button.dart';
+import 'package:my_finalapp1/widget/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -52,8 +53,11 @@ class _AddPromotionsState extends State<AddPromotions> {
       // Navigator.pop(context, true);
     } else {
       print('Register not Success!!');
+      // Navigator.pop(context, false);
       print(response.body);
     }
+
+    // if (isBTNLoading) return;
   }
 
   @override
@@ -61,7 +65,10 @@ class _AddPromotionsState extends State<AddPromotions> {
     // TODO: implement initState
     super.initState();
     getNP();
+    isBTNLoading = false;
   }
+
+  bool isBTNLoading = true;
 
   Map<String, dynamic> _rec_member;
   var _npId;
@@ -512,14 +519,16 @@ class _AddPromotionsState extends State<AddPromotions> {
           ),
           primary: tPimaryColor,
         ),
-        child: Text(
-          'เสร็จสิ้น',
-          style: TextStyle(
-            fontSize: 16,
-            color: tTextWColor,
-          ),
-        ),
-        onPressed: () {
+        child: isBTNLoading
+            ? ShowProgress().loadingBotton()
+            : Text(
+                'เสร็จสิ้น',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: tTextWColor,
+                ),
+              ),
+        onPressed: () async {
           if (_formkey.currentState.validate()) {
             Map<String, dynamic> valuse = Map();
             // valuse['np_id'] = _npId;
@@ -527,10 +536,12 @@ class _AddPromotionsState extends State<AddPromotions> {
             valuse['pro_detail'] = _pro_detail.text;
             valuse['pro_start'] = _dateStart.toString();
             valuse['pro_end'] = _dateEnd.toString();
-
-            print(valuse);
+            setState(() => isBTNLoading = true);
+            await Future.delayed(Duration(seconds: 2));
             addPromotions(valuse);
             sendPathImage();
+            print(valuse);
+            await Future.delayed(Duration(seconds: 1));
             Navigator.pop(context);
           }
         },

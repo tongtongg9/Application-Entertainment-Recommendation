@@ -40,9 +40,12 @@ class _ProfileState extends State<Profile> {
       //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
       setState(() {
         udata = members.infouser;
+        loadScreen = false;
       });
     }
   }
+
+  bool loadScreen = true;
 
   @override
   void initState() {
@@ -78,7 +81,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: bodyuProScn(),
+        child: loadScreen ? ShowProgress().loadingScreen() : bodyuProScn(),
       ),
     );
   }

@@ -42,9 +42,12 @@ class _ShowDataUserState extends State<ShowDataUser> {
       //รับค่า ข้อมูลทั้งหมดไว้ในตัวแปร
       setState(() {
         udata = members.infouser;
+        loadScreen = false;
       });
     }
   }
+
+  bool loadScreen = true;
 
   // Future<Null> refreshModel() async {
   //   setState(() {
@@ -119,95 +122,98 @@ class _ShowDataUserState extends State<ShowDataUser> {
           ),
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(20), // todo ระยะห่างจากขอบจอ !!
-        child: Column(
-          children: [
-            profilePic(), //? -- > Profile Picture
-            // TextButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, '/upload')
-            //         .then((value) => refreshModel());
-            //   },
-            //   child: Text(
-            //     'เปลี่ยนรูปโปร์ไฟล์',
-            //     style: TextStyle(color: tPimaryColor),
-            //   ),
-            // ),
-            SizedBox(height: 10),
-            Divider(
-              thickness: 2,
-              color: Colors.black12,
+      body: loadScreen
+          ? ShowProgress().loadingScreen()
+          : Container(
+              padding: EdgeInsets.all(20), // todo ระยะห่างจากขอบจอ !!
+              child: Column(
+                children: [
+                  profilePic(), //? -- > Profile Picture
+                  // TextButton(
+                  //   onPressed: () {
+                  //     Navigator.pushNamed(context, '/upload')
+                  //         .then((value) => refreshModel());
+                  //   },
+                  //   child: Text(
+                  //     'เปลี่ยนรูปโปร์ไฟล์',
+                  //     style: TextStyle(color: tPimaryColor),
+                  //   ),
+                  // ),
+                  SizedBox(height: 10),
+                  Divider(
+                    thickness: 2,
+                    color: Colors.black12,
+                  ),
+                  SizedBox(height: 25),
+                  Row(
+                    children: [
+                      Infotype(
+                        type: 'ชื่อผู้ใช้',
+                      ),
+                      Infodata(
+                        data: '${udata.userUsername}',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Infotype(
+                        type: 'ชื่อ-สกุล',
+                      ),
+                      Infodata(
+                        data: '${udata.userName} ${udata.userLastname}',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Infotype(
+                        type: 'เบอร์โทร',
+                      ),
+                      Infodata(
+                        data: '${udata.userPhone}',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Infotype(
+                        type: 'Email',
+                      ),
+                      Infodata(
+                        data: '${udata.userEmail}',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Infotype(
+                        type: 'เพศ',
+                      ),
+                      Infodata(
+                        data: '${udata.userGender}',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Infotype(
+                        type: 'วันเกิด',
+                      ),
+                      Infodata(
+                        data:
+                            '${dateformate.format(DateTime.parse(udata.userBday))}',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            SizedBox(height: 25),
-            Row(
-              children: [
-                Infotype(
-                  type: 'ชื่อผู้ใช้',
-                ),
-                Infodata(
-                  data: '${udata.userUsername}',
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Infotype(
-                  type: 'ชื่อ-สกุล',
-                ),
-                Infodata(
-                  data: '${udata.userName} ${udata.userLastname}',
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Infotype(
-                  type: 'เบอร์โทร',
-                ),
-                Infodata(
-                  data: '${udata.userPhone}',
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Infotype(
-                  type: 'Email',
-                ),
-                Infodata(
-                  data: '${udata.userEmail}',
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Infotype(
-                  type: 'เพศ',
-                ),
-                Infodata(
-                  data: '${udata.userGender}',
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Infotype(
-                  type: 'วันเกิด',
-                ),
-                Infodata(
-                  data: '${dateformate.format(DateTime.parse(udata.userBday))}',
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
     );
   }
 
