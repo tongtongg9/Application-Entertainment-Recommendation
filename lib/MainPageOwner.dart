@@ -76,12 +76,12 @@ class _MainPageOwnerState extends State<MainPageOwner> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Image.asset(
-                'assets/images/logo_text.png',
-                width: MediaQuery.of(context).size.width * 0.4,
+                'assets/images/cover_owner.png',
+                width: MediaQuery.of(context).size.width * 0.9,
               ),
-              SizedBox(height: 50),
+              // SizedBox(height: 50),
               loginfrom(),
-              SizedBox(height: 50),
+              // SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -173,6 +173,7 @@ class _MainPageOwnerState extends State<MainPageOwner> {
   Widget _btnMLogin() {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.4,
+      height: 45,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.all(8),
@@ -200,18 +201,18 @@ class _MainPageOwnerState extends State<MainPageOwner> {
   Widget _btnMRegis() {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.4,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.all(8),
+      height: 45,
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
+          side: BorderSide(color: tPimaryColor),
           primary: tPimaryColor,
         ),
         child: Text(
           'สมัครสมาชิก',
           style: TextStyle(
-            color: Colors.white,
             fontSize: 16,
           ),
         ),

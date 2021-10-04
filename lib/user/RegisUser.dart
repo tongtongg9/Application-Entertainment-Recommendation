@@ -192,9 +192,6 @@ class _RegisUserState extends State<RegisUser> {
                           !RegExp(r'[0-9]').hasMatch(values)) {
                         return 'รหัสผ่านของคุณต้องมีอักษร a-z A-Z และตัวเลขอย่างน้อย 1 ตัวเลข';
                       }
-                      // if (!RegExp(r'[0-9]').hasMatch(values)) {
-                      //   return 'รหัสผ่านของคุณต้องมีตัวเลขอย่างน้อย 1 ตัวเลข';
-                      // }
                       return null;
                     },
                     'assets/icons/user.png',
