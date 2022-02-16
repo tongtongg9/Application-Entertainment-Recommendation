@@ -1,3 +1,3 @@
 class Keys {
-  var apikey = 'AIzaSyBJduJWX1sNBvIDGZdciGeuhB1SZd4QZX8';
+  var apikey = 'google maps key api';
 }
