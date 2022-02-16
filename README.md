@@ -1,4 +1,4 @@
-# my_finalapp1
+# Application-Entertainment-Recommendation
 
 A new Flutter project.
 
