@@ -1,6 +1,6 @@
 # Application-Entertainment-Recommendation
 
-A new Flutter project.
+Graduate Project : The Development Application of Entertainment Recommendation in Maha Sarakham Provinc.
 
 ## Getting Started
 
